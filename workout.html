@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="WORKOUT">
+<title>WORKOUT</title>
+
+<!-- Icône PWA générée inline en SVG→base64 -->
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj48cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiBmaWxsPSIjMGEwYTBhIi8+PHJlY3QgeD0iMjQiIHk9Ijg0IiB3aWR0aD0iMTMyIiBoZWlnaHQ9IjEyIiByeD0iNiIgZmlsbD0iI2M2ZjEzNSIvPjxyZWN0IHg9IjE0IiB5PSI3MCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjQwIiByeD0iNiIgZmlsbD0iI2M2ZjEzNSIvPjxyZWN0IHg9IjE0NiIgeT0iNzAiIHdpZHRoPSIyMCIgaGVpZ2h0PSI0MCIgcng9IjYiIGZpbGw9IiNjNmYxMzUiLz48cmVjdCB4PSIyIiB5PSI3OCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjI0IiByeD0iNiIgZmlsbD0iI2M2ZjEzNSIvPjxyZWN0IHg9IjE2MiIgeT0iNzgiIHdpZHRoPSIxNiIgaGVpZ2h0PSIyNCIgcng9IjYiIGZpbGw9IiNjNmYxMzUiLz48L3N2Zz4=">
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:#0a0a0a;color:#f0f0f0;font-family:'DM Sans',sans-serif;min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:#333;border-radius:99px}
+
+/* HEADER */
+.hdr{padding:calc(env(safe-area-inset-top)+14px) 16px 0;max-width:760px;margin:0 auto}
+.hdr-row{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px}
+.week-title{font-family:'Bebas Neue';font-size:2rem;letter-spacing:3px;line-height:1}
+.week-sub{font-size:.72rem;color:#555;margin-top:2px}
+.hdr-btns{display:flex;gap:7px;flex-wrap:wrap}
+.btn{padding:7px 13px;border:none;border-radius:8px;cursor:pointer;font-family:'DM Sans';font-size:.78rem;font-weight:600}
+.btn-ghost{background:#1c1c1c;color:#888}
+.btn-accent{color:#000;font-weight:700}
+
+/* TABS */
+.tabs{display:flex;margin-top:18px;overflow-x:auto;gap:3px}
+.tab{flex:1;min-width:68px;padding:10px 6px;border:none;border-radius:10px 10px 0 0;background:transparent;font-family:'Bebas Neue';font-size:.9rem;letter-spacing:1px;cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;color:#555}
+.tab.active{background:#111}
+
+/* PROGRESS */
+.prog-bar-wrap{background:#111;border-bottom:1px solid #1c1c1c;padding:10px 16px}
+.prog-inner{max-width:760px;margin:0 auto}
+.prog-row{display:flex;justify-content:space-between;font-size:.73rem;color:#666;margin-bottom:5px}
+.prog-track{height:4px;background:#1c1c1c;border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;border-radius:99px;transition:width .3s}
+.prog-day-label{font-size:.7rem;color:#555;margin-top:4px}
+
+/* GRID */
+.grid{max-width:760px;margin:0 auto;padding:14px 14px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+
+/* CARD */
+.card{background:#111;border:1px solid #1c1c1c;border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.card-accent{height:3px}
+.card-body{padding:13px 13px 11px;display:flex;flex-direction:column;gap:10px}
+.card-name{font-family:'Bebas Neue';font-size:1.12rem;letter-spacing:1px;line-height:1.1}
+.card-muscle{font-size:.7rem;color:#666;margin-top:2px}
+.badge{padding:2px 8px;border-radius:99px;font-size:.67rem;font-weight:700;letter-spacing:.4px;white-space:nowrap}
+
+/* STATS */
+.stats{display:flex;gap:6px}
+.stat{background:#0a0a0a;border:1px solid #222;border-radius:8px;padding:5px 6px;text-align:center;flex:1}
+.stat-val{font-family:'Bebas Neue';font-size:1rem}
+.stat-lbl{font-size:.58rem;color:#555;letter-spacing:.5px}
+.charge-wrap{background:#0a0a0a;border-radius:8px;padding:4px 6px;display:flex;flex-direction:column;align-items:center;flex:1;min-width:62px}
+.charge-input{width:100%;background:transparent;border:none;font-family:'Bebas Neue';font-size:1rem;text-align:center;outline:none}
+.charge-unit{font-size:.58px;color:#555;letter-spacing:.5px;font-size:.58rem}
+
+/* DOTS */
+.dots-row{display:flex;align-items:center;gap:8px}
+.dots{display:flex;gap:5px;flex-wrap:wrap;flex:1}
+.dot{width:26px;height:26px;border-radius:50%;border:2px solid #333;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.58rem;color:transparent;font-weight:700;transition:all .15s;flex-shrink:0;-webkit-user-select:none;user-select:none}
+.dot.done{color:#000}
+.dots-count{font-size:.78rem;color:#888;white-space:nowrap}
+
+/* RPE */
+.rpe-bars{display:flex;gap:2px;margin-top:2px}
+.rpe-seg{flex:1;height:5px;border-radius:3px;background:#1c1c1c;cursor:pointer;transition:background .1s}
+
+/* MODALS */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:100;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
+.overlay.open{opacity:1;pointer-events:all}
+.sheet{background:#0f0f0f;border-radius:20px 20px 0 0;padding:24px 18px calc(env(safe-area-inset-bottom)+28px);width:100%;max-width:680px;max-height:88vh;overflow-y:auto;transform:translateY(30px);transition:transform .3s}
+.overlay.open .sheet{transform:translateY(0)}
+.sheet-title{font-family:'Bebas Neue';font-size:1.7rem;letter-spacing:2px;margin-bottom:3px}
+.sheet-sub{font-size:.78rem;color:#666;margin-bottom:20px}
+.close-btn{float:right;background:#1e1e1e;border:none;color:#888;border-radius:8px;padding:4px 11px;cursor:pointer;font-size:1.1rem;margin-bottom:-8px}
+
+/* NEXT WEEK */
+.day-section{margin-bottom:18px}
+.day-section-title{font-family:'Bebas Neue';font-size:1rem;letter-spacing:1px;margin-bottom:8px;border-bottom:1px solid #1c1c1c;padding-bottom:5px}
+.change-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #111;font-size:.82rem}
+.change-row:last-child{border:none}
+.change-name{flex:1;color:#ccc}
+.change-w{color:#666;font-size:.75rem}
+.status-badge{padding:2px 10px;border-radius:99px;font-weight:700;font-size:.73rem}
+
+/* HISTORY */
+.exo-select{background:#111;border:1px solid #1c1c1c;color:#f0f0f0;border-radius:10px;padding:8px 12px;font-family:'DM Sans';font-size:.83rem;width:100%;margin-bottom:18px;outline:none}
+.chart-wrap{background:#111;border:1px solid #1c1c1c;border-radius:14px;padding:16px;margin-bottom:18px}
+.chart-title{font-family:'Bebas Neue';font-size:1rem;letter-spacing:1px;margin-bottom:12px}
+.mini-chart{height:100px;display:flex;align-items:flex-end;gap:6px}
+.bar-col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:1;gap:4px}
+.bar{border-radius:4px 4px 0 0;width:100%;min-height:4px;transition:height .3s}
+.bar-lbl{font-size:.58rem;color:#555}
+.bar-val{font-size:.65rem;font-weight:600}
+.week-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.chip{background:#111;border:1px solid #1c1c1c;border-radius:10px;padding:6px 12px;font-size:.76rem}
+.chip span{color:#555;margin-right:4px}
+
+/* RECAP */
+.recap-card{background:#111;border:1px solid #1c1c1c;border-radius:14px;padding:18px;margin-bottom:14px}
+.recap-card-title{font-family:'Bebas Neue';font-size:.95rem;letter-spacing:1px;color:#888;margin-bottom:14px}
+.vol-row{margin-bottom:9px}
+.vol-info{display:flex;justify-content:space-between;font-size:.76rem;margin-bottom:3px}
+.vol-track{height:5px;background:#1c1c1c;border-radius:99px;overflow:hidden}
+.vol-fill{height:100%;border-radius:99px}
+.rule-row{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+.rule-icon{font-family:'Bebas Neue';font-size:1.3rem;width:20px}
+.rule-txt{font-size:.8rem;color:#aaa}
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<!-- NEXT WEEK SHEET -->
+<div class="overlay" id="nextOverlay">
+  <div class="sheet">
+    <button class="close-btn" onclick="closeSheet('nextOverlay')">✕</button>
+    <div class="sheet-title">SEMAINE SUIVANTE</div>
+    <div class="sheet-sub" id="nextSub"></div>
+    <div id="nextContent"></div>
+    <button class="btn btn-accent" id="confirmBtn" onclick="confirmNextWeek()"
+      style="width:100%;padding:14px;border-radius:12px;font-family:'Bebas Neue';font-size:1.1rem;letter-spacing:2px;margin-top:10px">
+      CONFIRMER
+    </button>
+  </div>
+</div>
+
+<!-- HISTORY SHEET -->
+<div class="overlay" id="histOverlay">
+  <div class="sheet">
+    <button class="close-btn" onclick="closeSheet('histOverlay')">✕</button>
+    <div class="sheet-title">HISTORIQUE</div>
+    <div class="sheet-sub">Progression des charges par exercice</div>
+    <div id="histContent"></div>
+  </div>
+</div>
+
+<!-- RECAP SHEET -->
+<div class="overlay" id="recapOverlay">
+  <div class="sheet">
+    <button class="close-btn" onclick="closeSheet('recapOverlay')">✕</button>
+    <div class="sheet-title">RÉCAP SEMAINE</div>
+    <div class="sheet-sub" id="recapSub"></div>
+    <div id="recapContent"></div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────
+const POLY_KEYS = ["Leg Press","Fentes","Tractions","Rowing","RDL","Hip Thrust","Développé couché","Dips"];
+const DAYS = [
+  {id:"lundi",label:"LUNDI",sub:"Upper A · Push",color:"#3b82f6",exos:[
+    {id:"dci",name:"Développé couché incliné",muscle:"Pectoraux sup.",w:17.5,unit:"kg/côté",sets:4,reps:"6-8",zone:"Force"},
+    {id:"dcp",name:"Développé couché plat",muscle:"Pectoraux",w:15,unit:"kg/côté",sets:3,reps:"10-12",zone:"Hypertrophie"},
+    {id:"pd",name:"Pec Deck machine",muscle:"Pectoraux (fin.)",w:30,unit:"kg",sets:3,reps:"15-20",zone:"Métabolique"},
+    {id:"dem",name:"Développé épaules machine",muscle:"Deltoïdes ant.",w:22,unit:"kg",sets:3,reps:"10-12",zone:"Hypertrophie"},
+    {id:"elc",name:"Élévations latérales câble",muscle:"Deltoïdes lat.",w:5,unit:"kg/côté",sets:4,reps:"15-20",zone:"Métabolique"},
+    {id:"etc",name:"Extension triceps corde",muscle:"Triceps",w:17.5,unit:"kg",sets:3,reps:"10-12",zone:"Hypertrophie"},
+    {id:"sk",name:"Skull crusher haltères",muscle:"Triceps long",w:8,unit:"kg/côté",sets:3,reps:"10-12",zone:"Hypertrophie"},
+    {id:"hiit_l",name:"HIIT vélo elliptique",muscle:"Cardio",w:8,unit:"intervalles",sets:1,reps:"8×30s/90s",zone:"Cardio",isCardio:true},
+  ]},
+  {id:"mardi",label:"MARDI",sub:"Lower A · Quad",color:"#10b981",exos:[
+    {id:"lp",name:"Leg Press",muscle:"Quadriceps",w:120,unit:"kg",sets:4,reps:"6-8",zone:"Force"},
+    {id:"fb",name:"Fentes bulgares",muscle:"Quad / Fessiers",w:10,unit:"kg/main",sets:3,reps:"10/jambe",zone:"Hypertrophie"},
+    {id:"le",name:"Leg Extension",muscle:"Quadriceps (iso)",w:40,unit:"kg",sets:3,reps:"15-20",zone:"Métabolique"},
+    {id:"lcc",name:"Leg Curl couché",muscle:"Ischio-jambiers",w:42,unit:"kg",sets:4,reps:"10-12",zone:"Hypertrophie"},
+    {id:"cm",name:"Crunch machine",muscle:"Abdominaux",w:10,unit:"kg",sets:3,reps:"12-15",zone:"Hypertrophie"},
+    {id:"pp",name:"Pallof Press câble",muscle:"Core / Obliques",w:8,unit:"kg",sets:3,reps:"12/côté",zone:"Hypertrophie"},
+    {id:"liss_m",name:"LISS Rameur",muscle:"Cardio",w:0,unit:"20min",sets:1,reps:"65% FC max",zone:"Cardio",isCardio:true},
+  ]},
+  {id:"jeudi",label:"JEUDI",sub:"Upper B · Pull",color:"#8b5cf6",exos:[
+    {id:"tr",name:"Tractions lestées",muscle:"Dos / Biceps",w:5,unit:"kg lest",sets:4,reps:"6-8",zone:"Force"},
+    {id:"tp",name:"Tirage poitrine câble",muscle:"Dos (largeur)",w:50,unit:"kg",sets:3,reps:"10-12",zone:"Hypertrophie"},
+    {id:"rhs",name:"Rowing Hammer Strength",muscle:"Dos (épaisseur)",w:30,unit:"kg/côté",sets:4,reps:"8-10",zone:"Hypertrophie"},
+    {id:"fp",name:"Face Pull câble corde",muscle:"Deltoïdes post.",w:12,unit:"kg",sets:4,reps:"15-20",zone:"Métabolique"},
+    {id:"sh",name:"Shrug haltères",muscle:"Trapèzes",w:14,unit:"kg/main",sets:3,reps:"12-15",zone:"Métabolique"},
+    {id:"cb",name:"Curl biceps supination",muscle:"Biceps",w:10,unit:"kg/côté",sets:3,reps:"10-12",zone:"Hypertrophie"},
+    {id:"cm2",name:"Curl marteau",muscle:"Brachial / Biceps",w:12,unit:"kg/côté",sets:3,reps:"10-12",zone:"Hypertrophie"},
+    {id:"wc",name:"Wrist curl",muscle:"Avant-bras",w:7,unit:"kg",sets:2,reps:"12-15",zone:"Avant-bras"},
+    {id:"rvc",name:"Reverse curl",muscle:"Avant-bras ext.",w:8,unit:"kg",sets:2,reps:"12-15",zone:"Avant-bras"},
+  ]},
+  {id:"vendredi",label:"VENDREDI",sub:"Lower B · Ischio/Fessier",color:"#f59e0b",exos:[
+    {id:"ht",name:"Hip Thrust machine",muscle:"Fessiers",w:70,unit:"kg",sets:4,reps:"10-12",zone:"Hypertrophie"},
+    {id:"rdl",name:"RDL haltères",muscle:"Ischio / Fessiers",w:15,unit:"kg/main",sets:4,reps:"8-10",zone:"Hypertrophie"},
+    {id:"lca",name:"Leg Curl assis",muscle:"Ischio-jambiers",w:35,unit:"kg",sets:3,reps:"15-20",zone:"Métabolique"},
+    {id:"fmv",name:"Fentes marchées",muscle:"Quad / Fessiers",w:10,unit:"kg/main",sets:3,reps:"10/jambe",zone:"Hypertrophie"},
+    {id:"mol",name:"Mollets machine",muscle:"Mollets",w:50,unit:"kg",sets:4,reps:"15-20",zone:"Métabolique"},
+    {id:"rj",name:"Relevés de jambes",muscle:"Abdominaux bas",w:0,unit:"pds corps",sets:3,reps:"12-15",zone:"Hypertrophie"},
+    {id:"fc",name:"Farmer's carry",muscle:"Avant-bras / Core",w:18,unit:"kg/main",sets:3,reps:"25m",zone:"Avant-bras"},
+    {id:"hiit_v",name:"HIIT Skillmill",muscle:"Cardio",w:6,unit:"intervalles",sets:1,reps:"6×40s/80s",zone:"Cardio",isCardio:true},
+  ]},
+];
+
+const ZONES = {
+  "Force":       {color:"#3b82f6",bg:"#1e3a5f"},
+  "Hypertrophie":{color:"#10b981",bg:"#064e3b"},
+  "Métabolique": {color:"#f59e0b",bg:"#451a03"},
+  "Avant-bras":  {color:"#8b5cf6",bg:"#2e1065"},
+  "Cardio":      {color:"#ef4444",bg:"#450a0a"},
+};
+
+const MUSCLES_LIST = ["Pectoraux","Dos","Épaules","Triceps","Biceps","Avant-bras","Quadriceps","Ischio-jambiers","Fessiers","Abdominaux","Mollets","Core"];
+function muscleGroup(m){
+  if(m.includes("Pect")) return "Pectoraux";
+  if(m.includes("Dos")) return "Dos";
+  if(m.includes("Delt")||m.includes("paul")) return "Épaules";
+  if(m.includes("Tric")) return "Triceps";
+  if(m.includes("Bic")||m.includes("Brach")) return "Biceps";
+  if(m.includes("Avant")) return "Avant-bras";
+  if(m.includes("Quad")) return "Quadriceps";
+  if(m.includes("Ischio")) return "Ischio-jambiers";
+  if(m.includes("Fess")) return "Fessiers";
+  if(m.includes("Abdo")) return "Abdominaux";
+  if(m.includes("Molet")) return "Mollets";
+  return "Core";
+}
+
+// ── STATE ─────────────────────────────────────────────────────────────────
+let S = {}, HIST = [], activeDay = 0, pendingChanges = null;
+
+function buildInit(){
+  const now = new Date(), dow = now.getDay();
+  const diff = dow===0?-6:1-dow;
+  const mon = new Date(now); mon.setDate(now.getDate()+diff);
+  const s = {weekNum:1, startDate:mon.toISOString().split("T")[0]};
+  DAYS.forEach(d=>{s[d.id]={};d.exos.forEach(ex=>{s[d.id][ex.id]={w:ex.w,done:0,rpe:0};});});
+  return s;
+}
+
+function load(){
+  try{ const s=localStorage.getItem("wk_state"); if(s) S=JSON.parse(s); else S=buildInit(); }catch{ S=buildInit(); }
+  try{ const h=localStorage.getItem("wk_hist"); if(h) HIST=JSON.parse(h); }catch{ HIST=[]; }
+}
+function save(){
+  localStorage.setItem("wk_state",JSON.stringify(S));
+  localStorage.setItem("wk_hist",JSON.stringify(HIST));
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────────────
+function fmtDate(iso){
+  const d=new Date(iso);
+  return d.toLocaleDateString("fr-FR",{day:"2-digit",month:"short"});
+}
+function addDays(iso,n){
+  const d=new Date(iso);d.setDate(d.getDate()+n);return d.toISOString().split("T")[0];
+}
+function isPoly(name){ return POLY_KEYS.some(p=>name.includes(p)); }
+
+function computeChanges(){
+  const res={};
+  DAYS.forEach(d=>{
+    res[d.id]=d.exos.map(ex=>{
+      const s=S[d.id][ex.id];
+      if(ex.isCardio) return {id:ex.id,name:ex.name,oldW:s.w,newW:s.w,delta:0,status:"→",reason:"Cardio"};
+      const all=s.done>=ex.sets, half=s.done>=Math.ceil(ex.sets/2);
+      let delta=0;
+      if(all) delta=isPoly(ex.name)?5:2.5;
+      else if(!half) delta=-2.5;
+      const newW=Math.max(0,s.w+delta);
+      return {id:ex.id,name:ex.name,oldW:s.w,newW,delta,status:delta>0?"↑":delta<0?"↓":"→",reason:all?"Toutes séries ✓":half?"Reps min. ok":"Reps min. ✗"};
+    });
+  });
+  return res;
+}
+
+function dayProgress(dayId){
+  const day=DAYS.find(d=>d.id===dayId);
+  let done=0,total=0;
+  day.exos.forEach(ex=>{
+    const tot=ex.isCardio?1:ex.sets;
+    total+=tot; done+=Math.min(S[dayId][ex.id].done,tot);
+  });
+  return {done,total,pct:total?Math.round(done/total*100):0};
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────
+function render(){
+  const day=DAYS[activeDay];
+  const acc=day.color;
+  const pg=dayProgress(day.id);
+  document.getElementById("app").innerHTML=`
+  <div class="hdr">
+    <div class="hdr-row">
+      <div>
+        <div class="week-title">SEMAINE ${S.weekNum}</div>
+        <div class="week-sub">${fmtDate(S.startDate)} → ${fmtDate(addDays(S.startDate,6))}</div>
+      </div>
+      <div class="hdr-btns">
+        <button class="btn btn-ghost" onclick="openRecap()">📊</button>
+        <button class="btn btn-ghost" onclick="openHistory()">📈</button>
+        <button class="btn btn-ghost" onclick="resetDay('${day.id}')">↺</button>
+        <button class="btn btn-accent" style="background:${acc}" onclick="openNextWeek()">Sem. →</button>
+      </div>
+    </div>
+    <div class="tabs">
+      ${DAYS.map((d,i)=>`
+        <button class="tab ${i===activeDay?"active":""}"
+          style="color:${i===activeDay?d.color:"#555"};border-color:${i===activeDay?d.color:"transparent"}"
+          onclick="switchDay(${i})">${d.label}</button>
+      `).join("")}
+    </div>
+  </div>
+  <div class="prog-bar-wrap">
+    <div class="prog-inner">
+      <div class="prog-row">
+        <span><span style="color:${acc};font-family:'Bebas Neue';font-size:.9rem">${pg.done}</span> / ${pg.total} séries</span>
+        <div style="display:flex;gap:12px;align-items:center">
+          <span style="color:${acc}">${pg.pct}%</span>
+        </div>
+      </div>
+      <div class="prog-track"><div class="prog-fill" style="width:${pg.pct}%;background:${acc}"></div></div>
+      <div class="prog-day-label">${day.label} — ${day.sub}</div>
+    </div>
+  </div>
+  <div class="grid">${day.exos.map(ex=>renderCard(ex,day)).join("")}</div>`;
+  // rebind RPE clicks after render
+}
+
+function renderCard(ex,day){
+  const acc=day.color;
+  const s=S[day.id][ex.id];
+  const z=ZONES[ex.zone];
+  const rest=ex.zone==="Force"?"3min":ex.zone==="Cardio"?"—":"90s";
+  const dots=ex.isCardio?
+    `<div class="dots-row">
+      <div class="dot ${s.done>=1?"done":""}" style="border-color:${s.done>=1?acc:"#333"};background:${s.done>=1?acc:"transparent"};color:${s.done>=1?"#000":"transparent"}"
+        onclick="toggleDot('${day.id}','${ex.id}',0)">✓</div>
+      <span style="font-size:.8rem;color:#888">Séance complétée</span>
+    </div>`
+    :`<div class="dots-row">
+      <div class="dots">${Array.from({length:ex.sets},(_,i)=>`
+        <div class="dot ${i<s.done?"done":""}"
+          style="border-color:${i<s.done?acc:"#333"};background:${i<s.done?acc:"transparent"};color:${i<s.done?"#000":"transparent"}"
+          onclick="toggleDot('${day.id}','${ex.id}',${i})">✓</div>`).join("")}
+      </div>
+      <span class="dots-count"><span style="color:${acc};font-family:'Bebas Neue';font-size:.95rem">${s.done}</span>/${ex.sets}</span>
+    </div>`;
+  const rpe=!ex.isCardio?`
+    <div>
+      <div style="font-size:.63rem;color:#555;margin-bottom:3px">RPE</div>
+      <div class="rpe-bars">
+        ${Array.from({length:10},(_,i)=>`
+          <div class="rpe-seg" onclick="setRpe('${day.id}','${ex.id}',${i+1})"
+            style="background:${i<s.rpe?(s.rpe>=9?"#ef4444":s.rpe>=7?"#f59e0b":"#10b981"):"#1c1c1c"}"></div>`).join("")}
+      </div>
+      ${s.rpe>0?`<div style="font-size:.62rem;color:#555;margin-top:2px;text-align:right">RPE ${s.rpe}/10</div>`:""}
+    </div>`:"";
+  return `<div class="card">
+    <div class="card-accent" style="background:${acc}"></div>
+    <div class="card-body">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div>
+          <div class="card-name">${ex.name}</div>
+          <div class="card-muscle">${ex.muscle}</div>
+        </div>
+        <span class="badge" style="background:${z.bg};color:${z.color}">${ex.zone}</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="stat-val" style="color:${acc}">${ex.sets}</div><div class="stat-lbl">SÉRIES</div></div>
+        <div class="stat"><div class="stat-val" style="color:${acc};font-size:.82rem">${ex.reps}</div><div class="stat-lbl">REPS</div></div>
+        <div class="stat"><div class="stat-val" style="color:${acc}">${rest}</div><div class="stat-lbl">REPOS</div></div>
+        <div class="charge-wrap" style="border:1px solid ${acc}44">
+          <input class="charge-input" type="number" step="0.5" value="${s.w}"
+            style="color:${acc}" onchange="setWeight('${day.id}','${ex.id}',this.value)">
+          <div class="charge-unit">${ex.unit.toUpperCase()}</div>
+        </div>
+      </div>
+      ${dots}
+      ${rpe}
+    </div>
+  </div>`;
+}
+
+// ── INTERACTIONS ──────────────────────────────────────────────────────────
+function switchDay(i){ activeDay=i; render(); }
+
+function toggleDot(dayId,exId,idx){
+  const s=S[dayId][exId];
+  s.done=idx<s.done?idx:idx+1;
+  save(); render();
+}
+function setWeight(dayId,exId,v){
+  S[dayId][exId].w=parseFloat(v)||0; save();
+}
+function setRpe(dayId,exId,v){
+  S[dayId][exId].rpe=v; save(); render();
+}
+function resetDay(dayId){
+  const d=DAYS.find(d=>d.id===dayId);
+  d.exos.forEach(ex=>{ S[dayId][ex.id].done=0; S[dayId][ex.id].rpe=0; });
+  save(); render();
+}
+
+// ── NEXT WEEK SHEET ───────────────────────────────────────────────────────
+function openNextWeek(){
+  pendingChanges=computeChanges();
+  document.getElementById("nextSub").textContent=`Récap → Semaine ${S.weekNum+1}`;
+  document.getElementById("confirmBtn").style.background=DAYS[activeDay].color;
+  document.getElementById("nextContent").innerHTML=DAYS.map(d=>`
+    <div class="day-section">
+      <div class="day-section-title" style="color:${d.color}">${d.label} – ${d.sub}</div>
+      ${pendingChanges[d.id].map(c=>`
+        <div class="change-row">
+          <span class="change-name">${c.name}</span>
+          <span class="change-w">${c.oldW}→${c.newW}${c.reason!=="Cardio"?" kg":""}</span>
+          <span class="status-badge" style="background:${c.status==="↑"?"#064e3b":c.status==="↓"?"#450a0a":"#1c1c1c"};color:${c.status==="↑"?"#10b981":c.status==="↓"?"#ef4444":"#f59e0b"}">${c.status}</span>
+          <span style="font-size:.68rem;color:#555">${c.reason}</span>
+        </div>`).join("")}
+    </div>`).join("");
+  openSheet("nextOverlay");
+}
+
+function confirmNextWeek(){
+  const snap=JSON.parse(JSON.stringify(S));
+  snap._label=`S${S.weekNum}`;
+  HIST=[...HIST.slice(-11),snap];
+  DAYS.forEach(d=>{
+    pendingChanges[d.id].forEach(c=>{
+      S[d.id][c.id].w=c.newW;
+      S[d.id][c.id].done=0;
+      S[d.id][c.id].rpe=0;
+    });
+  });
+  S.weekNum++; S.startDate=addDays(S.startDate,7);
+  save(); closeSheet("nextOverlay"); render();
+}
+
+// ── HISTORY SHEET ─────────────────────────────────────────────────────────
+let selExoId=null;
+function openHistory(){
+  const allExos=DAYS.flatMap(d=>d.exos.filter(e=>!e.isCardio));
+  if(!selExoId) selExoId=allExos[0].id;
+  renderHistSheet();
+  openSheet("histOverlay");
+}
+
+function renderHistSheet(){
+  const allExos=DAYS.flatMap(d=>d.exos.filter(e=>!e.isCardio));
+  const selEx=allExos.find(e=>e.id===selExoId)||allExos[0];
+  const data=HIST.map((snap,i)=>{
+    let w=null;
+    DAYS.forEach(d=>{ if(snap[d.id]?.[selExoId]!=null) w=snap[d.id][selExoId].w; });
+    return {label:snap._label||`S${i+1}`,w};
+  }).filter(d=>d.w!==null).slice(-6);
+
+  const maxW=data.length?Math.max(...data.map(d=>d.w),1):1;
+  const acc=DAYS[activeDay].color;
+
+  document.getElementById("histContent").innerHTML=`
+    <select class="exo-select" onchange="selExoId=this.value;renderHistSheet()">
+      ${DAYS.map(d=>`<optgroup label="${d.label} – ${d.sub}">
+        ${d.exos.filter(e=>!e.isCardio).map(ex=>`
+          <option value="${ex.id}" ${ex.id===selExoId?"selected":""}>${ex.name}</option>`).join("")}
+      </optgroup>`).join("")}
+    </select>
+    <div class="chart-wrap">
+      <div class="chart-title" style="color:${acc}">${selEx.name} <span style="color:#555;font-size:.75rem;font-family:'DM Sans'">${selEx.unit}</span></div>
+      ${data.length<2?`<div style="color:#555;text-align:center;padding:20px;font-size:.82rem">Complète au moins 2 semaines pour voir la progression.</div>`:`
+      <div class="mini-chart">
+        ${data.map(d=>`
+          <div class="bar-col">
+            <div class="bar-val" style="color:${acc};font-size:.65rem">${d.w}</div>
+            <div class="bar" style="height:${Math.max(8,d.w/maxW*80)}px;background:${acc}22;border:1px solid ${acc}66"></div>
+            <div class="bar-lbl">${d.label}</div>
+          </div>`).join("")}
+      </div>`}
+    </div>
+    ${HIST.length?`
+    <div style="font-family:'Bebas Neue';font-size:.9rem;letter-spacing:1px;color:#666;margin-bottom:10px">SEMAINES ENREGISTRÉES</div>
+    <div class="week-chips">
+      ${HIST.slice(-6).map((snap,i)=>{
+        let w=null; DAYS.forEach(d=>{ if(snap[d.id]?.[selExoId]!=null) w=snap[d.id][selExoId].w; });
+        return `<div class="chip"><span>${snap._label||"S"+(i+1)}</span>${w!=null?w+" "+selEx.unit:"—"}</div>`;
+      }).join("")}
+    </div>`:""}`;
+}
+
+// ── RECAP SHEET ───────────────────────────────────────────────────────────
+function openRecap(){
+  const vol={};
+  MUSCLES_LIST.forEach(m=>{vol[m]=0;});
+  DAYS.forEach(d=>d.exos.forEach(ex=>{
+    if(ex.isCardio) return;
+    const mg=muscleGroup(ex.muscle);
+    vol[mg]=(vol[mg]||0)+ex.sets;
+  }));
+  const maxV=Math.max(...Object.values(vol),1);
+  const acc=DAYS[activeDay].color;
+  document.getElementById("recapSub").textContent=`Semaine ${S.weekNum} · ${fmtDate(S.startDate)} → ${fmtDate(addDays(S.startDate,6))}`;
+  document.getElementById("recapContent").innerHTML=`
+    <div class="recap-card">
+      <div class="recap-card-title">VOLUME PAR GROUPE MUSCULAIRE</div>
+      ${MUSCLES_LIST.filter(m=>vol[m]>0).map(m=>`
+        <div class="vol-row">
+          <div class="vol-info"><span style="color:#ccc">${m}</span><span style="color:#555">${vol[m]} séries</span></div>
+          <div class="vol-track"><div class="vol-fill" style="width:${vol[m]/maxV*100}%;background:${acc}"></div></div>
+        </div>`).join("")}
+    </div>
+    <div class="recap-card">
+      <div class="recap-card-title">RÈGLES SURCHARGE PROGRESSIVE</div>
+      ${[
+        {icon:"↑",col:"#10b981",txt:"Poly +5kg / Isolation +2.5kg — toutes séries complétées"},
+        {icon:"→",col:"#f59e0b",txt:"Même charge — reps minimales atteintes"},
+        {icon:"↓",col:"#ef4444",txt:"−2.5kg — reps minimales non atteintes"},
+      ].map(r=>`<div class="rule-row"><span class="rule-icon" style="color:${r.col}">${r.icon}</span><span class="rule-txt">${r.txt}</span></div>`).join("")}
+    </div>`;
+  openSheet("recapOverlay");
+}
+
+// ── SHEET UTILS ───────────────────────────────────────────────────────────
+function openSheet(id){ document.getElementById(id).classList.add("open"); }
+function closeSheet(id){ document.getElementById(id).classList.remove("open"); }
+document.querySelectorAll(".overlay").forEach(el=>{
+  el.addEventListener("click",e=>{ if(e.target===el) el.classList.remove("open"); });
+});
+
+// ── BOOT ─────────────────────────────────────────────────────────────────
+load(); render();
+</script>
+</body>
+</html>
