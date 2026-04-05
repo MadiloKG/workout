@@ -5,158 +5,352 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="WORKOUT">
-<title>WORKOUT</title>
-
-<!-- Icône PWA générée inline en SVG→base64 -->
-<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj48cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiBmaWxsPSIjMGEwYTBhIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTAsOTApIHJvdGF0ZSgtNDUpIj48cmVjdCB4PSItNSIgeT0iLTcwIiB3aWR0aD0iMTAiIGhlaWdodD0iMTAwIiByeD0iMyIgZmlsbD0iI2M0YjVmZCIvPjxwb2x5Z29uIHBvaW50cz0iMCwtODUgMTAsLTY1IC0xMCwtNjUiIGZpbGw9IiNhNzhiZmEiLz48cmVjdCB4PSItMTYiIHk9IjI4IiB3aWR0aD0iMzIiIGhlaWdodD0iMTAiIHJ4PSI1IiBmaWxsPSIjN2MzYWVkIi8+PHJlY3QgeD0iLTQiIHk9IjM4IiB3aWR0aD0iOCIgaGVpZ2h0PSIyNiIgcng9IjQiIGZpbGw9IiM2ZDI4ZDkiLz48L2c+PC9zdmc+">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230a0a0a'/><g transform='translate(16,16) rotate(-45)'><rect x='-2' y='-13' width='4' height='18' rx='1' fill='%23c4b5fd'/><polygon points='0,-16 3,-11 -3,-11' fill='%23a78bfa'/><rect x='-5' y='4' width='10' height='3' rx='2' fill='%237c3aed'/><rect x='-1.5' y='7' width='3' height='6' rx='1.5' fill='%236d28d9'/></g></svg>">
-
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="apple-mobile-web-app-title" content="BANKAI">
+<title>BANKAI</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj48cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiBmaWxsPSIjMDUwNTEyIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTAsOTApIHJvdGF0ZSgtNDUpIj48cmVjdCB4PSItNSIgeT0iLTcwIiB3aWR0aD0iMTAiIGhlaWdodD0iMTAwIiByeD0iMyIgZmlsbD0iI2M0YjVmZCIvPjxwb2x5Z29uIHBvaW50cz0iMCwtODUgMTAsLTY1IC0xMCwtNjUiIGZpbGw9IiNhNzhiZmEiLz48cmVjdCB4PSItMTYiIHk9IjI4IiB3aWR0aD0iMzIiIGhlaWdodD0iMTAiIHJ4PSI1IiBmaWxsPSIjN2MzYWVkIi8+PHJlY3QgeD0iLTQiIHk9IjM4IiB3aWR0aD0iOCIgaGVpZ2h0PSIyNiIgcng9IjQiIGZpbGw9IiM2ZDI4ZDkiLz48L2c+PC9zdmc+">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23050512'/><g transform='translate(16,16) rotate(-45)'><rect x='-2' y='-13' width='4' height='18' rx='1' fill='%23c4b5fd'/><polygon points='0,-16 3,-11 -3,-11' fill='%23a78bfa'/><rect x='-5' y='4' width='10' height='3' rx='2' fill='%237c3aed'/><rect x='-1.5' y='7' width='3' height='6' rx='1.5' fill='%236d28d9'/></g></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{background:#0a0a0a;color:#f0f0f0;font-family:'DM Sans',sans-serif;min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
-::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:#333;border-radius:99px}
+:root{
+  --bg:#050512;
+  --surface:#0c0c1e;
+  --surface2:#11112b;
+  --border:rgba(139,92,246,.12);
+  --border2:rgba(139,92,246,.25);
+  --p:#8b5cf6;--p2:#a78bfa;--p3:#c4b5fd;
+  --gold:#f59e0b;--red:#ef4444;--green:#10b981;--blue:#3b82f6;
+  --text:#f1f0ff;--muted:#5a5a8a;--muted2:#8888bb;
+  --r:16px;
+}
+html{height:100%}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100%;overflow-x:hidden;padding-bottom:calc(env(safe-area-inset-bottom)+20px);-webkit-font-smoothing:antialiased}
 
-/* HEADER */
-.hdr{padding:calc(env(safe-area-inset-top)+14px) 16px 0;max-width:760px;margin:0 auto}
-.hdr-row{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px}
-.week-title{font-family:'Bebas Neue';font-size:2rem;letter-spacing:3px;line-height:1}
-.week-sub{font-size:.72rem;color:#555;margin-top:2px}
-.hdr-btns{display:flex;gap:7px;flex-wrap:wrap}
-.btn{padding:7px 13px;border:none;border-radius:8px;cursor:pointer;font-family:'DM Sans';font-size:.78rem;font-weight:600}
-.btn-ghost{background:#1c1c1c;color:#888}
-.btn-accent{color:#000;font-weight:700}
+/* ── BACKGROUND ── */
+.bg-mesh{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.18}
+.bg-orb1{width:500px;height:500px;background:radial-gradient(circle,#7c3aed,transparent);top:-200px;left:-150px;animation:orb-drift1 20s ease-in-out infinite}
+.bg-orb2{width:400px;height:400px;background:radial-gradient(circle,#3b82f6,transparent);bottom:-100px;right:-100px;animation:orb-drift2 25s ease-in-out infinite}
+.bg-orb3{width:250px;height:250px;background:radial-gradient(circle,#8b5cf6,transparent);top:40%;left:60%;animation:orb-drift3 18s ease-in-out infinite}
+.bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(139,92,246,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(139,92,246,.04) 1px,transparent 1px);background-size:40px 40px}
+@keyframes orb-drift1{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(60px,40px) scale(1.1)}66%{transform:translate(-30px,20px) scale(.95)}}
+@keyframes orb-drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,-60px) scale(1.15)}}
+@keyframes orb-drift3{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-40px)}}
 
-/* TABS */
-.tabs{display:flex;margin-top:18px;overflow-x:auto;gap:3px}
-.tab{flex:1;min-width:68px;padding:10px 6px;border:none;border-radius:10px 10px 0 0;background:transparent;font-family:'Bebas Neue';font-size:.9rem;letter-spacing:1px;cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;color:#555}
-.tab.active{background:#111}
+/* ── HEADER ── */
+.hdr{position:sticky;top:0;z-index:50;padding:calc(env(safe-area-inset-top)+12px) 0 0}
+.hdr-glass{background:rgba(5,5,18,.8);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-bottom:1px solid var(--border)}
+.hdr-inner{max-width:780px;margin:0 auto;padding:0 16px}
+.hdr-top{display:flex;justify-content:space-between;align-items:center;padding:12px 0 10px;gap:10px}
 
-/* PROGRESS */
-.prog-bar-wrap{background:#111;border-bottom:1px solid #1c1c1c;padding:10px 16px}
-.prog-inner{max-width:760px;margin:0 auto}
-.prog-row{display:flex;justify-content:space-between;font-size:.73rem;color:#666;margin-bottom:5px}
-.prog-track{height:4px;background:#1c1c1c;border-radius:99px;overflow:hidden}
-.prog-fill{height:100%;border-radius:99px;transition:width .3s}
-.prog-day-label{font-size:.7rem;color:#555;margin-top:4px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#4f46e5);display:flex;align-items:center;justify-content:center;font-size:1.1rem;box-shadow:0 0 20px rgba(124,58,237,.4)}
+.logo-text{font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:5px;background:linear-gradient(135deg,#fff 30%,var(--p3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-/* GRID */
-.grid{max-width:760px;margin:0 auto;padding:14px 14px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.week-pill{background:rgba(139,92,246,.1);border:1px solid var(--border2);border-radius:99px;padding:4px 14px;text-align:center}
+.week-pill-num{font-family:'Bebas Neue';font-size:.95rem;letter-spacing:2px;color:var(--p2);line-height:1}
+.week-pill-date{font-size:.58rem;color:var(--muted);letter-spacing:.5px}
 
-/* CARD */
-.card{background:#111;border:1px solid #1c1c1c;border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
-.card-accent{height:3px}
-.card-body{padding:13px 13px 11px;display:flex;flex-direction:column;gap:10px}
-.card-name{font-family:'Bebas Neue';font-size:1.12rem;letter-spacing:1px;line-height:1.1}
-.card-muscle{font-size:.7rem;color:#666;margin-top:2px}
-.badge{padding:2px 8px;border-radius:99px;font-size:.67rem;font-weight:700;letter-spacing:.4px;white-space:nowrap}
+.hdr-actions{display:flex;gap:6px}
+.act-btn{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--muted2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:all .2s}
+.act-btn:active{transform:scale(.9);background:rgba(139,92,246,.15);color:var(--p2)}
+.act-btn-next{background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border-color:transparent;box-shadow:0 0 16px rgba(124,58,237,.35);font-size:.7rem;font-family:'DM Sans';font-weight:700;width:auto;padding:0 14px;letter-spacing:.5px}
+.act-btn-next:active{transform:scale(.95)}
 
-/* STATS */
-.stats{display:flex;gap:6px}
-.stat{background:#0a0a0a;border:1px solid #222;border-radius:8px;padding:5px 6px;text-align:center;flex:1}
-.stat-val{font-family:'Bebas Neue';font-size:1rem}
-.stat-lbl{font-size:.58rem;color:#555;letter-spacing:.5px}
-.charge-wrap{background:#0a0a0a;border-radius:8px;padding:4px 6px;display:flex;flex-direction:column;align-items:center;flex:1;min-width:62px}
-.charge-input{width:100%;background:transparent;border:none;font-family:'Bebas Neue';font-size:1rem;text-align:center;outline:none}
-.charge-unit{font-size:.58px;color:#555;letter-spacing:.5px;font-size:.58rem}
+/* ── TABS ── */
+.tabs-wrap{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;margin:0 -0px;padding:2px 0 0}
+.tabs-wrap::-webkit-scrollbar{display:none}
+.tab{flex:1;min-width:68px;padding:10px 4px 12px;border:none;background:transparent;font-family:'Bebas Neue';font-size:.8rem;letter-spacing:2px;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;color:var(--muted);position:relative;white-space:nowrap}
+.tab.active{color:#fff;border-color:var(--tc)}
+.tab.active::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--tc);box-shadow:0 0 8px var(--tc)}
 
-/* DOTS */
+/* ── PROGRESS BAR ── */
+.pg-bar{background:rgba(5,5,18,.9);border-bottom:1px solid var(--border);padding:10px 16px}
+.pg-inner{max-width:780px;margin:0 auto}
+.pg-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.pg-info{display:flex;align-items:baseline;gap:4px}
+.pg-done{font-family:'Bebas Neue';font-size:1.1rem;line-height:1}
+.pg-total{font-size:.72rem;color:var(--muted)}
+.pg-pct{font-family:'Bebas Neue';font-size:.85rem}
+.pg-track{height:2px;background:rgba(255,255,255,.06);border-radius:99px;overflow:visible;position:relative}
+.pg-fill{height:100%;border-radius:99px;position:relative;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.pg-fill::after{content:'';position:absolute;right:-2px;top:50%;transform:translateY(-50%);width:6px;height:6px;border-radius:50%;background:inherit;box-shadow:0 0 10px currentColor;transition:right .5s}
+.pg-label{font-size:.62rem;color:var(--muted);margin-top:5px;letter-spacing:.5px}
+
+/* ── GRID ── */
+.grid{max-width:780px;margin:0 auto;padding:16px 14px 100px;display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:12px;position:relative;z-index:1}
+
+/* ── CARD ── */
+.card{background:rgba(12,12,30,.7);border:1px solid var(--border);border-radius:20px;overflow:hidden;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .2s,border-color .2s;position:relative}
+.card::before{content:'';position:absolute;inset:0;border-radius:20px;background:linear-gradient(135deg,rgba(255,255,255,.03),transparent 60%);pointer-events:none}
+.card-glow{position:absolute;top:-40px;right:-40px;width:120px;height:120px;border-radius:50%;filter:blur(40px);opacity:.12;pointer-events:none}
+.card-top{height:1px;margin:0;position:relative;overflow:visible}
+.card-top-line{height:1px;width:100%}
+.card-body{padding:14px 14px 12px;display:flex;flex-direction:column;gap:11px}
+
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.card-name{font-family:'Bebas Neue';font-size:1.15rem;letter-spacing:1px;line-height:1.15;color:var(--text)}
+.card-muscle{font-size:.66rem;color:var(--muted2);margin-top:3px;display:flex;align-items:center;gap:4px}
+.card-muscle::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--muted2);display:inline-block}
+
+.zone-badge{padding:3px 10px;border-radius:99px;font-size:.63rem;font-weight:700;letter-spacing:.8px;border:1px solid transparent;white-space:nowrap;flex-shrink:0}
+
+/* ── STATS ROW ── */
+.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr 1.2fr;gap:5px}
+.stat-cell{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:6px 4px;display:flex;flex-direction:column;align-items:center;gap:1px}
+.stat-v{font-family:'Bebas Neue';font-size:.95rem;line-height:1}
+.stat-l{font-size:.52rem;color:var(--muted);letter-spacing:.6px;margin-top:1px}
+.charge-cell{background:rgba(255,255,255,.03);border-radius:10px;padding:5px 4px;display:flex;flex-direction:column;align-items:center;gap:1px}
+.charge-inp{width:100%;background:transparent;border:none;font-family:'Bebas Neue';font-size:.95rem;text-align:center;outline:none;line-height:1;min-width:0}
+.charge-u{font-size:.5rem;color:var(--muted);letter-spacing:.6px;margin-top:1px}
+
+/* ── DOTS ── */
+.dots-wrap{display:flex;flex-direction:column;gap:8px}
 .dots-row{display:flex;align-items:center;gap:8px}
 .dots{display:flex;gap:5px;flex-wrap:wrap;flex:1}
-.dot{width:26px;height:26px;border-radius:50%;border:2px solid #333;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.58rem;color:transparent;font-weight:700;transition:all .15s;flex-shrink:0;-webkit-user-select:none;user-select:none}
-.dot.done{color:#000}
-.dots-count{font-size:.78rem;color:#888;white-space:nowrap}
+.dot{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,.12);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0;-webkit-user-select:none;user-select:none;position:relative}
+.dot::after{content:'';position:absolute;inset:0;border-radius:50%;opacity:0;transition:opacity .2s}
+.dot.done{border-color:transparent}
+.dot.done::after{opacity:1}
+.dot:active{transform:scale(.82)}
+.dot-count{font-size:.72rem;color:var(--muted2);white-space:nowrap;font-weight:600;min-width:26px;text-align:right}
 
-/* RPE */
-.rpe-bars{display:flex;gap:2px;margin-top:2px}
-.rpe-seg{flex:1;height:5px;border-radius:3px;background:#1c1c1c;cursor:pointer;transition:background .1s}
+/* TIMER BUTTON */
+.timer-btn{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.15);border-radius:12px;cursor:pointer;transition:all .2s;-webkit-user-select:none;user-select:none}
+.timer-btn:active{background:rgba(139,92,246,.15);transform:scale(.98)}
+.timer-btn-left{display:flex;align-items:center;gap:7px;font-size:.75rem;color:var(--p2);font-weight:600}
+.timer-btn-icon{width:24px;height:24px;border-radius:7px;background:rgba(139,92,246,.2);display:flex;align-items:center;justify-content:center;font-size:.8rem}
+.timer-btn-time{font-size:.68rem;color:var(--muted);font-style:italic}
 
-/* MODALS */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:100;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
-.overlay.open{opacity:1;pointer-events:all}
-.sheet{background:#0f0f0f;border-radius:20px 20px 0 0;padding:24px 18px calc(env(safe-area-inset-bottom)+28px);width:100%;max-width:680px;max-height:88vh;overflow-y:auto;transform:translateY(30px);transition:transform .3s}
-.overlay.open .sheet{transform:translateY(0)}
-.sheet-title{font-family:'Bebas Neue';font-size:1.7rem;letter-spacing:2px;margin-bottom:3px}
-.sheet-sub{font-size:.78rem;color:#666;margin-bottom:20px}
-.close-btn{float:right;background:#1e1e1e;border:none;color:#888;border-radius:8px;padding:4px 11px;cursor:pointer;font-size:1.1rem;margin-bottom:-8px}
+/* ── RPE ── */
+.rpe-row{display:flex;flex-direction:column;gap:5px}
+.rpe-top{display:flex;justify-content:space-between;align-items:center}
+.rpe-lbl{font-size:.6rem;color:var(--muted);letter-spacing:.5px}
+.rpe-val{font-size:.6rem;font-weight:700}
+.rpe-segs{display:flex;gap:2px}
+.rpe-s{flex:1;height:3px;border-radius:99px;cursor:pointer;transition:all .12s}
+.rpe-s:active{transform:scaleY(2)}
+
+/* ── TIMER OVERLAY ── */
+.t-overlay{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;opacity:0;pointer-events:none;transition:opacity .3s;padding:20px}
+.t-overlay.open{opacity:1;pointer-events:all}
+.t-bg{position:absolute;inset:0;background:rgba(5,5,18,.95);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px)}
+.t-glow{position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,.2),transparent 70%);animation:t-pulse 2.5s ease-in-out infinite}
+@keyframes t-pulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.2);opacity:1}}
+.t-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:16px;width:100%}
+
+.t-exo{font-size:.7rem;color:var(--muted2);letter-spacing:3px;text-transform:uppercase;text-align:center}
+.t-ring{position:relative;width:190px;height:190px}
+.t-svg{width:190px;height:190px;transform:rotate(-90deg)}
+.t-track{fill:none;stroke:rgba(255,255,255,.06);stroke-width:6}
+.t-prog{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .95s linear,stroke .4s}
+.t-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.t-time{font-family:'Bebas Neue';font-size:3.2rem;letter-spacing:5px;line-height:1;background:linear-gradient(135deg,#fff,var(--p3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.t-sublabel{font-size:.58rem;color:var(--muted);letter-spacing:3px}
+
+.t-adjusts{display:flex;gap:8px}
+.t-adj{padding:7px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;color:var(--p2);font-size:.72rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:'DM Sans'}
+.t-adj:active{background:rgba(139,92,246,.2);transform:scale(.94)}
+
+.t-controls{display:flex;gap:12px;align-items:center}
+.t-ctrl{width:54px;height:54px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all .2s}
+.t-ctrl:active{transform:scale(.88)}
+.t-ctrl-ghost{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:var(--muted2)}
+.t-ctrl-main{background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;box-shadow:0 0 24px rgba(124,58,237,.5);width:62px;height:62px;font-size:1.2rem}
+
+/* ── BANKAI ── */
+.bk-overlay{position:fixed;inset:0;z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;pointer-events:none;transition:opacity .25s;overflow:hidden}
+.bk-overlay.open{opacity:1;pointer-events:all}
+.bk-bg{position:absolute;inset:0;background:#050512}
+.bk-radial{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(109,40,217,.35) 0%,rgba(5,5,18,.0) 65%);animation:bk-radial-pulse 1.5s ease-out forwards}
+@keyframes bk-radial-pulse{0%{opacity:0;transform:scale(.5)}100%{opacity:1;transform:scale(1)}}
+.bk-lines{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.bk-line{position:absolute;width:1px;background:linear-gradient(to top,transparent,rgba(139,92,246,.5),transparent);height:100vh;animation:bk-line-fade .6s ease-out forwards}
+@keyframes bk-line-fade{0%{opacity:0;transform:scaleY(0)}60%{opacity:1;transform:scaleY(1)}100%{opacity:.3}}
+.bk-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px}
+.bk-icon{font-size:4rem;filter:drop-shadow(0 0 30px rgba(139,92,246,.9));animation:bk-icon-in .5s cubic-bezier(.34,1.56,.64,1) forwards;opacity:0}
+@keyframes bk-icon-in{0%{opacity:0;transform:scale(0) rotate(-90deg)}100%{opacity:1;transform:scale(1) rotate(0deg)}}
+.bk-title{font-family:'Bebas Neue';font-size:4.5rem;letter-spacing:14px;line-height:1;background:linear-gradient(135deg,#fff 0%,var(--p3) 40%,var(--p) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:bk-text-in .5s .25s cubic-bezier(.34,1.56,.64,1) both;filter:drop-shadow(0 0 30px rgba(139,92,246,.6))}
+@keyframes bk-text-in{0%{opacity:0;transform:scale(1.8) translateY(-10px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+.bk-sub{font-size:.75rem;color:var(--p3);letter-spacing:5px;animation:bk-text-in .5s .4s both}
+.bk-tap{font-size:.65rem;color:var(--muted);letter-spacing:3px;margin-top:48px;animation:blink 1.4s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* ── SHEETS ── */
+.s-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:150;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.s-overlay.open{opacity:1;pointer-events:all}
+.sheet{background:rgba(9,9,22,.97);border:1px solid var(--border2);border-bottom:none;border-radius:24px 24px 0 0;padding:6px 0 0;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;transform:translateY(30px);transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.s-overlay.open .sheet{transform:translateY(0)}
+.sheet-handle{width:36px;height:4px;border-radius:99px;background:rgba(255,255,255,.12);margin:10px auto 0}
+.sheet-head{padding:16px 20px 4px;display:flex;align-items:flex-start;justify-content:space-between}
+.sheet-title{font-family:'Bebas Neue';font-size:1.8rem;letter-spacing:3px;background:linear-gradient(135deg,#fff,var(--p2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sheet-close{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.06);border:none;color:var(--muted2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.sheet-body{padding:10px 20px calc(env(safe-area-inset-bottom)+30px)}
+.sheet-sub{font-size:.73rem;color:var(--muted);margin-bottom:16px;letter-spacing:.3px}
 
 /* NEXT WEEK */
-.day-section{margin-bottom:18px}
-.day-section-title{font-family:'Bebas Neue';font-size:1rem;letter-spacing:1px;margin-bottom:8px;border-bottom:1px solid #1c1c1c;padding-bottom:5px}
-.change-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #111;font-size:.82rem}
-.change-row:last-child{border:none}
-.change-name{flex:1;color:#ccc}
-.change-w{color:#666;font-size:.75rem}
-.status-badge{padding:2px 10px;border-radius:99px;font-weight:700;font-size:.73rem}
+.day-group{margin-bottom:20px}
+.day-group-title{font-family:'Bebas Neue';font-size:.95rem;letter-spacing:2px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.day-group-dot{width:6px;height:6px;border-radius:50%}
+.change-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.03);font-size:.8rem}
+.change-item:last-child{border:none}
+.change-name{flex:1;color:rgba(255,255,255,.8)}
+.change-arrow{font-size:.68rem;color:var(--muted)}
+.s-badge{padding:2px 10px;border-radius:99px;font-weight:700;font-size:.7rem}
+.change-reason{font-size:.62rem;color:var(--muted);flex-shrink:0}
+.confirm-btn{width:100%;padding:16px;border:none;border-radius:16px;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;font-family:'Bebas Neue';font-size:1.15rem;letter-spacing:4px;cursor:pointer;box-shadow:0 8px 32px rgba(124,58,237,.4);margin-top:16px;transition:all .2s}
+.confirm-btn:active{transform:scale(.97)}
 
 /* HISTORY */
-.exo-select{background:#111;border:1px solid #1c1c1c;color:#f0f0f0;border-radius:10px;padding:8px 12px;font-family:'DM Sans';font-size:.83rem;width:100%;margin-bottom:18px;outline:none}
-.chart-wrap{background:#111;border:1px solid #1c1c1c;border-radius:14px;padding:16px;margin-bottom:18px}
-.chart-title{font-family:'Bebas Neue';font-size:1rem;letter-spacing:1px;margin-bottom:12px}
-.mini-chart{height:100px;display:flex;align-items:flex-end;gap:6px}
-.bar-col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:1;gap:4px}
-.bar{border-radius:4px 4px 0 0;width:100%;min-height:4px;transition:height .3s}
-.bar-lbl{font-size:.58rem;color:#555}
-.bar-val{font-size:.65rem;font-weight:600}
-.week-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.chip{background:#111;border:1px solid #1c1c1c;border-radius:10px;padding:6px 12px;font-size:.76rem}
-.chip span{color:#555;margin-right:4px}
+.exo-sel{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--text);border-radius:12px;padding:10px 14px;font-family:'DM Sans';font-size:.82rem;outline:none;margin-bottom:16px;appearance:none;-webkit-appearance:none}
+.chart-card{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:16px}
+.chart-title{font-family:'Bebas Neue';font-size:1rem;letter-spacing:2px;margin-bottom:14px}
+.mini-chart{height:90px;display:flex;align-items:flex-end;gap:6px}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px}
+.bar-rect{width:100%;border-radius:5px 5px 0 0;min-height:4px;transition:height .4s}
+.bar-lbl{font-size:.54rem;color:var(--muted)}
+.bar-v{font-size:.62rem;font-weight:600}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:4px}
+.chip{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:99px;padding:4px 12px;font-size:.72rem;color:var(--muted2)}
+.chip-label{color:var(--muted);margin-right:4px;font-size:.65rem}
 
 /* RECAP */
-.recap-card{background:#111;border:1px solid #1c1c1c;border-radius:14px;padding:18px;margin-bottom:14px}
-.recap-card-title{font-family:'Bebas Neue';font-size:.95rem;letter-spacing:1px;color:#888;margin-bottom:14px}
-.vol-row{margin-bottom:9px}
-.vol-info{display:flex;justify-content:space-between;font-size:.76rem;margin-bottom:3px}
-.vol-track{height:5px;background:#1c1c1c;border-radius:99px;overflow:hidden}
+.recap-card{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px}
+.recap-card-title{font-family:'Bebas Neue';font-size:.85rem;letter-spacing:2px;color:var(--muted2);margin-bottom:14px}
+.vol-item{margin-bottom:10px}
+.vol-top{display:flex;justify-content:space-between;font-size:.73rem;margin-bottom:4px;color:rgba(255,255,255,.7)}
+.vol-val{color:var(--muted);font-size:.68rem}
+.vol-track{height:3px;background:rgba(255,255,255,.05);border-radius:99px;overflow:hidden}
 .vol-fill{height:100%;border-radius:99px}
-.rule-row{display:flex;gap:12px;align-items:center;margin-bottom:10px}
-.rule-icon{font-family:'Bebas Neue';font-size:1.3rem;width:20px}
-.rule-txt{font-size:.8rem;color:#aaa}
+.rule-item{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+.rule-sym{font-family:'Bebas Neue';font-size:1.4rem;width:22px;line-height:1}
+.rule-desc{font-size:.77rem;color:rgba(255,255,255,.6)}
 </style>
 </head>
 <body>
 
-<div id="app"></div>
+<div class="bg-mesh">
+  <div class="bg-orb bg-orb1"></div>
+  <div class="bg-orb bg-orb2"></div>
+  <div class="bg-orb bg-orb3"></div>
+  <div class="bg-grid"></div>
+</div>
+
+<div id="root"></div>
+
+<!-- TIMER -->
+<div class="t-overlay" id="timerOv">
+  <div class="t-bg"></div>
+  <div class="t-glow"></div>
+  <div class="t-content">
+    <div class="t-exo" id="tExoName">—</div>
+    <div class="t-ring">
+      <svg class="t-svg" viewBox="0 0 190 190">
+        <circle class="t-track" cx="95" cy="95" r="82"/>
+        <circle class="t-prog" id="tProg" cx="95" cy="95" r="82"
+          stroke-dasharray="515" stroke-dashoffset="0" stroke="url(#tg)"/>
+        <defs><linearGradient id="tg" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#7c3aed"/>
+          <stop offset="100%" stop-color="#c4b5fd"/>
+        </linearGradient></defs>
+      </svg>
+      <div class="t-center">
+        <div class="t-time" id="tTime">03:00</div>
+        <div class="t-sublabel">RÉCUPÉRATION</div>
+      </div>
+    </div>
+    <div class="t-adjusts">
+      <button class="t-adj" onclick="adj(-15)">−15s</button>
+      <button class="t-adj" onclick="adj(-30)">−30s</button>
+      <button class="t-adj" onclick="adj(30)">+30s</button>
+      <button class="t-adj" onclick="adj(60)">+1min</button>
+    </div>
+    <div class="t-controls">
+      <button class="t-ctrl t-ctrl-ghost" onclick="closeTimer()" title="Fermer">✕</button>
+      <button class="t-ctrl t-ctrl-main" id="tPauseBtn" onclick="togglePause()">⏸</button>
+      <button class="t-ctrl t-ctrl-ghost" onclick="skipTimer()" title="Skip">⏭</button>
+    </div>
+  </div>
+</div>
+
+<!-- BANKAI -->
+<div class="bk-overlay" id="bkOv" onclick="closeBankai()">
+  <div class="bk-bg"></div>
+  <div class="bk-radial"></div>
+  <div class="bk-lines">
+    <div class="bk-line" style="transform:rotate(0deg)"></div>
+    <div class="bk-line" style="transform:rotate(30deg)"></div>
+    <div class="bk-line" style="transform:rotate(60deg)"></div>
+    <div class="bk-line" style="transform:rotate(90deg)"></div>
+    <div class="bk-line" style="transform:rotate(120deg)"></div>
+    <div class="bk-line" style="transform:rotate(150deg)"></div>
+  </div>
+  <div class="bk-content">
+    <div class="bk-icon">⚔️</div>
+    <div class="bk-title">BANKAI</div>
+    <div class="bk-sub">SÉRIE SUIVANTE</div>
+    <div class="bk-tap">APPUIE POUR CONTINUER</div>
+  </div>
+</div>
 
 <!-- NEXT WEEK SHEET -->
-<div class="overlay" id="nextOverlay">
+<div class="s-overlay" id="nextOv">
   <div class="sheet">
-    <button class="close-btn" onclick="closeSheet('nextOverlay')">✕</button>
-    <div class="sheet-title">SEMAINE SUIVANTE</div>
-    <div class="sheet-sub" id="nextSub"></div>
-    <div id="nextContent"></div>
-    <button class="btn btn-accent" id="confirmBtn" onclick="confirmNextWeek()"
-      style="width:100%;padding:14px;border-radius:12px;font-family:'Bebas Neue';font-size:1.1rem;letter-spacing:2px;margin-top:10px">
-      CONFIRMER
-    </button>
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <div class="sheet-title">SEMAINE+</div>
+      <button class="sheet-close" onclick="closeSheet('nextOv')">✕</button>
+    </div>
+    <div class="sheet-body">
+      <div class="sheet-sub" id="nextSub"></div>
+      <div id="nextContent"></div>
+      <button class="confirm-btn" onclick="confirmNext()">CONFIRMER & DÉMARRER →</button>
+    </div>
   </div>
 </div>
 
 <!-- HISTORY SHEET -->
-<div class="overlay" id="histOverlay">
+<div class="s-overlay" id="histOv">
   <div class="sheet">
-    <button class="close-btn" onclick="closeSheet('histOverlay')">✕</button>
-    <div class="sheet-title">HISTORIQUE</div>
-    <div class="sheet-sub">Progression des charges par exercice</div>
-    <div id="histContent"></div>
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <div class="sheet-title">STATS</div>
+      <button class="sheet-close" onclick="closeSheet('histOv')">✕</button>
+    </div>
+    <div class="sheet-body">
+      <div class="sheet-sub">Progression des charges par exercice</div>
+      <div id="histContent"></div>
+    </div>
   </div>
 </div>
 
 <!-- RECAP SHEET -->
-<div class="overlay" id="recapOverlay">
+<div class="s-overlay" id="recapOv">
   <div class="sheet">
-    <button class="close-btn" onclick="closeSheet('recapOverlay')">✕</button>
-    <div class="sheet-title">RÉCAP SEMAINE</div>
-    <div class="sheet-sub" id="recapSub"></div>
-    <div id="recapContent"></div>
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <div class="sheet-title">RÉCAP</div>
+      <button class="sheet-close" onclick="closeSheet('recapOv')">✕</button>
+    </div>
+    <div class="sheet-body">
+      <div class="sheet-sub" id="recapSub"></div>
+      <div id="recapContent"></div>
+    </div>
   </div>
 </div>
 
 <script>
 // ── DATA ──────────────────────────────────────────────────────────────────
-const POLY_KEYS = ["Leg Press","Fentes","Tractions","Rowing","RDL","Hip Thrust","Développé couché","Dips"];
-const DAYS = [
+const POLY=["Leg Press","Fentes","Tractions","Rowing","RDL","Hip Thrust","Développé couché","Dips"];
+const REST_T={Force:180,Hypertrophie:90,Métabolique:60,"Avant-bras":60,Cardio:0};
+const ZONES={
+  Force:      {color:"#3b82f6",bg:"rgba(59,130,246,.12)",border:"rgba(59,130,246,.25)"},
+  Hypertrophie:{color:"#10b981",bg:"rgba(16,185,129,.12)",border:"rgba(16,185,129,.25)"},
+  Métabolique:{color:"#f59e0b",bg:"rgba(245,158,11,.12)",border:"rgba(245,158,11,.25)"},
+  "Avant-bras":{color:"#8b5cf6",bg:"rgba(139,92,246,.12)",border:"rgba(139,92,246,.25)"},
+  Cardio:     {color:"#ef4444",bg:"rgba(239,68,68,.12)",border:"rgba(239,68,68,.25)"},
+};
+const DAYS=[
   {id:"lundi",label:"LUNDI",sub:"Upper A · Push",color:"#3b82f6",exos:[
     {id:"dci",name:"Développé couché incliné",muscle:"Pectoraux sup.",w:17.5,unit:"kg/côté",sets:4,reps:"6-8",zone:"Force"},
     {id:"dcp",name:"Développé couché plat",muscle:"Pectoraux",w:15,unit:"kg/côté",sets:3,reps:"10-12",zone:"Hypertrophie"},
@@ -170,7 +364,7 @@ const DAYS = [
   {id:"mardi",label:"MARDI",sub:"Lower A · Quad",color:"#10b981",exos:[
     {id:"lp",name:"Leg Press",muscle:"Quadriceps",w:120,unit:"kg",sets:4,reps:"6-8",zone:"Force"},
     {id:"fb",name:"Fentes bulgares",muscle:"Quad / Fessiers",w:10,unit:"kg/main",sets:3,reps:"10/jambe",zone:"Hypertrophie"},
-    {id:"le",name:"Leg Extension",muscle:"Quadriceps (iso)",w:40,unit:"kg",sets:3,reps:"15-20",zone:"Métabolique"},
+    {id:"le",name:"Leg Extension",muscle:"Quad (iso)",w:40,unit:"kg",sets:3,reps:"15-20",zone:"Métabolique"},
     {id:"lcc",name:"Leg Curl couché",muscle:"Ischio-jambiers",w:42,unit:"kg",sets:4,reps:"10-12",zone:"Hypertrophie"},
     {id:"cm",name:"Crunch machine",muscle:"Abdominaux",w:10,unit:"kg",sets:3,reps:"12-15",zone:"Hypertrophie"},
     {id:"pp",name:"Pallof Press câble",muscle:"Core / Obliques",w:8,unit:"kg",sets:3,reps:"12/côté",zone:"Hypertrophie"},
@@ -198,179 +392,179 @@ const DAYS = [
     {id:"hiit_v",name:"HIIT Skillmill",muscle:"Cardio",w:6,unit:"intervalles",sets:1,reps:"6×40s/80s",zone:"Cardio",isCardio:true},
   ]},
 ];
-
-const ZONES = {
-  "Force":       {color:"#3b82f6",bg:"#1e3a5f"},
-  "Hypertrophie":{color:"#10b981",bg:"#064e3b"},
-  "Métabolique": {color:"#f59e0b",bg:"#451a03"},
-  "Avant-bras":  {color:"#8b5cf6",bg:"#2e1065"},
-  "Cardio":      {color:"#ef4444",bg:"#450a0a"},
-};
-
-const MUSCLES_LIST = ["Pectoraux","Dos","Épaules","Triceps","Biceps","Avant-bras","Quadriceps","Ischio-jambiers","Fessiers","Abdominaux","Mollets","Core"];
-function muscleGroup(m){
-  if(m.includes("Pect")) return "Pectoraux";
-  if(m.includes("Dos")) return "Dos";
-  if(m.includes("Delt")||m.includes("paul")) return "Épaules";
-  if(m.includes("Tric")) return "Triceps";
-  if(m.includes("Bic")||m.includes("Brach")) return "Biceps";
-  if(m.includes("Avant")) return "Avant-bras";
-  if(m.includes("Quad")) return "Quadriceps";
-  if(m.includes("Ischio")) return "Ischio-jambiers";
-  if(m.includes("Fess")) return "Fessiers";
-  if(m.includes("Abdo")) return "Abdominaux";
-  if(m.includes("Molet")) return "Mollets";
-  return "Core";
+const MUSCLES=["Pectoraux","Dos","Épaules","Triceps","Biceps","Avant-bras","Quadriceps","Ischio-jambiers","Fessiers","Abdominaux","Mollets","Core"];
+function mg(m){
+  if(m.includes("Pect"))return"Pectoraux";if(m.includes("Dos"))return"Dos";
+  if(m.includes("Delt")||m.includes("paul"))return"Épaules";if(m.includes("Tric"))return"Triceps";
+  if(m.includes("Bic")||m.includes("Brach"))return"Biceps";if(m.includes("Avant"))return"Avant-bras";
+  if(m.includes("Quad"))return"Quadriceps";if(m.includes("Ischio"))return"Ischio-jambiers";
+  if(m.includes("Fess"))return"Fessiers";if(m.includes("Abdo"))return"Abdominaux";
+  if(m.includes("Molet"))return"Mollets";return"Core";
 }
 
 // ── STATE ─────────────────────────────────────────────────────────────────
-let S = {}, HIST = [], activeDay = 0, pendingChanges = null;
-
-function buildInit(){
-  const now = new Date(), dow = now.getDay();
-  const diff = dow===0?-6:1-dow;
-  const mon = new Date(now); mon.setDate(now.getDate()+diff);
-  const s = {weekNum:1, startDate:mon.toISOString().split("T")[0]};
-  DAYS.forEach(d=>{s[d.id]={};d.exos.forEach(ex=>{s[d.id][ex.id]={w:ex.w,done:0,rpe:0};});});
+let S={},H=[],aDay=0,pending=null,selExo=null;
+function initS(){
+  const now=new Date(),dow=now.getDay(),diff=dow===0?-6:1-dow;
+  const mon=new Date(now);mon.setDate(now.getDate()+diff);
+  const s={weekNum:1,startDate:mon.toISOString().split("T")[0]};
+  DAYS.forEach(d=>{s[d.id]={};d.exos.forEach(e=>{s[d.id][e.id]={w:e.w,done:0,rpe:0};});});
   return s;
 }
-
 function load(){
-  try{ const s=localStorage.getItem("wk_state"); if(s) S=JSON.parse(s); else S=buildInit(); }catch{ S=buildInit(); }
-  try{ const h=localStorage.getItem("wk_hist"); if(h) HIST=JSON.parse(h); }catch{ HIST=[]; }
+  try{const s=localStorage.getItem("bk4");S=s?JSON.parse(s):initS();}catch{S=initS();}
+  try{const h=localStorage.getItem("bk4h");H=h?JSON.parse(h):[];}catch{H=[];}
 }
-function save(){
-  localStorage.setItem("wk_state",JSON.stringify(S));
-  localStorage.setItem("wk_hist",JSON.stringify(HIST));
-}
-
-// ── HELPERS ───────────────────────────────────────────────────────────────
-function fmtDate(iso){
-  const d=new Date(iso);
-  return d.toLocaleDateString("fr-FR",{day:"2-digit",month:"short"});
-}
-function addDays(iso,n){
-  const d=new Date(iso);d.setDate(d.getDate()+n);return d.toISOString().split("T")[0];
-}
-function isPoly(name){ return POLY_KEYS.some(p=>name.includes(p)); }
-
-function computeChanges(){
-  const res={};
-  DAYS.forEach(d=>{
-    res[d.id]=d.exos.map(ex=>{
-      const s=S[d.id][ex.id];
-      if(ex.isCardio) return {id:ex.id,name:ex.name,oldW:s.w,newW:s.w,delta:0,status:"→",reason:"Cardio"};
-      const all=s.done>=ex.sets, half=s.done>=Math.ceil(ex.sets/2);
-      let delta=0;
-      if(all) delta=isPoly(ex.name)?5:2.5;
-      else if(!half) delta=-2.5;
-      const newW=Math.max(0,s.w+delta);
-      return {id:ex.id,name:ex.name,oldW:s.w,newW,delta,status:delta>0?"↑":delta<0?"↓":"→",reason:all?"Toutes séries ✓":half?"Reps min. ok":"Reps min. ✗"};
-    });
-  });
-  return res;
+function save(){localStorage.setItem("bk4",JSON.stringify(S));localStorage.setItem("bk4h",JSON.stringify(H));}
+function fd(iso){return new Date(iso).toLocaleDateString("fr-FR",{day:"2-digit",month:"short"});}
+function ad(iso,n){const d=new Date(iso);d.setDate(d.getDate()+n);return d.toISOString().split("T")[0];}
+function poly(name){return POLY.some(p=>name.includes(p));}
+function restLabel(zone){const s=REST_T[zone]||90;return s>=60?`${s/60}min`:`${s}s`;}
+function dayPg(id){
+  const day=DAYS.find(d=>d.id===id);let done=0,tot=0;
+  day.exos.forEach(e=>{const t=e.isCardio?1:e.sets;tot+=t;done+=Math.min(S[id][e.id].done,t);});
+  return{done,tot,pct:tot?Math.round(done/tot*100):0};
 }
 
-function dayProgress(dayId){
-  const day=DAYS.find(d=>d.id===dayId);
-  let done=0,total=0;
-  day.exos.forEach(ex=>{
-    const tot=ex.isCardio?1:ex.sets;
-    total+=tot; done+=Math.min(S[dayId][ex.id].done,tot);
-  });
-  return {done,total,pct:total?Math.round(done/total*100):0};
+// ── TIMER ─────────────────────────────────────────────────────────────────
+let tIv=null,tTotal=0,tLeft=0,tPaused=false;
+const CIRC=2*Math.PI*82;
+function startTimer(exo){
+  const s=REST_T[exo.zone]||90;if(!s){showBankai();return;}
+  tTotal=s;tLeft=s;tPaused=false;
+  document.getElementById("tExoName").textContent=exo.name.toUpperCase();
+  document.getElementById("tPauseBtn").textContent="⏸";
+  document.getElementById("timerOv").classList.add("open");
+  updTimer();clearInterval(tIv);tIv=setInterval(tick,1000);
 }
+function tick(){if(tPaused)return;tLeft--;if(tLeft<=0){tLeft=0;updTimer();clearInterval(tIv);closeTimer();showBankai();return;}updTimer();}
+function updTimer(){
+  const m=Math.floor(tLeft/60),s=tLeft%60;
+  document.getElementById("tTime").textContent=`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+  const r=tTotal>0?tLeft/tTotal:0,off=CIRC*(1-r);
+  const p=document.getElementById("tProg");p.style.strokeDashoffset=off;
+  p.style.stroke=(1-r)<.5?"url(#tg)":(1-r)<.8?"#f59e0b":"#ef4444";
+}
+function togglePause(){tPaused=!tPaused;document.getElementById("tPauseBtn").textContent=tPaused?"▶":"⏸";}
+function skipTimer(){clearInterval(tIv);closeTimer();showBankai();}
+function closeTimer(){document.getElementById("timerOv").classList.remove("open");clearInterval(tIv);}
+function adj(s){tLeft=Math.max(5,tLeft+s);if(s>0)tTotal=Math.max(tTotal,tLeft);updTimer();}
+
+// ── BANKAI ────────────────────────────────────────────────────────────────
+function showBankai(){
+  if(navigator.vibrate)navigator.vibrate([80,40,80,40,250]);
+  document.getElementById("bkOv").classList.add("open");
+  setTimeout(closeBankai,4500);
+}
+function closeBankai(){document.getElementById("bkOv").classList.remove("open");}
 
 // ── RENDER ────────────────────────────────────────────────────────────────
 function render(){
-  const day=DAYS[activeDay];
-  const acc=day.color;
-  const pg=dayProgress(day.id);
-  document.getElementById("app").innerHTML=`
+  const day=DAYS[aDay],acc=day.color,pg=dayPg(day.id);
+  document.getElementById("root").innerHTML=`
   <div class="hdr">
-    <div class="hdr-row">
-      <div>
-        <div class="week-title">SEMAINE ${S.weekNum}</div>
-        <div class="week-sub">${fmtDate(S.startDate)} → ${fmtDate(addDays(S.startDate,6))}</div>
-      </div>
-      <div class="hdr-btns">
-        <button class="btn btn-ghost" onclick="openRecap()">📊</button>
-        <button class="btn btn-ghost" onclick="openHistory()">📈</button>
-        <button class="btn btn-ghost" onclick="resetDay('${day.id}')">↺</button>
-        <button class="btn btn-accent" style="background:${acc}" onclick="openNextWeek()">Sem. →</button>
-      </div>
-    </div>
-    <div class="tabs">
-      ${DAYS.map((d,i)=>`
-        <button class="tab ${i===activeDay?"active":""}"
-          style="color:${i===activeDay?d.color:"#555"};border-color:${i===activeDay?d.color:"transparent"}"
-          onclick="switchDay(${i})">${d.label}</button>
-      `).join("")}
-    </div>
-  </div>
-  <div class="prog-bar-wrap">
-    <div class="prog-inner">
-      <div class="prog-row">
-        <span><span style="color:${acc};font-family:'Bebas Neue';font-size:.9rem">${pg.done}</span> / ${pg.total} séries</span>
-        <div style="display:flex;gap:12px;align-items:center">
-          <span style="color:${acc}">${pg.pct}%</span>
+    <div class="hdr-glass">
+      <div class="hdr-inner">
+        <div class="hdr-top">
+          <div class="logo">
+            <div class="logo-icon">⚔️</div>
+            <div class="logo-text">BANKAI</div>
+          </div>
+          <div class="week-pill">
+            <div class="week-pill-num">S${S.weekNum}</div>
+            <div class="week-pill-date">${fd(S.startDate)} → ${fd(ad(S.startDate,6))}</div>
+          </div>
+          <div class="hdr-actions">
+            <button class="act-btn" onclick="openRecap()" title="Récap">📊</button>
+            <button class="act-btn" onclick="openHistory()" title="Stats">📈</button>
+            <button class="act-btn" onclick="resetDay('${day.id}')" title="Reset">↺</button>
+            <button class="act-btn act-btn-next" onclick="openNext()">SEM+</button>
+          </div>
+        </div>
+        <div class="tabs-wrap">
+          ${DAYS.map((d,i)=>`
+            <button class="tab ${i===aDay?"active":""}" style="--tc:${d.color}" onclick="switchDay(${i})">${d.label}</button>
+          `).join("")}
         </div>
       </div>
-      <div class="prog-track"><div class="prog-fill" style="width:${pg.pct}%;background:${acc}"></div></div>
-      <div class="prog-day-label">${day.label} — ${day.sub}</div>
     </div>
   </div>
-  <div class="grid">${day.exos.map(ex=>renderCard(ex,day)).join("")}</div>`;
-  // rebind RPE clicks after render
+  <div class="pg-bar">
+    <div class="pg-inner">
+      <div class="pg-row">
+        <div class="pg-info">
+          <span class="pg-done" style="color:${acc}">${pg.done}</span>
+          <span class="pg-total">/ ${pg.tot} séries</span>
+        </div>
+        <span class="pg-pct" style="color:${acc}">${pg.pct}%</span>
+      </div>
+      <div class="pg-track">
+        <div class="pg-fill" style="width:${pg.pct}%;background:linear-gradient(90deg,${acc}80,${acc})"></div>
+      </div>
+      <div class="pg-label">${day.label} — ${day.sub}</div>
+    </div>
+  </div>
+  <div class="grid">${day.exos.map(e=>renderCard(e,day)).join("")}</div>`;
 }
 
 function renderCard(ex,day){
-  const acc=day.color;
-  const s=S[day.id][ex.id];
-  const z=ZONES[ex.zone];
-  const rest=ex.zone==="Force"?"3min":ex.zone==="Cardio"?"—":"90s";
+  const acc=day.color,s=S[day.id][ex.id],z=ZONES[ex.zone];
+  const rl=restLabel(ex.zone);
   const dots=ex.isCardio?
     `<div class="dots-row">
-      <div class="dot ${s.done>=1?"done":""}" style="border-color:${s.done>=1?acc:"#333"};background:${s.done>=1?acc:"transparent"};color:${s.done>=1?"#000":"transparent"}"
-        onclick="toggleDot('${day.id}','${ex.id}',0)">✓</div>
-      <span style="font-size:.8rem;color:#888">Séance complétée</span>
+      <div class="dot ${s.done>=1?"done":""}"
+        style="${s.done>=1?`background:${acc};box-shadow:0 0 14px ${acc}88`:`border-color:rgba(255,255,255,.15)`};color:${s.done>=1?"#000":"transparent"}"
+        onclick="togDot('${day.id}','${ex.id}',0)">✓</div>
+      <span style="font-size:.73rem;color:var(--muted2)">Séance complétée</span>
     </div>`
-    :`<div class="dots-row">
-      <div class="dots">${Array.from({length:ex.sets},(_,i)=>`
-        <div class="dot ${i<s.done?"done":""}"
-          style="border-color:${i<s.done?acc:"#333"};background:${i<s.done?acc:"transparent"};color:${i<s.done?"#000":"transparent"}"
-          onclick="toggleDot('${day.id}','${ex.id}',${i})">✓</div>`).join("")}
+    :`<div class="dots-wrap">
+      <div class="dots-row">
+        <div class="dots">${Array.from({length:ex.sets},(_,i)=>`
+          <div class="dot ${i<s.done?"done":""}"
+            style="${i<s.done?`background:${acc};box-shadow:0 0 12px ${acc}66`:`border-color:rgba(255,255,255,.1)`};color:${i<s.done?"#000":"transparent"}"
+            onclick="togDot('${day.id}','${ex.id}',${i})">✓</div>`).join("")}
+        </div>
+        <span class="dot-count" style="color:${acc}">${s.done}/${ex.sets}</span>
       </div>
-      <span class="dots-count"><span style="color:${acc};font-family:'Bebas Neue';font-size:.95rem">${s.done}</span>/${ex.sets}</span>
+      <div class="timer-btn" onclick="startTimer(${JSON.stringify({id:ex.id,name:ex.name,zone:ex.zone}).replace(/"/g,'&quot;')})">
+        <div class="timer-btn-left">
+          <div class="timer-btn-icon">⏱</div>
+          <span>Récupération</span>
+        </div>
+        <span class="timer-btn-time">${rl}</span>
+      </div>
     </div>`;
   const rpe=!ex.isCardio?`
-    <div>
-      <div style="font-size:.63rem;color:#555;margin-bottom:3px">RPE</div>
-      <div class="rpe-bars">
-        ${Array.from({length:10},(_,i)=>`
-          <div class="rpe-seg" onclick="setRpe('${day.id}','${ex.id}',${i+1})"
-            style="background:${i<s.rpe?(s.rpe>=9?"#ef4444":s.rpe>=7?"#f59e0b":"#10b981"):"#1c1c1c"}"></div>`).join("")}
+    <div class="rpe-row">
+      <div class="rpe-top">
+        <span class="rpe-lbl">EFFORT (RPE)</span>
+        ${s.rpe>0?`<span class="rpe-val" style="color:${s.rpe>=9?"#ef4444":s.rpe>=7?"#f59e0b":"#10b981"}">${s.rpe}/10</span>`:""}
       </div>
-      ${s.rpe>0?`<div style="font-size:.62rem;color:#555;margin-top:2px;text-align:right">RPE ${s.rpe}/10</div>`:""}
+      <div class="rpe-segs">${Array.from({length:10},(_,i)=>`
+        <div class="rpe-s" onclick="setRpe('${day.id}','${ex.id}',${i+1})"
+          style="background:${i<s.rpe?(s.rpe>=9?"#ef4444":s.rpe>=7?"#f59e0b":"#10b981"):"rgba(255,255,255,.07)"}"></div>`).join("")}
+      </div>
     </div>`:"";
-  return `<div class="card">
-    <div class="card-accent" style="background:${acc}"></div>
+  return `
+  <div class="card" style="border-color:${z.border}">
+    <div class="card-glow" style="background:${acc}"></div>
+    <div class="card-top"><div class="card-top-line" style="background:linear-gradient(90deg,${acc},${acc}22,transparent)"></div></div>
     <div class="card-body">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+      <div class="card-head">
         <div>
           <div class="card-name">${ex.name}</div>
           <div class="card-muscle">${ex.muscle}</div>
         </div>
-        <span class="badge" style="background:${z.bg};color:${z.color}">${ex.zone}</span>
+        <span class="zone-badge" style="background:${z.bg};color:${z.color};border-color:${z.border}">${ex.zone}</span>
       </div>
-      <div class="stats">
-        <div class="stat"><div class="stat-val" style="color:${acc}">${ex.sets}</div><div class="stat-lbl">SÉRIES</div></div>
-        <div class="stat"><div class="stat-val" style="color:${acc};font-size:.82rem">${ex.reps}</div><div class="stat-lbl">REPS</div></div>
-        <div class="stat"><div class="stat-val" style="color:${acc}">${rest}</div><div class="stat-lbl">REPOS</div></div>
-        <div class="charge-wrap" style="border:1px solid ${acc}44">
-          <input class="charge-input" type="number" step="0.5" value="${s.w}"
-            style="color:${acc}" onchange="setWeight('${day.id}','${ex.id}',this.value)">
-          <div class="charge-unit">${ex.unit.toUpperCase()}</div>
+      <div class="stats-row">
+        <div class="stat-cell"><span class="stat-v" style="color:${acc}">${ex.sets}</span><span class="stat-l">SÉRIES</span></div>
+        <div class="stat-cell"><span class="stat-v" style="color:${acc};font-size:.8rem">${ex.reps}</span><span class="stat-l">REPS</span></div>
+        <div class="stat-cell"><span class="stat-v" style="color:${acc}">${ex.isCardio?"—":rl}</span><span class="stat-l">REPOS</span></div>
+        <div class="charge-cell" style="border:1px solid ${z.border}">
+          <input class="charge-inp" type="number" step="0.5" value="${s.w}" style="color:${acc}"
+            onchange="setW('${day.id}','${ex.id}',this.value)">
+          <span class="charge-u">${ex.unit.toUpperCase()}</span>
         </div>
       </div>
       ${dots}
@@ -380,150 +574,110 @@ function renderCard(ex,day){
 }
 
 // ── INTERACTIONS ──────────────────────────────────────────────────────────
-function switchDay(i){ activeDay=i; render(); }
+function switchDay(i){aDay=i;render();}
+function togDot(dId,eId,idx){const s=S[dId][eId];s.done=idx<s.done?idx:idx+1;save();render();}
+function setW(dId,eId,v){S[dId][eId].w=parseFloat(v)||0;save();}
+function setRpe(dId,eId,v){S[dId][eId].rpe=v;save();render();}
+function resetDay(dId){DAYS.find(d=>d.id===dId).exos.forEach(e=>{S[dId][e.id].done=0;S[dId][e.id].rpe=0;});save();render();}
 
-function toggleDot(dayId,exId,idx){
-  const s=S[dayId][exId];
-  s.done=idx<s.done?idx:idx+1;
-  save(); render();
+// ── NEXT WEEK ─────────────────────────────────────────────────────────────
+function calcChanges(){
+  const r={};
+  DAYS.forEach(d=>{r[d.id]=d.exos.map(e=>{
+    const s=S[d.id][e.id];
+    if(e.isCardio)return{id:e.id,name:e.name,oldW:s.w,newW:s.w,delta:0,status:"→",reason:"Cardio"};
+    const all=s.done>=e.sets,half=s.done>=Math.ceil(e.sets/2);
+    let delta=all?(poly(e.name)?5:2.5):half?0:-2.5;
+    const newW=Math.max(0,s.w+delta);
+    return{id:e.id,name:e.name,oldW:s.w,newW,delta,status:delta>0?"↑":delta<0?"↓":"→",reason:all?"Toutes ✓":half?"Min. ok":"Min. ✗"};
+  });});
+  return r;
 }
-function setWeight(dayId,exId,v){
-  S[dayId][exId].w=parseFloat(v)||0; save();
-}
-function setRpe(dayId,exId,v){
-  S[dayId][exId].rpe=v; save(); render();
-}
-function resetDay(dayId){
-  const d=DAYS.find(d=>d.id===dayId);
-  d.exos.forEach(ex=>{ S[dayId][ex.id].done=0; S[dayId][ex.id].rpe=0; });
-  save(); render();
-}
-
-// ── NEXT WEEK SHEET ───────────────────────────────────────────────────────
-function openNextWeek(){
-  pendingChanges=computeChanges();
-  document.getElementById("nextSub").textContent=`Récap → Semaine ${S.weekNum+1}`;
-  document.getElementById("confirmBtn").style.background=DAYS[activeDay].color;
+function openNext(){
+  pending=calcChanges();
+  document.getElementById("nextSub").textContent=`Changements de charge → Semaine ${S.weekNum+1}`;
   document.getElementById("nextContent").innerHTML=DAYS.map(d=>`
-    <div class="day-section">
-      <div class="day-section-title" style="color:${d.color}">${d.label} – ${d.sub}</div>
-      ${pendingChanges[d.id].map(c=>`
-        <div class="change-row">
+    <div class="day-group">
+      <div class="day-group-title" style="color:${d.color}">
+        <div class="day-group-dot" style="background:${d.color}"></div>${d.label} · ${d.sub}
+      </div>
+      ${pending[d.id].map(c=>`
+        <div class="change-item">
           <span class="change-name">${c.name}</span>
-          <span class="change-w">${c.oldW}→${c.newW}${c.reason!=="Cardio"?" kg":""}</span>
-          <span class="status-badge" style="background:${c.status==="↑"?"#064e3b":c.status==="↓"?"#450a0a":"#1c1c1c"};color:${c.status==="↑"?"#10b981":c.status==="↓"?"#ef4444":"#f59e0b"}">${c.status}</span>
-          <span style="font-size:.68rem;color:#555">${c.reason}</span>
+          <span class="change-arrow">${c.oldW} → ${c.newW}${c.reason!=="Cardio"?" kg":""}</span>
+          <span class="s-badge" style="background:${c.status==="↑"?"rgba(16,185,129,.15)":c.status==="↓"?"rgba(239,68,68,.15)":"rgba(245,158,11,.15)"};color:${c.status==="↑"?"#10b981":c.status==="↓"?"#ef4444":"#f59e0b"}">${c.status}</span>
+          <span class="change-reason">${c.reason}</span>
         </div>`).join("")}
     </div>`).join("");
-  openSheet("nextOverlay");
+  openSheet("nextOv");
+}
+function confirmNext(){
+  const snap=JSON.parse(JSON.stringify(S));snap._label=`S${S.weekNum}`;
+  H=[...H.slice(-11),snap];
+  DAYS.forEach(d=>pending[d.id].forEach(c=>{S[d.id][c.id].w=c.newW;S[d.id][c.id].done=0;S[d.id][c.id].rpe=0;}));
+  S.weekNum++;S.startDate=ad(S.startDate,7);
+  save();closeSheet("nextOv");render();
 }
 
-function confirmNextWeek(){
-  const snap=JSON.parse(JSON.stringify(S));
-  snap._label=`S${S.weekNum}`;
-  HIST=[...HIST.slice(-11),snap];
-  DAYS.forEach(d=>{
-    pendingChanges[d.id].forEach(c=>{
-      S[d.id][c.id].w=c.newW;
-      S[d.id][c.id].done=0;
-      S[d.id][c.id].rpe=0;
-    });
-  });
-  S.weekNum++; S.startDate=addDays(S.startDate,7);
-  save(); closeSheet("nextOverlay"); render();
-}
-
-// ── HISTORY SHEET ─────────────────────────────────────────────────────────
-let selExoId=null;
+// ── HISTORY ───────────────────────────────────────────────────────────────
 function openHistory(){
-  const allExos=DAYS.flatMap(d=>d.exos.filter(e=>!e.isCardio));
-  if(!selExoId) selExoId=allExos[0].id;
-  renderHistSheet();
-  openSheet("histOverlay");
+  const all=DAYS.flatMap(d=>d.exos.filter(e=>!e.isCardio));
+  if(!selExo)selExo=all[0].id;
+  renderHist();openSheet("histOv");
 }
-
-function renderHistSheet(){
-  const allExos=DAYS.flatMap(d=>d.exos.filter(e=>!e.isCardio));
-  const selEx=allExos.find(e=>e.id===selExoId)||allExos[0];
-  const data=HIST.map((snap,i)=>{
-    let w=null;
-    DAYS.forEach(d=>{ if(snap[d.id]?.[selExoId]!=null) w=snap[d.id][selExoId].w; });
-    return {label:snap._label||`S${i+1}`,w};
-  }).filter(d=>d.w!==null).slice(-6);
-
+function renderHist(){
+  const all=DAYS.flatMap(d=>d.exos.filter(e=>!e.isCardio));
+  const ex=all.find(e=>e.id===selExo)||all[0];
+  const data=H.map((s,i)=>{let w=null;DAYS.forEach(d=>{if(s[d.id]?.[selExo]!=null)w=s[d.id][selExo].w;});return{l:s._label||`S${i+1}`,w};}).filter(d=>d.w!=null).slice(-6);
   const maxW=data.length?Math.max(...data.map(d=>d.w),1):1;
-  const acc=DAYS[activeDay].color;
-
+  const acc=DAYS[aDay].color;
   document.getElementById("histContent").innerHTML=`
-    <select class="exo-select" onchange="selExoId=this.value;renderHistSheet()">
-      ${DAYS.map(d=>`<optgroup label="${d.label} – ${d.sub}">
-        ${d.exos.filter(e=>!e.isCardio).map(ex=>`
-          <option value="${ex.id}" ${ex.id===selExoId?"selected":""}>${ex.name}</option>`).join("")}
-      </optgroup>`).join("")}
+    <select class="exo-sel" onchange="selExo=this.value;renderHist()">
+      ${DAYS.map(d=>`<optgroup label="${d.label} – ${d.sub}">${d.exos.filter(e=>!e.isCardio).map(e=>`<option value="${e.id}" ${e.id===selExo?"selected":""}>${e.name}</option>`).join("")}</optgroup>`).join("")}
     </select>
-    <div class="chart-wrap">
-      <div class="chart-title" style="color:${acc}">${selEx.name} <span style="color:#555;font-size:.75rem;font-family:'DM Sans'">${selEx.unit}</span></div>
-      ${data.length<2?`<div style="color:#555;text-align:center;padding:20px;font-size:.82rem">Complète au moins 2 semaines pour voir la progression.</div>`:`
-      <div class="mini-chart">
-        ${data.map(d=>`
-          <div class="bar-col">
-            <div class="bar-val" style="color:${acc};font-size:.65rem">${d.w}</div>
-            <div class="bar" style="height:${Math.max(8,d.w/maxW*80)}px;background:${acc}22;border:1px solid ${acc}66"></div>
-            <div class="bar-lbl">${d.label}</div>
-          </div>`).join("")}
+    <div class="chart-card">
+      <div class="chart-title" style="color:${acc};font-family:'Bebas Neue';letter-spacing:2px">${ex.name}</div>
+      ${data.length<2?`<div style="color:var(--muted);font-size:.78rem;text-align:center;padding:20px">Complète 2+ semaines pour voir la progression.</div>`:`
+      <div class="mini-chart">${data.map(d=>`
+        <div class="bar-col">
+          <div class="bar-v" style="color:${acc}">${d.w}</div>
+          <div class="bar-rect" style="height:${Math.max(8,d.w/maxW*70)}px;background:linear-gradient(to top,${acc}33,${acc}66);border:1px solid ${acc}44"></div>
+          <div class="bar-lbl">${d.l}</div>
+        </div>`).join("")}
       </div>`}
     </div>
-    ${HIST.length?`
-    <div style="font-family:'Bebas Neue';font-size:.9rem;letter-spacing:1px;color:#666;margin-bottom:10px">SEMAINES ENREGISTRÉES</div>
-    <div class="week-chips">
-      ${HIST.slice(-6).map((snap,i)=>{
-        let w=null; DAYS.forEach(d=>{ if(snap[d.id]?.[selExoId]!=null) w=snap[d.id][selExoId].w; });
-        return `<div class="chip"><span>${snap._label||"S"+(i+1)}</span>${w!=null?w+" "+selEx.unit:"—"}</div>`;
-      }).join("")}
-    </div>`:""}`;
+    ${H.length?`<div class="chips">${H.slice(-6).map((s,i)=>{let w=null;DAYS.forEach(d=>{if(s[d.id]?.[selExo]!=null)w=s[d.id][selExo].w;});return`<div class="chip"><span class="chip-label">${s._label||"S"+(i+1)}</span>${w!=null?w+" "+ex.unit:"—"}</div>`;}).join("")}</div>`:""}`;
 }
 
-// ── RECAP SHEET ───────────────────────────────────────────────────────────
+// ── RECAP ─────────────────────────────────────────────────────────────────
 function openRecap(){
-  const vol={};
-  MUSCLES_LIST.forEach(m=>{vol[m]=0;});
-  DAYS.forEach(d=>d.exos.forEach(ex=>{
-    if(ex.isCardio) return;
-    const mg=muscleGroup(ex.muscle);
-    vol[mg]=(vol[mg]||0)+ex.sets;
-  }));
-  const maxV=Math.max(...Object.values(vol),1);
-  const acc=DAYS[activeDay].color;
-  document.getElementById("recapSub").textContent=`Semaine ${S.weekNum} · ${fmtDate(S.startDate)} → ${fmtDate(addDays(S.startDate,6))}`;
+  const vol={};MUSCLES.forEach(m=>{vol[m]=0;});
+  DAYS.forEach(d=>d.exos.forEach(e=>{if(e.isCardio)return;const g=mg(e.muscle);vol[g]=(vol[g]||0)+e.sets;}));
+  const maxV=Math.max(...Object.values(vol),1),acc=DAYS[aDay].color;
+  document.getElementById("recapSub").textContent=`Semaine ${S.weekNum} · ${fd(S.startDate)} → ${fd(ad(S.startDate,6))}`;
   document.getElementById("recapContent").innerHTML=`
     <div class="recap-card">
       <div class="recap-card-title">VOLUME PAR GROUPE MUSCULAIRE</div>
-      ${MUSCLES_LIST.filter(m=>vol[m]>0).map(m=>`
-        <div class="vol-row">
-          <div class="vol-info"><span style="color:#ccc">${m}</span><span style="color:#555">${vol[m]} séries</span></div>
-          <div class="vol-track"><div class="vol-fill" style="width:${vol[m]/maxV*100}%;background:${acc}"></div></div>
+      ${MUSCLES.filter(m=>vol[m]>0).map(m=>`
+        <div class="vol-item">
+          <div class="vol-top"><span>${m}</span><span class="vol-val">${vol[m]} séries</span></div>
+          <div class="vol-track"><div class="vol-fill" style="width:${vol[m]/maxV*100}%;background:linear-gradient(90deg,${acc}55,${acc})"></div></div>
         </div>`).join("")}
     </div>
     <div class="recap-card">
-      <div class="recap-card-title">RÈGLES SURCHARGE PROGRESSIVE</div>
-      ${[
-        {icon:"↑",col:"#10b981",txt:"Poly +5kg / Isolation +2.5kg — toutes séries complétées"},
-        {icon:"→",col:"#f59e0b",txt:"Même charge — reps minimales atteintes"},
-        {icon:"↓",col:"#ef4444",txt:"−2.5kg — reps minimales non atteintes"},
-      ].map(r=>`<div class="rule-row"><span class="rule-icon" style="color:${r.col}">${r.icon}</span><span class="rule-txt">${r.txt}</span></div>`).join("")}
+      <div class="recap-card-title">SURCHARGE PROGRESSIVE</div>
+      ${[{sym:"↑",col:"#10b981",t:"Poly +5kg / Isolation +2.5kg — toutes séries ✓"},{sym:"→",col:"#f59e0b",t:"Même charge — reps minimales atteintes"},{sym:"↓",col:"#ef4444",t:"−2.5kg — reps minimales non atteintes"}].map(r=>`
+        <div class="rule-item"><span class="rule-sym" style="color:${r.col}">${r.sym}</span><span class="rule-desc">${r.t}</span></div>`).join("")}
     </div>`;
-  openSheet("recapOverlay");
+  openSheet("recapOv");
 }
 
-// ── SHEET UTILS ───────────────────────────────────────────────────────────
-function openSheet(id){ document.getElementById(id).classList.add("open"); }
-function closeSheet(id){ document.getElementById(id).classList.remove("open"); }
-document.querySelectorAll(".overlay").forEach(el=>{
-  el.addEventListener("click",e=>{ if(e.target===el) el.classList.remove("open"); });
-});
+// ── UTILS ─────────────────────────────────────────────────────────────────
+function openSheet(id){document.getElementById(id).classList.add("open");}
+function closeSheet(id){document.getElementById(id).classList.remove("open");}
+document.querySelectorAll(".s-overlay").forEach(el=>el.addEventListener("click",e=>{if(e.target===el)el.classList.remove("open");}));
 
-// ── BOOT ─────────────────────────────────────────────────────────────────
-load(); render();
+load();render();
 </script>
 </body>
 </html>
