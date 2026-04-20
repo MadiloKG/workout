@@ -13,27 +13,16 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#000;
-  --s1:#0a0a0a;
-  --s2:#111;
-  --s3:#1a1a1a;
-  --b1:rgba(89,112,129,.25);
-  --b2:rgba(89,112,129,.45);
-  --b3:rgba(210,210,210,.15);
-  --steel:#597081;
-  --steel2:#7a95a8;
-  --steel3:#9db3c0;
-  --light:#D2D2D2;
-  --light2:#e8e8e8;
-  --text:#f0f0f0;
-  --muted:#597081;
-  --muted2:#8a9fa8;
-  --r:14px;
+  --bg:#000;--s1:#0a0a0a;--s2:#111;--s3:#1a1a1a;
+  --b1:rgba(89,112,129,.25);--b2:rgba(89,112,129,.45);--b3:rgba(210,210,210,.15);
+  --steel:#597081;--steel2:#7a95a8;--steel3:#9db3c0;
+  --light:#D2D2D2;--light2:#e8e8e8;--text:#f0f0f0;
+  --muted:#597081;--muted2:#8a9fa8;--r:14px;
+  --ok:#7a95a8;--warn:#9db3c0;--fail:#597081;
 }
 html{height:100%}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100%;overflow-x:hidden;padding-bottom:calc(env(safe-area-inset-bottom)+24px);-webkit-font-smoothing:antialiased}
 
-/* BG */
 .bg-wrap{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .bg-orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.07}
 .bg-orb1{width:500px;height:500px;background:radial-gradient(circle,#597081,transparent);top:-150px;left:-100px;animation:ob1 22s ease-in-out infinite}
@@ -65,16 +54,19 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .tab{flex:1;min-width:68px;padding:9px 4px 12px;border:none;background:transparent;font-family:'Bebas Neue';font-size:.8rem;letter-spacing:2px;cursor:pointer;border-bottom:2px solid transparent;transition:all .18s;color:var(--muted);white-space:nowrap}
 .tab.active{color:var(--light);border-color:var(--steel)}
 
-/* PROGRESS */
-.pg-bar{background:rgba(0,0,0,.9);border-bottom:1px solid var(--b1);padding:9px 14px}
-.pg-inner{max-width:780px;margin:0 auto}
+/* FATIGUE INDICATOR */
+.fatigue-bar{background:rgba(0,0,0,.9);border-bottom:1px solid var(--b1);padding:9px 14px}
+.fatigue-inner{max-width:780px;margin:0 auto}
 .pg-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
 .pg-done{font-family:'Bebas Neue';font-size:1rem;color:var(--light)}
 .pg-total{font-size:.7rem;color:var(--muted)}
 .pg-pct{font-family:'Bebas Neue';font-size:.82rem;color:var(--steel2)}
 .pg-track{height:2px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden}
 .pg-fill{height:100%;background:linear-gradient(90deg,var(--steel),var(--light));border-radius:99px;transition:width .4s cubic-bezier(.4,0,.2,1)}
-.pg-lbl{font-size:.6rem;color:var(--muted);margin-top:4px;letter-spacing:.5px}
+.fatigue-row{display:flex;gap:8px;margin-top:6px;align-items:center}
+.fatigue-lbl{font-size:.6rem;color:var(--muted);letter-spacing:.5px;flex:1}
+.fatigue-chips{display:flex;gap:5px}
+.f-chip{font-size:.58rem;padding:2px 7px;border-radius:99px;border:1px solid;font-weight:600;letter-spacing:.3px}
 
 /* GRID */
 .grid{max-width:780px;margin:0 auto;padding:14px 12px 90px;display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:11px;position:relative;z-index:1}
@@ -90,6 +82,13 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .card-muscle::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--steel);display:inline-block;flex-shrink:0}
 .zone-badge{padding:3px 9px;border-radius:99px;font-size:.62rem;font-weight:700;letter-spacing:.7px;white-space:nowrap;flex-shrink:0}
 
+/* PERF SUMMARY on card */
+.card-perf{display:flex;align-items:center;justify-content:space-between;padding:5px 8px;background:rgba(89,112,129,.05);border:1px solid var(--b1);border-radius:9px}
+.perf-item{display:flex;flex-direction:column;align-items:center;gap:1px}
+.perf-val{font-family:'Bebas Neue';font-size:.95rem;line-height:1}
+.perf-lbl{font-size:.52rem;color:var(--muted);letter-spacing:.5px}
+.perf-sep{width:1px;height:22px;background:var(--b1)}
+
 /* SETS TABLE */
 .sets-table{display:flex;flex-direction:column;gap:0;border:1px solid var(--b1);border-radius:11px;overflow:hidden}
 .sets-header{display:grid;grid-template-columns:28px 1fr 1fr 1fr 32px;gap:0;background:rgba(89,112,129,.08);padding:5px 8px;border-bottom:1px solid var(--b1)}
@@ -102,13 +101,19 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .set-input{background:rgba(255,255,255,.04);border:1px solid rgba(89,112,129,.18);border-radius:7px;color:var(--text);font-family:'DM Sans';font-size:.8rem;font-weight:600;text-align:center;padding:4px 3px;width:100%;outline:none;margin:0 2px;min-width:0;transition:border-color .15s}
 .set-input:focus{border-color:var(--steel)}
 .set-input.done-input{border-color:rgba(89,112,129,.35);color:var(--light)}
-/* RPE input special */
 .rpe-input-wrap{position:relative;margin:0 2px}
 .rpe-input{background:rgba(255,255,255,.04);border:1px solid rgba(89,112,129,.18);border-radius:7px;color:var(--text);font-family:'DM Sans';font-size:.8rem;font-weight:600;text-align:center;padding:4px 3px;width:100%;outline:none;transition:border-color .15s,color .15s}
 .rpe-input:focus{border-color:var(--steel)}
 .set-check{width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(89,112,129,.3);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.65rem;color:transparent;transition:all .18s;flex-shrink:0;-webkit-user-select:none;user-select:none;justify-self:center}
 .set-check.checked{background:var(--steel);border-color:var(--steel);color:#000;box-shadow:0 0 10px rgba(89,112,129,.4)}
 .set-check:active{transform:scale(.82)}
+
+/* NOTE SEANCE */
+.note-area{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--b1);border-radius:9px;color:var(--text);font-family:'DM Sans';font-size:.75rem;padding:8px 10px;outline:none;resize:none;height:58px;transition:border-color .2s}
+.note-area:focus{border-color:var(--steel)}
+.note-area::placeholder{color:var(--muted)}
+.note-save-btn{margin-top:5px;width:100%;padding:7px;border:1px solid var(--b1);border-radius:9px;background:rgba(89,112,129,.08);color:var(--steel2);font-family:'DM Sans';font-size:.72rem;font-weight:600;cursor:pointer;transition:all .15s}
+.note-save-btn:active{background:rgba(89,112,129,.2)}
 
 /* TIMER BTN */
 .timer-btn{display:flex;align-items:center;justify-content:space-between;padding:8px 11px;background:rgba(89,112,129,.06);border:1px solid var(--b1);border-radius:11px;cursor:pointer;transition:all .2s}
@@ -197,6 +202,12 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .chip{background:rgba(255,255,255,.03);border:1px solid var(--b1);border-radius:99px;padding:4px 11px;font-size:.7rem;color:var(--muted2)}
 .chip-l{color:var(--muted);margin-right:3px;font-size:.63rem}
 
+/* RPE TREND in history */
+.rpe-mini{height:44px;display:flex;align-items:flex-end;gap:4px;margin-top:10px}
+.rpe-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px}
+.rpe-bar{width:100%;border-radius:3px 3px 0 0;min-height:3px;transition:height .4s}
+.rpe-lbl{font-size:.5rem;color:var(--muted)}
+
 /* RECAP */
 .recap-card{background:rgba(255,255,255,.02);border:1px solid var(--b1);border-radius:14px;padding:15px;margin-bottom:11px}
 .recap-ttl{font-family:'Bebas Neue';font-size:.83rem;letter-spacing:2px;color:var(--muted2);margin-bottom:12px}
@@ -208,6 +219,14 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .rule-item{display:flex;gap:11px;align-items:center;margin-bottom:9px}
 .rule-sym{font-family:'Bebas Neue';font-size:1.3rem;width:20px;line-height:1}
 .rule-desc{font-size:.76rem;color:rgba(255,255,255,.55)}
+
+/* NOTES HISTORY in recap */
+.note-hist-item{padding:8px 10px;background:rgba(89,112,129,.05);border:1px solid var(--b1);border-radius:9px;margin-bottom:7px}
+.note-hist-date{font-size:.6rem;color:var(--muted);margin-bottom:3px;letter-spacing:.5px}
+.note-hist-text{font-size:.74rem;color:rgba(255,255,255,.65)}
+
+/* PERF ALERT in card */
+.perf-alert{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:8px;font-size:.66rem;font-weight:600}
 </style>
 </head>
 <body>
@@ -289,7 +308,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
     <div class="sh-handle"></div>
     <div class="sh-head"><div class="sh-title">STATS</div><button class="sh-close" onclick="closeSheet('histOv')">✕</button></div>
     <div class="sh-body">
-      <div class="sh-sub">Progression des charges par exercice</div>
+      <div class="sh-sub">Progression des charges & RPE par exercice</div>
       <div id="histContent"></div>
     </div>
   </div>
@@ -318,11 +337,24 @@ const ZONES={
   "Avant-bras":{color:"#597081",bg:"rgba(89,112,129,.1)",border:"rgba(89,112,129,.22)"},
   Cardio:     {color:"#aaaaaa",bg:"rgba(210,210,210,.06)",border:"rgba(210,210,210,.15)"},
 };
+
+// ── PROGRAMME OPTIMISÉ ──────────────────────────────────────────────────
+// LUNDI: DCI (Force) → Dips (Hyp, remplace DCP → moins de fatigue pectorale cumulative)
+//         → Pec Deck → DEM → Élév. lat → Extension triceps → Skull crusher → HIIT
+// MARDI: LP (Force) → Fentes bulgares → Leg Extension → Leg Curl couché → Crunch → Pallof → LISS
+// JEUDI: Tractions (Force) → Rowing HS (avant Tirage poitrine = dos frais sur lourd)
+//         → Tirage poitrine → Face Pull → Shrug → Curl biceps → Curl marteau → Wrist/Reverse
+// VENDREDI: RDL (Force, chaîne post fraîche) → Hip Thrust → Leg Curl assis
+//           → Fentes marchées → Mollets → Relevés jambes → Farmer's carry → HIIT
+
 const DAYS=[
   {id:"lundi",label:"LUNDI",sub:"Upper A · Push",color:"#7a95a8",exos:[
-    {id:"dci",name:"Développé couché incliné",muscle:"Pectoraux sup.",w:17.5,unit:"kg/côté",sets:4,reps:"6-8",zone:"Force"},
-    {id:"dcp",name:"Développé couché plat",muscle:"Pectoraux",w:15,unit:"kg/côté",sets:3,reps:"10-12",zone:"Hypertrophie"},
-    {id:"pd",name:"Pec Deck machine",muscle:"Pectoraux (fin.)",w:30,unit:"kg",sets:3,reps:"15-20",zone:"Métabolique"},
+    {id:"dci",name:"Développé couché incliné",muscle:"Pectoraux sup.",w:17.5,unit:"kg/côté",sets:4,reps:"6-8",zone:"Force",
+     note:"Premier exercice, pectoraux frais. RPE cible 7-8."},
+    {id:"dips",name:"Dips lestés",muscle:"Pectoraux bas / Triceps",w:5,unit:"kg lest",sets:3,reps:"10-12",zone:"Hypertrophie",
+     note:"Remplace DCP. Même stimulation pec/tri mais moins de fatigue arthiculaire post-incliné."},
+    {id:"pd",name:"Pec Deck machine",muscle:"Pectoraux (fin.)",w:30,unit:"kg",sets:3,reps:"15-20",zone:"Métabolique",
+     note:"Finition isolation. Charge plus facile à tenir malgré fatigue."},
     {id:"dem",name:"Développé épaules machine",muscle:"Deltoïdes ant.",w:22,unit:"kg",sets:3,reps:"10-12",zone:"Hypertrophie"},
     {id:"elc",name:"Élévations latérales câble",muscle:"Deltoïdes lat.",w:5,unit:"kg/côté",sets:4,reps:"15-20",zone:"Métabolique"},
     {id:"etc",name:"Extension triceps corde",muscle:"Triceps",w:17.5,unit:"kg",sets:3,reps:"10-12",zone:"Hypertrophie"},
@@ -330,18 +362,24 @@ const DAYS=[
     {id:"hiit_l",name:"HIIT vélo elliptique",muscle:"Cardio",w:8,unit:"intervalles",sets:1,reps:"8×30s",zone:"Cardio",isCardio:true},
   ]},
   {id:"mardi",label:"MARDI",sub:"Lower A · Quad",color:"#9db3c0",exos:[
-    {id:"lp",name:"Leg Press",muscle:"Quadriceps",w:120,unit:"kg",sets:4,reps:"6-8",zone:"Force"},
-    {id:"fb",name:"Fentes bulgares",muscle:"Quad / Fessiers",w:10,unit:"kg/main",sets:3,reps:"10/jambe",zone:"Hypertrophie"},
+    {id:"lp",name:"Leg Press",muscle:"Quadriceps",w:120,unit:"kg",sets:4,reps:"6-8",zone:"Force",
+     note:"Quadriceps frais. Amplitude complète, genoux à 90°."},
+    {id:"fb",name:"Fentes bulgares",muscle:"Quad / Fessiers",w:10,unit:"kg/main",sets:3,reps:"10/jambe",zone:"Hypertrophie",
+     note:"Avant Leg Extension pour garder stabilité sur mouvement technique."},
     {id:"le",name:"Leg Extension",muscle:"Quad (iso)",w:40,unit:"kg",sets:3,reps:"15-20",zone:"Métabolique"},
-    {id:"lcc",name:"Leg Curl couché",muscle:"Ischio-jambiers",w:42,unit:"kg",sets:4,reps:"10-12",zone:"Hypertrophie"},
+    {id:"lcc",name:"Leg Curl couché",muscle:"Ischio-jambiers",w:42,unit:"kg",sets:4,reps:"10-12",zone:"Hypertrophie",
+     note:"Ischio encore frais, pas pré-fatigués par la chaîne post."},
     {id:"cm",name:"Crunch machine",muscle:"Abdominaux",w:10,unit:"kg",sets:3,reps:"12-15",zone:"Hypertrophie"},
     {id:"pp",name:"Pallof Press câble",muscle:"Core / Obliques",w:8,unit:"kg",sets:3,reps:"12/côté",zone:"Hypertrophie"},
     {id:"liss_m",name:"LISS Rameur",muscle:"Cardio",w:0,unit:"20min",sets:1,reps:"65% FC max",zone:"Cardio",isCardio:true},
   ]},
   {id:"jeudi",label:"JEUDI",sub:"Upper B · Pull",color:"#D2D2D2",exos:[
-    {id:"tr",name:"Tractions lestées",muscle:"Dos / Biceps",w:5,unit:"kg lest",sets:4,reps:"6-8",zone:"Force"},
-    {id:"tp",name:"Tirage poitrine câble",muscle:"Dos (largeur)",w:50,unit:"kg",sets:3,reps:"10-12",zone:"Hypertrophie"},
-    {id:"rhs",name:"Rowing Hammer Strength",muscle:"Dos (épaisseur)",w:30,unit:"kg/côté",sets:4,reps:"8-10",zone:"Hypertrophie"},
+    {id:"tr",name:"Tractions lestées",muscle:"Dos / Biceps",w:5,unit:"kg lest",sets:4,reps:"6-8",zone:"Force",
+     note:"Dos frais. RPE 7-8. Amplitude complète, dead hang en bas."},
+    {id:"rhs",name:"Rowing Hammer Strength",muscle:"Dos (épaisseur)",w:30,unit:"kg/côté",sets:4,reps:"8-10",zone:"Hypertrophie",
+     note:"Déplacé avant Tirage poitrine : dos encore frais sur le mouvement lourd."},
+    {id:"tp",name:"Tirage poitrine câble",muscle:"Dos (largeur)",w:50,unit:"kg",sets:3,reps:"10-12",zone:"Hypertrophie",
+     note:"Maintenant 3e exo : charge légèrement abaissée si nécessaire, toujours efficace."},
     {id:"fp",name:"Face Pull câble corde",muscle:"Deltoïdes post.",w:12,unit:"kg",sets:4,reps:"15-20",zone:"Métabolique"},
     {id:"sh",name:"Shrug haltères",muscle:"Trapèzes",w:14,unit:"kg/main",sets:3,reps:"12-15",zone:"Métabolique"},
     {id:"cb",name:"Curl biceps supination",muscle:"Biceps",w:10,unit:"kg/côté",sets:3,reps:"10-12",zone:"Hypertrophie"},
@@ -350,8 +388,10 @@ const DAYS=[
     {id:"rvc",name:"Reverse curl",muscle:"Avant-bras ext.",w:8,unit:"kg",sets:2,reps:"12-15",zone:"Avant-bras"},
   ]},
   {id:"vendredi",label:"VENDREDI",sub:"Lower B · Ischio/Fessier",color:"#597081",exos:[
-    {id:"ht",name:"Hip Thrust machine",muscle:"Fessiers",w:70,unit:"kg",sets:4,reps:"10-12",zone:"Hypertrophie"},
-    {id:"rdl",name:"RDL haltères",muscle:"Ischio / Fessiers",w:15,unit:"kg/main",sets:4,reps:"8-10",zone:"Hypertrophie"},
+    {id:"rdl",name:"RDL haltères",muscle:"Ischio / Fessiers",w:15,unit:"kg/main",sets:4,reps:"8-10",zone:"Hypertrophie",
+     note:"Déplacé en 1er : chaîne postérieure fraîche sur le mouvement technique lourd."},
+    {id:"ht",name:"Hip Thrust machine",muscle:"Fessiers",w:70,unit:"kg",sets:4,reps:"10-12",zone:"Hypertrophie",
+     note:"Maintenant 2e : fessiers pré-activés par le RDL → meilleur recrutement."},
     {id:"lca",name:"Leg Curl assis",muscle:"Ischio-jambiers",w:35,unit:"kg",sets:3,reps:"15-20",zone:"Métabolique"},
     {id:"fmv",name:"Fentes marchées",muscle:"Quad / Fessiers",w:10,unit:"kg/main",sets:3,reps:"10/jambe",zone:"Hypertrophie"},
     {id:"mol",name:"Mollets machine",muscle:"Mollets",w:50,unit:"kg",sets:4,reps:"15-20",zone:"Métabolique"},
@@ -371,7 +411,6 @@ function mg(m){
 }
 
 // ── STATE ─────────────────────────────────────────────────────────────────
-// Per-set state: sets = [{w, reps, rpe, done}, ...]
 let S={},H=[],aDay=0,pending=null,selExo=null;
 
 function defaultSets(ex){
@@ -380,29 +419,28 @@ function defaultSets(ex){
 function initS(){
   const now=new Date(),dow=now.getDay(),diff=dow===0?-6:1-dow;
   const mon=new Date(now);mon.setDate(now.getDate()+diff);
-  const s={weekNum:1,startDate:mon.toISOString().split("T")[0]};
+  const s={weekNum:1,startDate:mon.toISOString().split("T")[0],notes:{}};
   DAYS.forEach(d=>{s[d.id]={};d.exos.forEach(e=>{
     s[d.id][e.id]=e.isCardio?{done:false}:{sets:defaultSets(e)};
   });});
   return s;
 }
 function load(){
-  try{const s=localStorage.getItem("bk5");S=s?JSON.parse(s):initS();}catch{S=initS();}
-  try{const h=localStorage.getItem("bk5h");H=h?JSON.parse(h):[];}catch{H=[];}
-  // migrate old format
+  try{const s=localStorage.getItem("bk6");S=s?JSON.parse(s):initS();}catch{S=initS();}
+  if(!S.notes)S.notes={};
+  try{const h=localStorage.getItem("bk6h");H=h?JSON.parse(h):[];}catch{H=[];}
   DAYS.forEach(d=>d.exos.forEach(e=>{
     const es=S[d.id]?.[e.id];
-    if(!e.isCardio&&es&&!es.sets){
-      S[d.id][e.id]={sets:defaultSets(e)};
-    }
+    if(!e.isCardio&&es&&!es.sets){S[d.id][e.id]={sets:defaultSets(e)};}
   }));
 }
-function save(){localStorage.setItem("bk5",JSON.stringify(S));localStorage.setItem("bk5h",JSON.stringify(H));}
+function save(){localStorage.setItem("bk6",JSON.stringify(S));localStorage.setItem("bk6h",JSON.stringify(H));}
 function fd(iso){return new Date(iso).toLocaleDateString("fr-FR",{day:"2-digit",month:"short"});}
 function ad(iso,n){const d=new Date(iso);d.setDate(d.getDate()+n);return d.toISOString().split("T")[0];}
 function poly(n){return POLY.some(p=>n.includes(p));}
 function restLbl(z){const s=REST_T[z]||90;return s>=60?`${s/60}min`:`${s}s`;}
 
+// ── PERF CALCULATIONS ──────────────────────────────────────────────────────
 function dayPg(id){
   const day=DAYS.find(d=>d.id===id);let done=0,tot=0;
   day.exos.forEach(e=>{
@@ -410,6 +448,35 @@ function dayPg(id){
     else{const sets=S[id][e.id]?.sets||[];tot+=sets.length;done+=sets.filter(s=>s.done).length;}
   });
   return{done,tot,pct:tot?Math.round(done/tot*100):0};
+}
+
+// fatigue score: ratio of reps achieved vs target, for done sets
+function dayFatigue(id){
+  const day=DAYS.find(d=>d.id===id);
+  let rpeTotal=0,rpeCount=0,repRatio=0,repCount=0;
+  day.exos.forEach(e=>{
+    if(e.isCardio)return;
+    const sets=S[id][e.id]?.sets||[];
+    sets.filter(s=>s.done).forEach(s=>{
+      if(s.rpe>0){rpeTotal+=s.rpe;rpeCount++;}
+      const target=parseFloat(e.reps.split("-")[1]||e.reps.split("-")[0]||e.reps)||12;
+      const actual=parseFloat(s.reps)||0;
+      repRatio+=Math.min(1,actual/target);repCount++;
+    });
+  });
+  return{
+    avgRpe:rpeCount?Math.round(rpeTotal/rpeCount*10)/10:null,
+    repEff:repCount?Math.round(repRatio/repCount*100):null
+  };
+}
+
+function exoPerf(dId,eId){
+  const sets=S[dId]?.[eId]?.sets||[];
+  const done=sets.filter(s=>s.done);
+  if(!done.length)return null;
+  const avgW=done.reduce((a,s)=>a+s.w,0)/done.length;
+  const avgRpe=done.filter(s=>s.rpe>0).length?done.filter(s=>s.rpe>0).reduce((a,s)=>a+s.rpe,0)/done.filter(s=>s.rpe>0).length:null;
+  return{avgW,avgRpe,doneCount:done.length};
 }
 
 // ── TIMER ─────────────────────────────────────────────────────────────────
@@ -447,7 +514,22 @@ function closeBankai(){document.getElementById("bkOv").classList.remove("open");
 
 // ── RENDER ────────────────────────────────────────────────────────────────
 function render(){
-  const day=DAYS[aDay],pg=dayPg(day.id);
+  const day=DAYS[aDay],pg=dayPg(day.id),fat=dayFatigue(day.id);
+  const note=S.notes[day.id]||"";
+  
+  // fatigue chips
+  let fatHtml="";
+  if(fat.avgRpe!==null){
+    const rpeC=fat.avgRpe>=9?"#D2D2D2":fat.avgRpe>=7?"#9db3c0":"#597081";
+    const rpeBg=fat.avgRpe>=9?"rgba(210,210,210,.1)":fat.avgRpe>=7?"rgba(89,112,129,.1)":"rgba(89,112,129,.06)";
+    fatHtml+=`<span class="f-chip" style="color:${rpeC};background:${rpeBg};border-color:${rpeC}">RPE moy. ${fat.avgRpe}</span>`;
+  }
+  if(fat.repEff!==null){
+    const effC=fat.repEff>=90?"#9db3c0":fat.repEff>=70?"#7a95a8":"#597081";
+    const effBg=fat.repEff>=90?"rgba(89,112,129,.1)":"rgba(89,112,129,.06)";
+    fatHtml+=`<span class="f-chip" style="color:${effC};background:${effBg};border-color:${effC}">Eff. reps ${fat.repEff}%</span>`;
+  }
+
   document.getElementById("root").innerHTML=`
   <div class="hdr">
     <div class="hdr-glass">
@@ -476,8 +558,8 @@ function render(){
       </div>
     </div>
   </div>
-  <div class="pg-bar">
-    <div class="pg-inner">
+  <div class="fatigue-bar">
+    <div class="fatigue-inner">
       <div class="pg-row">
         <div style="display:flex;align-items:baseline;gap:4px">
           <span class="pg-done">${pg.done}</span>
@@ -486,10 +568,23 @@ function render(){
         <span class="pg-pct">${pg.pct}%</span>
       </div>
       <div class="pg-track"><div class="pg-fill" style="width:${pg.pct}%"></div></div>
-      <div class="pg-lbl">${day.label} — ${day.sub}</div>
+      <div class="fatigue-row">
+        <span class="fatigue-lbl">${day.label} — ${day.sub}</span>
+        <div class="fatigue-chips">${fatHtml}</div>
+      </div>
     </div>
   </div>
-  <div class="grid">${day.exos.map(e=>renderCard(e,day)).join("")}</div>`;
+  <div class="grid">
+    ${day.exos.map(e=>renderCard(e,day)).join("")}
+    <div class="card" style="border-color:rgba(89,112,129,.18)">
+      <div class="card-line"></div>
+      <div class="card-body">
+        <div style="font-family:'Bebas Neue';font-size:.9rem;letter-spacing:2px;color:var(--steel2)">NOTE SÉANCE</div>
+        <textarea class="note-area" id="noteArea" placeholder="Ressenti, douleurs, contexte (sommeil, stress)…">${note}</textarea>
+        <button class="note-save-btn" onclick="saveNote('${day.id}')">SAUVEGARDER NOTE ✓</button>
+      </div>
+    </div>
+  </div>`;
 }
 
 function rpeColor(v){
@@ -499,6 +594,7 @@ function rpeColor(v){
 
 function renderCard(ex,day){
   const z=ZONES[ex.zone],rl=restLbl(ex.zone);
+  
   if(ex.isCardio){
     const done=S[day.id][ex.id]?.done;
     return`<div class="card" style="border-color:${z.border}">
@@ -512,10 +608,36 @@ function renderCard(ex,day){
           <div class="set-check ${done?"checked":""}" onclick="togCardio('${day.id}','${ex.id}')">✓</div>
           <span style="font-size:.75rem;color:var(--muted2)">${ex.reps} — ${ex.w} ${ex.unit}</span>
         </div>
+        ${ex.note?`<div style="font-size:.62rem;color:var(--muted);font-style:italic;padding:0 2px">${ex.note}</div>`:""}
       </div>
     </div>`;
   }
+  
   const sets=S[day.id][ex.id]?.sets||defaultSets(ex);
+  const perf=exoPerf(day.id,ex.id);
+  
+  // Perf mini-summary (avgRpe + doneCount)
+  let perfHtml="";
+  if(perf){
+    const avgRpeC=perf.avgRpe?(perf.avgRpe>=9?"#D2D2D2":perf.avgRpe>=7?"#9db3c0":"#7a95a8"):"var(--muted)";
+    perfHtml=`<div class="card-perf">
+      <div class="perf-item">
+        <span class="perf-val" style="color:var(--light2)">${perf.doneCount}/${ex.sets}</span>
+        <span class="perf-lbl">SÉRIES</span>
+      </div>
+      <div class="perf-sep"></div>
+      <div class="perf-item">
+        <span class="perf-val" style="color:var(--steel2)">${perf.avgW.toFixed(1)}</span>
+        <span class="perf-lbl">KG MOY</span>
+      </div>
+      <div class="perf-sep"></div>
+      <div class="perf-item">
+        <span class="perf-val" style="color:${avgRpeC}">${perf.avgRpe?perf.avgRpe.toFixed(1):"—"}</span>
+        <span class="perf-lbl">RPE MOY</span>
+      </div>
+    </div>`;
+  }
+  
   const rows=sets.map((s,i)=>{
     const rpeC=rpeColor(s.rpe);
     return`<div class="set-row ${s.done?"done-row":""}">
@@ -534,6 +656,7 @@ function renderCard(ex,day){
       <div class="set-check ${s.done?"checked":""}" onclick="togSet('${day.id}','${ex.id}',${i})">✓</div>
     </div>`;
   }).join("");
+  
   return`<div class="card" style="border-color:${z.border}">
     <div class="card-line"></div>
     <div class="card-body">
@@ -541,6 +664,8 @@ function renderCard(ex,day){
         <div><div class="card-name">${ex.name}</div><div class="card-muscle">${ex.muscle}</div></div>
         <span class="zone-badge" style="background:${z.bg};color:${z.color};border-color:${z.border}">${ex.zone}</span>
       </div>
+      ${ex.note?`<div style="font-size:.62rem;color:var(--muted);font-style:italic;padding:0 2px;border-left:2px solid var(--steel);padding-left:7px">${ex.note}</div>`:""}
+      ${perfHtml}
       <div class="sets-table">
         <div class="sets-header">
           <span>SÉR.</span><span>KG</span><span>REPS</span><span>RPE</span><span></span>
@@ -573,16 +698,23 @@ function togCardio(dId,eId){
 function setVal(dId,eId,idx,key,val){
   const sets=S[dId][eId].sets;
   sets[idx][key]=key==="rpe"?Math.min(10,Math.max(0,parseFloat(val)||0)):(parseFloat(val)||0);
-  save();
-  // re-render only rpe color without full render for perf
-  if(key==="rpe")render();
+  save();render();
 }
 function resetDay(dId){
   DAYS.find(d=>d.id===dId).exos.forEach(e=>{
     if(e.isCardio)S[dId][e.id].done=false;
     else S[dId][e.id].sets=defaultSets(e);
   });
+  if(S.notes)delete S.notes[dId];
   save();render();
+}
+function saveNote(dId){
+  if(!S.notes)S.notes={};
+  const val=document.getElementById("noteArea")?.value||"";
+  S.notes[dId]=val;
+  save();
+  const btn=document.querySelector(".note-save-btn");
+  if(btn){btn.textContent="SAUVEGARDÉ ✓";btn.style.color="var(--steel2)";setTimeout(()=>{btn.textContent="SAUVEGARDER NOTE ✓";btn.style.color="";},1500);}
 }
 
 // ── NEXT WEEK ─────────────────────────────────────────────────────────────
@@ -594,7 +726,6 @@ function calcChanges(){
     const doneSets=sets.filter(s=>s.done).length;
     const all=doneSets>=e.sets,half=doneSets>=Math.ceil(e.sets/2);
     let delta=all?(poly(e.name)?5:2.5):half?0:-2.5;
-    // use average weight across done sets as base
     const doneW=sets.filter(s=>s.done).map(s=>s.w);
     const avgW=doneW.length?doneW.reduce((a,b)=>a+b,0)/doneW.length:e.w;
     const newW=Math.max(0,avgW+delta);
@@ -619,6 +750,7 @@ function openNext(){
   openSheet("nextOv");
 }
 function confirmNext(){
+  // save notes history too
   const snap=JSON.parse(JSON.stringify(S));snap._label=`S${S.weekNum}`;
   H=[...H.slice(-11),snap];
   DAYS.forEach(d=>pending[d.id].forEach(c=>{
@@ -626,6 +758,7 @@ function confirmNext(){
     const newW=parseFloat(c.newW);
     S[d.id][c.id].sets=S[d.id][c.id].sets.map(s=>({...s,w:newW,done:false,rpe:0}));
   }));
+  S.notes={};
   S.weekNum++;S.startDate=ad(S.startDate,7);
   save();closeSheet("nextOv");render();
 }
@@ -640,20 +773,39 @@ function renderHist(){
   const all=DAYS.flatMap(d=>d.exos.filter(e=>!e.isCardio));
   const ex=all.find(e=>e.id===selExo)||all[0];
   const data=H.map((snap,i)=>{
-    let w=null;
+    let w=null,rpe=null;
     DAYS.forEach(d=>{
       const es=snap[d.id]?.[selExo];
-      if(es?.sets){const ws=es.sets.map(s=>s.w);w=ws.reduce((a,b)=>a+b,0)/ws.length;}
+      if(es?.sets){
+        const ws=es.sets.map(s=>s.w);w=ws.reduce((a,b)=>a+b,0)/ws.length;
+        const rpes=es.sets.filter(s=>s.rpe>0).map(s=>s.rpe);
+        if(rpes.length)rpe=rpes.reduce((a,b)=>a+b,0)/rpes.length;
+      }
     });
-    return{l:snap._label||`S${i+1}`,w};
+    return{l:snap._label||`S${i+1}`,w,rpe};
   }).filter(d=>d.w!=null).slice(-6);
   const maxW=data.length?Math.max(...data.map(d=>d.w),1):1;
+  const maxRpe=10;
+
+  // build RPE trend bars
+  const rpeBars=data.length>=2&&data.some(d=>d.rpe)?`
+    <div style="margin-top:14px">
+      <div class="chart-ttl" style="margin-bottom:8px">RPE MOYEN</div>
+      <div class="rpe-mini">${data.map(d=>`
+        <div class="rpe-col">
+          ${d.rpe?`<div style="font-size:.55rem;color:var(--steel2)">${d.rpe.toFixed(1)}</div>`:""}
+          <div class="rpe-bar" style="height:${d.rpe?Math.max(4,d.rpe/maxRpe*36):4}px;background:${d.rpe>=9?"rgba(210,210,210,.4)":d.rpe>=7?"rgba(122,149,168,.4)":"rgba(89,112,129,.3)"}"></div>
+          <div class="rpe-lbl">${d.l}</div>
+        </div>`).join("")}
+      </div>
+    </div>`:"";
+
   document.getElementById("histContent").innerHTML=`
     <select class="exo-sel" onchange="selExo=this.value;renderHist()">
       ${DAYS.map(d=>`<optgroup label="${d.label} – ${d.sub}">${d.exos.filter(e=>!e.isCardio).map(e=>`<option value="${e.id}" ${e.id===selExo?"selected":""}>${e.name}</option>`).join("")}</optgroup>`).join("")}
     </select>
     <div class="chart-card">
-      <div class="chart-ttl">${ex.name}</div>
+      <div class="chart-ttl">${ex.name} — CHARGE (kg)</div>
       ${data.length<2?`<div style="color:var(--muted);font-size:.78rem;text-align:center;padding:20px">Complète 2+ semaines pour voir la progression.</div>`:`
       <div class="mini-chart">${data.map(d=>`
         <div class="bar-col">
@@ -661,7 +813,7 @@ function renderHist(){
           <div class="bar-r" style="height:${Math.max(8,d.w/maxW*70)}px"></div>
           <div class="bar-l">${d.l}</div>
         </div>`).join("")}
-      </div>`}
+      </div>${rpeBars}`}
     </div>
     ${H.length?`<div class="chips">${H.slice(-6).map((snap,i)=>{
       let w=null;
@@ -675,6 +827,23 @@ function openRecap(){
   const vol={};MUSCLES.forEach(m=>{vol[m]=0;});
   DAYS.forEach(d=>d.exos.forEach(e=>{if(e.isCardio)return;const g=mg(e.muscle);vol[g]=(vol[g]||0)+e.sets;}));
   const maxV=Math.max(...Object.values(vol),1);
+
+  // collect notes from history
+  const notesHistory=H.slice(-4).map(snap=>({
+    label:snap._label||"Sem.",
+    notes:Object.entries(snap.notes||{}).filter(([,v])=>v).map(([k,v])=>({day:k,text:v}))
+  })).filter(s=>s.notes.length).reverse();
+
+  const notesHtml=notesHistory.length?`
+    <div class="recap-card">
+      <div class="recap-ttl">JOURNAL DES SÉANCES</div>
+      ${notesHistory.map(s=>s.notes.map(n=>`
+        <div class="note-hist-item">
+          <div class="note-hist-date">${s.label} · ${n.day.toUpperCase()}</div>
+          <div class="note-hist-text">${n.text}</div>
+        </div>`).join("")).join("")}
+    </div>`:"";
+
   document.getElementById("recapSub").textContent=`S${S.weekNum} · ${fd(S.startDate)} → ${fd(ad(S.startDate,6))}`;
   document.getElementById("recapContent").innerHTML=`
     <div class="recap-card">
@@ -689,7 +858,8 @@ function openRecap(){
       <div class="recap-ttl">SURCHARGE PROGRESSIVE</div>
       ${[{sym:"↑",col:"#D2D2D2",t:"Poly +5kg / Isolation +2.5kg — toutes séries ✓"},{sym:"→",col:"#9db3c0",t:"Même charge — reps minimales atteintes"},{sym:"↓",col:"#597081",t:"−2.5kg — reps minimales non atteintes"}].map(r=>`
         <div class="rule-item"><span class="rule-sym" style="color:${r.col}">${r.sym}</span><span class="rule-desc">${r.t}</span></div>`).join("")}
-    </div>`;
+    </div>
+    ${notesHtml}`;
   openSheet("recapOv");
 }
 
