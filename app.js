@@ -26,12 +26,19 @@ const ZONES = {
 const ZONE_LIST = ["Force","Hypertrophie","Métabolique","Avant-bras","Cardio"];
 
 // ── DAYS (méta) ───────────────────────────────────────────────────────────
+// Chaque jour a sa propre couleur d'accent (utilisée dans le thème)
 const DAYS_META = [
-  { id:"lundi",    label:"LUNDI",    sub:"Upper A · Push",            color:"#7a95a8" },
-  { id:"mardi",    label:"MARDI",    sub:"Lower A · Quad",            color:"#9db3c0" },
-  { id:"jeudi",    label:"JEUDI",    sub:"Upper B · Pull",            color:"#D2D2D2" },
-  { id:"vendredi", label:"VENDREDI", sub:"Lower B · Ischio/Fessier",  color:"#597081" },
+  { id:"lundi",    label:"LUNDI",    sub:"Upper A · Push",            color:"#E05A4F", rgb:"224,90,79"  },
+  { id:"mardi",    label:"MARDI",    sub:"Lower A · Quad",            color:"#E0A24A", rgb:"224,162,74" },
+  { id:"jeudi",    label:"JEUDI",    sub:"Upper B · Pull",            color:"#5AB1D4", rgb:"90,177,212" },
+  { id:"vendredi", label:"VENDREDI", sub:"Lower B · Ischio/Fessier",  color:"#A570D4", rgb:"165,112,212"},
 ];
+
+function applyDayTheme(day){
+  const r = document.documentElement;
+  r.style.setProperty('--day-c', day.color);
+  r.style.setProperty('--day-rgb', day.rgb);
+}
 
 // ── PROGRAMME PAR DÉFAUT ──────────────────────────────────────────────────
 const DEFAULT_EXOS = {
@@ -267,6 +274,7 @@ function rpeColor(v){ if (!v) return "rgba(89,112,129,.3)"; if (v>=9) return "#D
 
 function render(){
   const day = DAYS_META[aDay];
+  applyDayTheme(day);
   const pg = dayPg(day.id), fat = dayFatigue(day.id);
 
   let fatHtml = "";
@@ -533,13 +541,14 @@ function resetDay(dId){
 
 // ── PROGRESSION INTELLIGENTE (RPE-aware) ──────────────────────────────────
 // Logique :
-//  - Échec (< moitié des séries faites) → -2.5kg
+//  - 0 série faite (séance non faite) → maintien total (mêmes charges & reps)
+//  - Échec (1 à <moitié des séries faites) → -2.5 kg
 //  - Partiel (moitié à toutes-1) → maintien
 //  - Toutes séries ✓ :
 //      RPE moyen ≥ 9   → maintien (consolider, on est à la limite)
 //      RPE moyen 7.5-9 → +1 rep (intensité élevée → augmenter volume)
 //      RPE moyen < 7.5 → +charge (poly +5, iso +2.5) (séance facile)
-//      RPE non renseigné → +charge par défaut (legacy)
+//      RPE non renseigné → +charge par défaut
 function calcChanges(){
   const r = {};
   DAYS_META.forEach(d => {
@@ -549,30 +558,35 @@ function calcChanges(){
       const sets = S.data[d.id][e.id]?.sets || [];
       const doneSets = sets.filter(s => s.done);
       const total = e.sets;
+      const noneDone = doneSets.length === 0;
       const all = doneSets.length >= total;
       const half = doneSets.length >= Math.ceil(total/2);
 
       const avgW = doneSets.length ? doneSets.reduce((a,s)=>a + (parseFloat(s.w)||0), 0) / doneSets.length : e.w;
-      const avgReps = doneSets.length ? doneSets.reduce((a,s)=>a + (parseFloat(s.reps)||0), 0) / doneSets.length : 0;
       const rpes = doneSets.filter(s => s.rpe>0);
       const avgRpe = rpes.length ? rpes.reduce((a,s)=>a+s.rpe,0) / rpes.length : null;
 
-      let mode = "hold", deltaW = 0, deltaReps = 0, reason = "Maintien", hint = "";
+      let mode = "hold", deltaW = 0, reason = "Maintien", hint = "";
       let newW = avgW, newReps = e.reps;
 
-      if (!half) {
+      if (noneDone) {
+        // SÉANCE NON FAITE → on garde tout à l'identique
+        mode = "skip"; reason = "Non faite";
+        hint = "Séance non faite → mêmes charges & reps";
+        newW = e.w; // garde la charge prévue (pas une moyenne sur rien)
+      } else if (!half) {
         mode = "down"; deltaW = -2.5; reason = "Échec";
         hint = "Reps min. non atteintes → charge réduite";
       } else if (!all) {
         mode = "hold"; reason = "Partiel";
-        hint = "Pas toutes les séries faites → on consolide";
+        hint = "Pas toutes les séries → on consolide";
       } else {
         // Toutes les séries ✓
         if (avgRpe !== null && avgRpe >= 9) {
           mode = "hold"; reason = `RPE ${avgRpe.toFixed(1)}`;
           hint = "Très dur — on consolide la charge";
         } else if (avgRpe !== null && avgRpe >= 7.5) {
-          mode = "reps"; deltaReps = 1; reason = `RPE ${avgRpe.toFixed(1)}`;
+          mode = "reps"; reason = `RPE ${avgRpe.toFixed(1)}`;
           hint = "Intensité bonne → +1 rep cible";
           newReps = bumpReps(e.reps, 1);
         } else {
@@ -582,8 +596,8 @@ function calcChanges(){
         }
       }
 
-      newW = Math.max(0, avgW + deltaW);
-      const status = mode === "up" ? "↑kg" : mode === "reps" ? "↑rep" : mode === "down" ? "↓kg" : "→";
+      if (mode !== "skip") newW = Math.max(0, avgW + deltaW);
+      const status = mode === "up" ? "↑kg" : mode === "reps" ? "↑rep" : mode === "down" ? "↓kg" : mode === "skip" ? "—" : "→";
 
       return {
         id: e.id, name: e.name,
@@ -614,9 +628,16 @@ function openNext(){
     <div class="day-grp">
       <div class="day-grp-title"><div class="day-dot"></div>${d.label} · ${d.sub}</div>
       ${pending[d.id].map(c => {
-        const col = c.status.includes("↑") ? "#D2D2D2" : c.status.includes("↓") ? "#597081" : "#9db3c0";
-        const bg = c.status.includes("↑") ? "rgba(210,210,210,.12)" : c.status.includes("↓") ? "rgba(89,112,129,.12)" : "rgba(89,112,129,.08)";
-        const txt = c.mode === "reps" ? `${c.oldReps} → ${c.newReps} reps`
+        const col = c.status.includes("↑") ? "#9be0a3"
+                  : c.status.includes("↓") ? "#e07a7a"
+                  : c.mode === "skip" ? "#666"
+                  : "#9db3c0";
+        const bg = c.status.includes("↑") ? "rgba(155,224,163,.10)"
+                 : c.status.includes("↓") ? "rgba(224,122,122,.10)"
+                 : c.mode === "skip" ? "rgba(120,120,120,.10)"
+                 : "rgba(89,112,129,.08)";
+        const txt = c.mode === "skip" ? `${c.oldReps} reps · ${parseFloat(c.newW)} kg`
+                  : c.mode === "reps" ? `${c.oldReps} → ${c.newReps} reps`
                   : c.mode === "cardio" ? "—"
                   : `${c.oldW} → ${c.newW} kg`;
         return `<div class="ch-item" style="flex-wrap:wrap">
@@ -638,10 +659,16 @@ function confirmNext(){
 
   DAYS_META.forEach(d => pending[d.id].forEach(c => {
     const ex = dayExos(d.id).find(e => e.id === c.id);
-    if (!ex || ex.isCardio) return;
-    if (c.mode === "reps") {
+    if (!ex) return;
+    if (ex.isCardio) {
+      if (S.data[d.id][c.id]) S.data[d.id][c.id].done = false;
+      return;
+    }
+    if (c.mode === "skip") {
+      // séance non faite → on garde charges & reps à l'identique, on remet juste les ✓ et RPE à zéro
+      S.data[d.id][c.id].sets = S.data[d.id][c.id].sets.map(s => ({ ...s, done:false, rpe:0 }));
+    } else if (c.mode === "reps") {
       ex.reps = c.newReps;
-      // garde même charge sur les séries
       S.data[d.id][c.id].sets = S.data[d.id][c.id].sets.map(s => ({ ...s, reps: String(c.newReps).split("-")[0]||c.newReps, done:false, rpe:0 }));
     } else {
       const newW = parseFloat(c.newW);
@@ -743,10 +770,11 @@ function openRecap(){
     <div class="recap-card">
       <div class="recap-ttl">PROGRESSION INTELLIGENTE</div>
       ${[
-        {sym:"↑kg",col:"#D2D2D2",t:"Toutes ✓ + RPE < 7.5 → poly +5kg / isolation +2.5kg"},
-        {sym:"↑rep",col:"#9db3c0",t:"Toutes ✓ + RPE 7.5-9 → +1 rep cible"},
+        {sym:"↑kg",col:"#9be0a3",t:"Toutes ✓ + RPE < 7.5 → poly +5kg / isolation +2.5kg"},
+        {sym:"↑rep",col:"#5AB1D4",t:"Toutes ✓ + RPE 7.5-9 → +1 rep cible"},
         {sym:"→",col:"#9db3c0",t:"Maintien : RPE ≥ 9 ou séries partielles"},
-        {sym:"↓kg",col:"#597081",t:"Échec (< moitié des séries) → −2.5kg"},
+        {sym:"↓kg",col:"#e07a7a",t:"Échec (< moitié des séries) → −2.5kg"},
+        {sym:"—",col:"#888",t:"Séance non faite (0 série) → mêmes charges & reps"},
       ].map(r => `
         <div class="rule-item"><span class="rule-sym" style="color:${r.col}">${r.sym}</span><span class="rule-desc">${r.t}</span></div>`).join("")}
     </div>`;
