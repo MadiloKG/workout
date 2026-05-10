@@ -16,6 +16,7 @@ document.addEventListener('touchend', e => {
 // ── CONSTANTES ────────────────────────────────────────────────────────────
 const POLY = ["Leg Press","Fentes","Tractions","Rowing","RDL","Hip Thrust","Développé couché","Dips"];
 const REST_T = { Force:180, Hypertrophie:90, Métabolique:60, "Avant-bras":60, Cardio:0 };
+const INTER_EXO_REST = 120; // 2 min de récup entre exercices (après dernière série)
 const ZONES = {
   Force:        {color:"#7a95a8", bg:"rgba(89,112,129,.12)", border:"rgba(89,112,129,.3)"},
   Hypertrophie: {color:"#D2D2D2", bg:"rgba(210,210,210,.08)", border:"rgba(210,210,210,.2)"},
@@ -237,11 +238,52 @@ function exoPerf(dId, eId){
 // ── TIMER ─────────────────────────────────────────────────────────────────
 let tIv=null, tTotal=0, tLeft=0, tPaused=false;
 const CIRC = 2 * Math.PI * 80;
-function startTimer(exo){
-  const sec = REST_T[exo.zone] || 90;
+
+// Détermine la durée de la prochaine récup pour l'affichage du bouton
+// (durée AVANT que la prochaine série ne soit validée)
+function nextRestSec(dId, eId, ex){
+  if (ex.isCardio) return 0;
+  const sets = S.data[dId]?.[eId]?.sets || [];
+  const nextIdx = sets.findIndex(s => !s.done);
+  // Si la prochaine série à valider est la dernière (ou si tout est déjà fait)
+  // → c'est un repos inter-exercices de 2 min
+  const willBeLast = nextIdx === -1 || nextIdx === sets.length - 1;
+  return willBeLast ? INTER_EXO_REST : (REST_T[ex.zone] || 90);
+}
+function fmtSec(s){
+  if (s < 60) return `${s}s`;
+  if (s % 60 === 0) return `${s/60}min`;
+  const m = Math.floor(s/60), r = s % 60;
+  return `${m}:${String(r).padStart(2,"0")}`;
+}
+
+// Démarre le timer ET auto-valide la prochaine série non-cochée
+function startTimer(dId, eId){
+  const ex = dayExos(dId).find(e => e.id === eId);
+  if (!ex || ex.isCardio) return;
+
+  const sets = S.data[dId][eId]?.sets || [];
+  const nextIdx = sets.findIndex(s => !s.done);
+
+  let validatedLast = false;
+  if (nextIdx >= 0) {
+    sets[nextIdx].done = true;
+    validatedLast = (nextIdx === sets.length - 1);
+    save();
+    rerenderCard(dId, eId);
+    refreshFatigueBar();
+  } else {
+    // Toutes déjà ✓ → on enchaîne vers l'inter-exo
+    validatedLast = true;
+  }
+
+  const sec = validatedLast ? INTER_EXO_REST : (REST_T[ex.zone] || 90);
   if (!sec) { showBankai(); return; }
+
   tTotal = sec; tLeft = sec; tPaused = false;
-  document.getElementById("tName").textContent = exo.name.toUpperCase();
+  document.getElementById("tName").textContent = ex.name.toUpperCase();
+  const sub = document.getElementById("tSubLabel");
+  if (sub) sub.textContent = validatedLast ? "EXERCICE SUIVANT" : "RÉCUPÉRATION";
   document.getElementById("tPause").textContent = "⏸";
   document.getElementById("tOv").classList.add("open");
   updT(); clearInterval(tIv); tIv = setInterval(tick, 1000);
@@ -345,7 +387,9 @@ function render(){
 
 function renderCard(ex, day){
   const z = ZONES[ex.zone] || ZONES["Hypertrophie"];
-  const rl = restLbl(ex.zone);
+  const nextSec = nextRestSec(day.id, ex.id, ex);
+  const rl = fmtSec(nextSec);
+  const isInter = !ex.isCardio && nextSec === INTER_EXO_REST;
 
   if (ex.isCardio) {
     const done = S.data[day.id][ex.id]?.done;
@@ -422,10 +466,10 @@ function renderCard(ex, day){
         </div>
         ${rows}
       </div>
-      <div class="timer-btn" onclick='startTimer(${JSON.stringify({id:ex.id,name:ex.name,zone:ex.zone}).replace(/'/g,"&#39;")})'>
+      <div class="timer-btn" onclick="startTimer('${day.id}','${ex.id}')">
         <div class="timer-btn-l">
           <div class="timer-icon">⏱</div>
-          <span>Récupération</span>
+          <span>${isInter ? "Inter-exercice" : "Récupération"}</span>
         </div>
         <span class="timer-dur">${rl}</span>
       </div>
