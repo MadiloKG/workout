@@ -14,25 +14,26 @@ document.addEventListener('touchend', e => {
 }, { passive: false });
 
 // ── CONSTANTES ────────────────────────────────────────────────────────────
-const POLY = ["Leg Press","Fentes","Tractions","Rowing","RDL","Hip Thrust","Développé couché","Dips"];
-const REST_T = { Force:180, Hypertrophie:90, Métabolique:60, "Avant-bras":60, Cardio:0 };
-const INTER_EXO_REST = 120; // 2 min de récup entre exercices (après dernière série)
+const POLY = ["Leg Press","Hack Squat","Squat","Fentes","Tractions","Rowing","Tirage","RDL","Hip Thrust","Développé","Dips","Thruster","Push Press"];
+// Récup : puissance/force = récup longue (SNC frais). Explosif = repos complet.
+const REST_T = { Explosif:180, Force:180, Hypertrophie:90, Métabolique:60, "Avant-bras":60, Cardio:0 };
+const INTER_EXO_REST = 150; // 2min30 de récup entre exercices (programme lourd)
 const ZONES = {
-  Force:        {color:"#7a95a8", bg:"rgba(89,112,129,.12)", border:"rgba(89,112,129,.3)"},
-  Hypertrophie: {color:"#D2D2D2", bg:"rgba(210,210,210,.08)", border:"rgba(210,210,210,.2)"},
-  Métabolique:  {color:"#9db3c0", bg:"rgba(89,112,129,.1)",  border:"rgba(89,112,129,.25)"},
-  "Avant-bras": {color:"#597081", bg:"rgba(89,112,129,.1)",  border:"rgba(89,112,129,.22)"},
-  Cardio:       {color:"#aaaaaa", bg:"rgba(210,210,210,.06)", border:"rgba(210,210,210,.15)"},
+  Explosif:     {color:"#F4B15E", bg:"rgba(224,138,60,.13)",  border:"rgba(224,138,60,.34)"},
+  Force:        {color:"#8FB0C4", bg:"rgba(91,118,136,.14)",  border:"rgba(91,118,136,.32)"},
+  Hypertrophie: {color:"#DCE6EE", bg:"rgba(199,214,224,.07)", border:"rgba(199,214,224,.18)"},
+  Métabolique:  {color:"#7FB2D0", bg:"rgba(127,178,208,.10)", border:"rgba(127,178,208,.24)"},
+  "Avant-bras": {color:"#5B7688", bg:"rgba(91,118,136,.10)",  border:"rgba(91,118,136,.22)"},
+  Cardio:       {color:"#9aa6ad", bg:"rgba(199,214,224,.05)", border:"rgba(199,214,224,.14)"},
 };
-const ZONE_LIST = ["Force","Hypertrophie","Métabolique","Avant-bras","Cardio"];
+const ZONE_LIST = ["Explosif","Force","Hypertrophie","Métabolique","Cardio"];
 
 // ── DAYS (méta) ───────────────────────────────────────────────────────────
 // Chaque jour a sa propre couleur d'accent (utilisée dans le thème)
 const DAYS_META = [
-  { id:"lundi",    label:"LUNDI",    sub:"Upper A · Push",            color:"#E05A4F", rgb:"224,90,79"  },
-  { id:"mardi",    label:"MARDI",    sub:"Lower A · Quad",            color:"#E0A24A", rgb:"224,162,74" },
-  { id:"jeudi",    label:"JEUDI",    sub:"Upper B · Pull",            color:"#5AB1D4", rgb:"90,177,212" },
-  { id:"vendredi", label:"VENDREDI", sub:"Lower B · Ischio/Fessier",  color:"#A570D4", rgb:"165,112,212"},
+  { id:"lundi",    label:"LUNDI",    sub:"Push · Power",     color:"#7FB2D0", rgb:"127,178,208" },
+  { id:"mercredi", label:"MERCREDI", sub:"Pull · Hinge",     color:"#6C86B8", rgb:"108,134,184" },
+  { id:"vendredi", label:"VENDREDI", sub:"Athletic · Total", color:"#E08A3C", rgb:"224,138,60"  },
 ];
 
 function applyDayTheme(day){
@@ -43,45 +44,37 @@ function applyDayTheme(day){
 
 // ── PROGRAMME PAR DÉFAUT ──────────────────────────────────────────────────
 const DEFAULT_EXOS = {
+  // ── LUNDI · PUSH / POWER ────────────────────────────────────────────────
   lundi: [
-    {id:"dci",   name:"Développé couché incliné",    muscle:"Pectoraux sup.",       w:17.5, unit:"kg/côté",    sets:4, reps:"6-8",   zone:"Force",        note:"Premier exercice, pectoraux frais. RPE cible 7-8."},
-    {id:"dips",  name:"Dips lestés",                 muscle:"Pectoraux bas / Triceps", w:5,  unit:"kg lest",   sets:3, reps:"10-12", zone:"Hypertrophie", note:"Remplace DCP. Même stim pec/tri, moins de fatigue articulaire."},
-    {id:"pd",    name:"Pec Deck machine",            muscle:"Pectoraux (fin.)",     w:30,   unit:"kg",         sets:3, reps:"15-20", zone:"Métabolique",  note:"Finition isolation."},
-    {id:"dem",   name:"Développé épaules machine",   muscle:"Deltoïdes ant.",       w:22,   unit:"kg",         sets:3, reps:"10-12", zone:"Hypertrophie"},
-    {id:"elc",   name:"Élévations latérales câble",  muscle:"Deltoïdes lat.",       w:5,    unit:"kg/côté",    sets:4, reps:"15-20", zone:"Métabolique"},
-    {id:"etc",   name:"Extension triceps corde",     muscle:"Triceps",              w:17.5, unit:"kg",         sets:3, reps:"10-12", zone:"Hypertrophie"},
-    {id:"sk",    name:"Skull crusher haltères",      muscle:"Triceps long",         w:8,    unit:"kg/côté",    sets:3, reps:"10-12", zone:"Hypertrophie"},
-    {id:"hiit_l",name:"HIIT vélo elliptique",        muscle:"Cardio",               w:8,    unit:"intervalles",sets:1, reps:"8×30s", zone:"Cardio", isCardio:true},
+    {id:"pushpress", name:"Développé militaire explosif haltères", muscle:"Épaules / Explosif",     w:14,   unit:"kg/main", sets:4, reps:"3",   zone:"Explosif",     note:"OUVERTURE À SEC. Pousse le plus VITE possible, jambes qui aident (push press). Jamais à l'échec — récup complète entre séries. C'est ça qui te rend explosif."},
+    {id:"inc",       name:"Développé incliné Hammer Strength",     muscle:"Pectoraux sup.",         w:27.5, unit:"kg/côté", sets:2, reps:"6-8", zone:"Force",        note:"Lourd. 1 rép en réserve sur la série 1, échec technique sur la série 2. Explosif à la poussée, contrôlé à la descente."},
+    {id:"pull",      name:"Tractions lestées",                     muscle:"Dos / Biceps",           w:5,    unit:"kg lest", sets:2, reps:"6-8", zone:"Force",        note:"Tire vite, redescends lentement. Dès que tu passes 8 reps, ajoute du lest. Si tu ne tiens pas 6 lestées, fais-les au poids du corps."},
+    {id:"ohp",       name:"Développé épaules Hammer Strength",     muscle:"Épaules",                w:22,   unit:"kg/côté", sets:2, reps:"6-8", zone:"Force",        note:"Puissance verticale. Gainage serré."},
+    {id:"dip",       name:"Dips lestés",                           muscle:"Pectoraux bas / Triceps",w:10,   unit:"kg lest", sets:2, reps:"8-10",zone:"Hypertrophie", note:"À l'échec sur les 2 séries. Descente contrôlée, poussée sèche."},
+    {id:"carry",     name:"Farmer's carry lourd",                  muscle:"Avant-bras / Core",      w:24,   unit:"kg/main", sets:2, reps:"30m", zone:"Métabolique",  note:"Le plus lourd possible en gardant une posture haute. Grip + gainage antichute."},
+    {id:"sm1",       name:"Skillmill · sprints",                   muscle:"Cardio",                 w:0,    unit:"6×20s",   sets:1, reps:"6×20s max", zone:"Cardio", isCardio:true, note:"Accélérations à fond, 40s de récup. Puissance jambes + condition."},
   ],
-  mardi: [
-    {id:"lp",    name:"Leg Press",            muscle:"Quadriceps",       w:120, unit:"kg",        sets:4, reps:"6-8",    zone:"Force",        note:"Quadriceps frais. Amplitude complète, genoux à 90°."},
-    {id:"fb",    name:"Fentes bulgares",      muscle:"Quad / Fessiers",  w:10,  unit:"kg/main",   sets:3, reps:"10/jambe", zone:"Hypertrophie", note:"Avant Leg Extension pour stabilité."},
-    {id:"le",    name:"Leg Extension",        muscle:"Quad (iso)",       w:40,  unit:"kg",        sets:3, reps:"15-20",  zone:"Métabolique"},
-    {id:"lcc",   name:"Leg Curl couché",      muscle:"Ischio-jambiers",  w:42,  unit:"kg",        sets:4, reps:"10-12",  zone:"Hypertrophie", note:"Ischio frais, pas pré-fatigués."},
-    {id:"cm",    name:"Crunch machine",       muscle:"Abdominaux",       w:10,  unit:"kg",        sets:3, reps:"12-15",  zone:"Hypertrophie"},
-    {id:"pp",    name:"Pallof Press câble",   muscle:"Core / Obliques",  w:8,   unit:"kg",        sets:3, reps:"12/côté", zone:"Hypertrophie"},
-    {id:"liss_m",name:"LISS Rameur",          muscle:"Cardio",           w:0,   unit:"20min",     sets:1, reps:"65% FC max", zone:"Cardio", isCardio:true},
+  // ── MERCREDI · PULL / HINGE ─────────────────────────────────────────────
+  mercredi: [
+    {id:"swing",  name:"Swing haltère balistique",           muscle:"Fessiers / Explosif",  w:24, unit:"kg",      sets:5, reps:"5",   zone:"Explosif",     note:"OUVERTURE À SEC. Projection sèche des hanches, pas les bras. Explosif, jamais à l'échec. Réveille la chaîne postérieure."},
+    {id:"rdl",    name:"RDL haltères",                       muscle:"Ischio / Fessiers",    w:20, unit:"kg/main", sets:2, reps:"6-8", zone:"Force",        note:"Lourd, dos neutre, 1 rép en réserve. Étirement contrôlé, remontée puissante."},
+    {id:"row",    name:"Rowing Hammer Strength",             muscle:"Dos (épaisseur)",      w:40, unit:"kg/côté", sets:2, reps:"6-8", zone:"Force",        note:"Tire fort vers le bas des côtes, coudes serrés. Explosif à la traction."},
+    {id:"press",  name:"Développé couché Hammer Strength",   muscle:"Pectoraux",            w:30, unit:"kg/côté", sets:2, reps:"6-8", zone:"Force",        note:"Push horizontal lourd. Barre/poignées rapides à la poussée."},
+    {id:"bulg",   name:"Fentes bulgares haltères",           muscle:"Quad / Fessiers",      w:14, unit:"kg/main", sets:2, reps:"8",   zone:"Hypertrophie", note:"8 reps PAR JAMBE, à l'échec. Stabilité, équilibre et mobilité de hanche."},
+    {id:"curl",   name:"Curl haltères",                      muscle:"Biceps",               w:14, unit:"kg/côté", sets:2, reps:"8-10",zone:"Hypertrophie", note:"À l'échec. Pas de balancier."},
+    {id:"hang",   name:"Relevés de jambes suspendu",         muscle:"Abdominaux",           w:0,  unit:"pds corps",sets:2, reps:"10-12", zone:"Métabolique", note:"Gainage + grip. Contrôle la descente, pas d'élan."},
+    {id:"sm2",    name:"Rameur · LISS",                      muscle:"Cardio",               w:0,  unit:"12min",   sets:1, reps:"12min",   zone:"Cardio", isCardio:true, note:"Allure régulière, respiration nasale. Récup active."},
   ],
-  jeudi: [
-    {id:"tr",    name:"Tractions lestées",            muscle:"Dos / Biceps",    w:5,  unit:"kg lest",  sets:4, reps:"6-8",   zone:"Force",        note:"Dos frais. RPE 7-8. Dead hang en bas."},
-    {id:"rhs",   name:"Rowing Hammer Strength",       muscle:"Dos (épaisseur)", w:30, unit:"kg/côté",  sets:4, reps:"8-10",  zone:"Hypertrophie", note:"Avant Tirage poitrine : dos encore frais."},
-    {id:"tp",    name:"Tirage poitrine câble",        muscle:"Dos (largeur)",   w:50, unit:"kg",       sets:3, reps:"10-12", zone:"Hypertrophie"},
-    {id:"fp",    name:"Face Pull câble corde",        muscle:"Deltoïdes post.", w:12, unit:"kg",       sets:4, reps:"15-20", zone:"Métabolique"},
-    {id:"sh",    name:"Shrug haltères",               muscle:"Trapèzes",        w:14, unit:"kg/main",  sets:3, reps:"12-15", zone:"Métabolique"},
-    {id:"cb",    name:"Curl biceps supination",       muscle:"Biceps",          w:10, unit:"kg/côté",  sets:3, reps:"10-12", zone:"Hypertrophie"},
-    {id:"cm2",   name:"Curl marteau",                 muscle:"Brachial / Biceps", w:12, unit:"kg/côté",sets:3, reps:"10-12", zone:"Hypertrophie"},
-    {id:"wc",    name:"Wrist curl",                   muscle:"Avant-bras",      w:7,  unit:"kg",       sets:2, reps:"12-15", zone:"Avant-bras"},
-    {id:"rvc",   name:"Reverse curl",                 muscle:"Avant-bras ext.", w:8,  unit:"kg",       sets:2, reps:"12-15", zone:"Avant-bras"},
-  ],
+  // ── VENDREDI · ATHLETIC / TOTAL ─────────────────────────────────────────
   vendredi: [
-    {id:"rdl",   name:"RDL haltères",          muscle:"Ischio / Fessiers", w:15, unit:"kg/main",   sets:4, reps:"8-10",   zone:"Hypertrophie", note:"Chaîne post fraîche. Mouvement technique lourd."},
-    {id:"ht",    name:"Hip Thrust machine",    muscle:"Fessiers",          w:70, unit:"kg",        sets:4, reps:"10-12",  zone:"Hypertrophie", note:"Fessiers pré-activés par le RDL."},
-    {id:"lca",   name:"Leg Curl assis",        muscle:"Ischio-jambiers",   w:35, unit:"kg",        sets:3, reps:"15-20",  zone:"Métabolique"},
-    {id:"fmv",   name:"Fentes marchées",       muscle:"Quad / Fessiers",   w:10, unit:"kg/main",   sets:3, reps:"10/jambe", zone:"Hypertrophie"},
-    {id:"mol",   name:"Mollets machine",       muscle:"Mollets",           w:50, unit:"kg",        sets:4, reps:"15-20",  zone:"Métabolique"},
-    {id:"rj",    name:"Relevés de jambes",     muscle:"Abdominaux bas",    w:0,  unit:"pds corps", sets:3, reps:"12-15",  zone:"Hypertrophie"},
-    {id:"fc",    name:"Farmer's carry",        muscle:"Avant-bras / Core", w:18, unit:"kg/main",   sets:3, reps:"25m",    zone:"Avant-bras"},
-    {id:"hiit_v",name:"HIIT Skillmill",        muscle:"Cardio",            w:6,  unit:"intervalles", sets:1, reps:"6×40s", zone:"Cardio", isCardio:true},
+    {id:"thruster", name:"Thruster haltères explosif",        muscle:"Quadriceps / Explosif", w:16, unit:"kg/main", sets:4, reps:"4",   zone:"Explosif",     note:"OUVERTURE À SEC. Squat → poussée en un geste explosif, full body. Vitesse max, jamais à l'échec."},
+    {id:"hack",     name:"Hack Squat",                        muscle:"Quadriceps",            w:80, unit:"kg",      sets:2, reps:"6-8", zone:"Force",        note:"Bas du corps lourd, amplitude complète, remontée explosive. (Pas de Hack ? Leg Press ~185kg.)"},
+    {id:"ht",       name:"Hip Thrust machine",                muscle:"Fessiers",              w:80, unit:"kg",      sets:2, reps:"8-10",zone:"Force",        note:"Puissance des hanches. Verrouille 1s en haut, fessiers contractés à fond."},
+    {id:"dipv",     name:"Dips lestés",                       muscle:"Pectoraux bas / Triceps",w:12,unit:"kg lest", sets:2, reps:"6-8", zone:"Force",        note:"Version lourde. Explosif à la poussée."},
+    {id:"row2",     name:"Tirage horizontal câble",           muscle:"Dos (largeur)",         w:55, unit:"kg",      sets:2, reps:"6-8", zone:"Force",        note:"Rétracte les omoplates, tire vers le nombril."},
+    {id:"cossack",  name:"Cossack squat + mobilité hanche",   muscle:"Quad / Mobilité",       w:8,  unit:"kg",      sets:2, reps:"6",   zone:"Hypertrophie", note:"6 reps PAR CÔTÉ. Grande amplitude — mobilité hanche/cheville, agilité et contrôle."},
+    {id:"rot",      name:"Rotation câble anti-rotation",      muscle:"Core / Obliques",       w:15, unit:"kg",      sets:2, reps:"12",  zone:"Métabolique",  note:"12 PAR CÔTÉ. Transfert de force par le tronc — la vraie source de puissance athlétique."},
+    {id:"sm3",      name:"Skillmill · agilité",               muscle:"Cardio",                w:0,  unit:"6×20s",   sets:1, reps:"6×20s",   zone:"Cardio", isCardio:true, note:"Changements de rythme et de vitesse. Pieds rapides, agilité + condition."},
   ],
 };
 
@@ -296,7 +289,7 @@ function updT(){
   const p = document.getElementById("tProg");
   p.style.strokeDashoffset = off;
   const ratio = 1-r;
-  p.style.stroke = ratio<.5 ? "#597081" : ratio<.8 ? "#9db3c0" : "#D2D2D2";
+  p.style.stroke = ratio<.5 ? "#5B7688" : ratio<.8 ? "#7FB2D0" : "#DCE6EE";
 }
 function togglePause(){ tPaused = !tPaused; document.getElementById("tPause").textContent = tPaused ? "▶" : "⏸"; }
 function skipTimer(){ clearInterval(tIv); closeTimer(); showBankai(); }
@@ -312,7 +305,7 @@ function showBankai(){
 function closeBankai(){ document.getElementById("bkOv").classList.remove("open"); }
 
 // ── RENDER ────────────────────────────────────────────────────────────────
-function rpeColor(v){ if (!v) return "rgba(89,112,129,.3)"; if (v>=9) return "#D2D2D2"; if (v>=7) return "#9db3c0"; return "#597081"; }
+function rpeColor(v){ if (!v) return "rgba(91,118,136,.32)"; if (v>=9) return "#F4B15E"; if (v>=7) return "#7FB2D0"; return "#5B7688"; }
 
 function render(){
   const day = DAYS_META[aDay];
@@ -321,13 +314,13 @@ function render(){
 
   let fatHtml = "";
   if (fat.avgRpe !== null) {
-    const rpeC = fat.avgRpe>=9 ? "#D2D2D2" : fat.avgRpe>=7 ? "#9db3c0" : "#597081";
-    const rpeBg = fat.avgRpe>=9 ? "rgba(210,210,210,.1)" : fat.avgRpe>=7 ? "rgba(89,112,129,.1)" : "rgba(89,112,129,.06)";
+    const rpeC = fat.avgRpe>=9 ? "#F4B15E" : fat.avgRpe>=7 ? "#7FB2D0" : "#5B7688";
+    const rpeBg = fat.avgRpe>=9 ? "rgba(224,138,60,.12)" : fat.avgRpe>=7 ? "rgba(127,178,208,.10)" : "rgba(91,118,136,.08)";
     fatHtml += `<span class="f-chip" style="color:${rpeC};background:${rpeBg};border-color:${rpeC}">RPE moy. ${fat.avgRpe}</span>`;
   }
   if (fat.repEff !== null) {
-    const effC = fat.repEff>=90 ? "#9db3c0" : fat.repEff>=70 ? "#7a95a8" : "#597081";
-    const effBg = fat.repEff>=90 ? "rgba(89,112,129,.1)" : "rgba(89,112,129,.06)";
+    const effC = fat.repEff>=90 ? "#7FB2D0" : fat.repEff>=70 ? "#8FB0C4" : "#5B7688";
+    const effBg = fat.repEff>=90 ? "rgba(127,178,208,.10)" : "rgba(91,118,136,.08)";
     fatHtml += `<span class="f-chip" style="color:${effC};background:${effBg};border-color:${effC}">Eff. reps ${fat.repEff}%</span>`;
   }
 
@@ -480,7 +473,7 @@ function renderCard(ex, day){
 function renderPerfHtml(dId, ex) {
   const perf = exoPerf(dId, ex.id);
   if (!perf) return "";
-  const avgRpeC = perf.avgRpe ? (perf.avgRpe>=9 ? "#D2D2D2" : perf.avgRpe>=7 ? "#9db3c0" : "#7a95a8") : "var(--muted)";
+  const avgRpeC = perf.avgRpe ? (perf.avgRpe>=9 ? "#F4B15E" : perf.avgRpe>=7 ? "#7FB2D0" : "#8FB0C4") : "var(--muted)";
   return `<div class="card-perf">
     <div class="perf-item">
       <span class="perf-val" style="color:var(--light2)">${perf.doneCount}/${ex.sets}</span>
@@ -517,13 +510,13 @@ function refreshFatigueBar() {
   if ($c) {
     let html = "";
     if (fat.avgRpe !== null) {
-      const rpeC = fat.avgRpe>=9 ? "#D2D2D2" : fat.avgRpe>=7 ? "#9db3c0" : "#597081";
-      const rpeBg = fat.avgRpe>=9 ? "rgba(210,210,210,.1)" : fat.avgRpe>=7 ? "rgba(89,112,129,.1)" : "rgba(89,112,129,.06)";
+      const rpeC = fat.avgRpe>=9 ? "#F4B15E" : fat.avgRpe>=7 ? "#7FB2D0" : "#5B7688";
+      const rpeBg = fat.avgRpe>=9 ? "rgba(224,138,60,.12)" : fat.avgRpe>=7 ? "rgba(127,178,208,.10)" : "rgba(91,118,136,.08)";
       html += `<span class="f-chip" style="color:${rpeC};background:${rpeBg};border-color:${rpeC}">RPE moy. ${fat.avgRpe}</span>`;
     }
     if (fat.repEff !== null) {
-      const effC = fat.repEff>=90 ? "#9db3c0" : fat.repEff>=70 ? "#7a95a8" : "#597081";
-      const effBg = fat.repEff>=90 ? "rgba(89,112,129,.1)" : "rgba(89,112,129,.06)";
+      const effC = fat.repEff>=90 ? "#7FB2D0" : fat.repEff>=70 ? "#8FB0C4" : "#5B7688";
+      const effBg = fat.repEff>=90 ? "rgba(127,178,208,.10)" : "rgba(91,118,136,.08)";
       html += `<span class="f-chip" style="color:${effC};background:${effBg};border-color:${effC}">Eff. reps ${fat.repEff}%</span>`;
     }
     $c.innerHTML = html;
@@ -672,14 +665,14 @@ function openNext(){
     <div class="day-grp">
       <div class="day-grp-title"><div class="day-dot"></div>${d.label} · ${d.sub}</div>
       ${pending[d.id].map(c => {
-        const col = c.status.includes("↑") ? "#9be0a3"
-                  : c.status.includes("↓") ? "#e07a7a"
-                  : c.mode === "skip" ? "#666"
-                  : "#9db3c0";
-        const bg = c.status.includes("↑") ? "rgba(155,224,163,.10)"
-                 : c.status.includes("↓") ? "rgba(224,122,122,.10)"
-                 : c.mode === "skip" ? "rgba(120,120,120,.10)"
-                 : "rgba(89,112,129,.08)";
+        const col = c.status.includes("↑") ? "#F4B15E"
+                  : c.status.includes("↓") ? "#C96A5A"
+                  : c.mode === "skip" ? "#5c6870"
+                  : "#8FB0C4";
+        const bg = c.status.includes("↑") ? "rgba(224,138,60,.12)"
+                 : c.status.includes("↓") ? "rgba(201,106,90,.12)"
+                 : c.mode === "skip" ? "rgba(92,104,112,.10)"
+                 : "rgba(91,118,136,.08)";
         const txt = c.mode === "skip" ? `${c.oldReps} reps · ${parseFloat(c.newW)} kg`
                   : c.mode === "reps" ? `${c.oldReps} → ${c.newReps} reps`
                   : c.mode === "cardio" ? "—"
@@ -814,11 +807,11 @@ function openRecap(){
     <div class="recap-card">
       <div class="recap-ttl">PROGRESSION INTELLIGENTE</div>
       ${[
-        {sym:"↑kg",col:"#9be0a3",t:"Toutes ✓ + RPE < 7.5 → poly +5kg / isolation +2.5kg"},
-        {sym:"↑rep",col:"#5AB1D4",t:"Toutes ✓ + RPE 7.5-9 → +1 rep cible"},
-        {sym:"→",col:"#9db3c0",t:"Maintien : RPE ≥ 9 ou séries partielles"},
-        {sym:"↓kg",col:"#e07a7a",t:"Échec (< moitié des séries) → −2.5kg"},
-        {sym:"—",col:"#888",t:"Séance non faite (0 série) → mêmes charges & reps"},
+        {sym:"↑kg",col:"#F4B15E",t:"Toutes ✓ + RPE < 7.5 → poly +5kg / isolation +2.5kg"},
+        {sym:"↑rep",col:"#7FB2D0",t:"Toutes ✓ + RPE 7.5-9 → +1 rep cible"},
+        {sym:"→",col:"#8FB0C4",t:"Maintien : RPE ≥ 9 ou séries partielles"},
+        {sym:"↓kg",col:"#C96A5A",t:"Échec (< moitié des séries) → −2.5kg"},
+        {sym:"—",col:"#6a7580",t:"Séance non faite (0 série) → mêmes charges & reps"},
       ].map(r => `
         <div class="rule-item"><span class="rule-sym" style="color:${r.col}">${r.sym}</span><span class="rule-desc">${r.t}</span></div>`).join("")}
     </div>`;
