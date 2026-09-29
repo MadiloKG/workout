@@ -1,9 +1,9 @@
-/* ═══════════════════════════════════════════════════════════════════════
-   BANKAI · style.css
-   Direction : « forge froide / reiatsu » — acier glacé au repos,
-   braise (ambre/ochre, colorimétrie deep-autumn) à la libération de puissance.
-   Type : Anton (impact) · Oswald (technique/data) · DM Sans (lecture)
-   ═══════════════════════════════════════════════════════════════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   BANKAI Â· style.css
+   Direction : Â« forge froide / reiatsu Â» â€” acier glacÃ© au repos,
+   braise (ambre/ochre, colorimÃ©trie deep-autumn) Ã  la libÃ©ration de puissance.
+   Type : Anton (impact) Â· Oswald (technique/data) Â· DM Sans (lecture)
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}
 
@@ -13,14 +13,14 @@
   --line:#1B2530; --line-2:#27343F;
   /* Texte */
   --frost:#DDE7EF; --frost-2:#AEC1CE; --text:#E6EDF3;
-  --muted:#6F8492; --muted-2:#526572;
+  --muted:#7C93A1; --muted-2:#6E828F;
   /* Acier (ADN Bankai) + glace */
   --steel:#5B7688; --steel-2:#8FB0C4; --ice:#7FB2D0;
-  /* Braise — accent chaud, réservé puissance/explosif/gains */
+  /* Braise â€” accent chaud, rÃ©servÃ© puissance/explosif/gains */
   --ember:#E08A3C; --ember-2:#F4B15E; --rust:#B45A2B; --danger:#C96A5A;
   --r:15px; --r-sm:11px; --r-lg:22px;
 
-  /* Alias de compatibilité (utilisés dans app.js) */
+  /* Alias de compatibilitÃ© (utilisÃ©s dans app.js) */
   --bg:var(--void); --s1:var(--void-2); --s2:var(--panel); --s3:var(--panel-2);
   --b1:rgba(91,118,136,.24); --b2:rgba(91,118,136,.44); --b3:rgba(221,231,239,.14);
   --steel2:var(--steel-2); --steel3:var(--ice); --light:var(--frost); --light2:#EDF3F8; --muted2:var(--frost-2);
@@ -42,16 +42,26 @@ body{
   -webkit-font-smoothing:antialiased;touch-action:manipulation;overscroll-behavior:none;
 }
 input,textarea,select,button{touch-action:manipulation;font-family:inherit}
+button{color:inherit}
 ::selection{background:rgba(224,138,60,.3)}
 
-/* ── ANTI-ROTATION ────────────────────────────────────────────────────── */
+/* â”€â”€ ACCESSIBILITÃ‰ : focus clavier visible â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+:focus:not(:focus-visible){outline:none}
+:focus-visible{outline:2px solid var(--ice);outline-offset:2px;border-radius:10px}
+.set-check:focus-visible,.act-btn:focus-visible,.exo-act:focus-visible,.sh-close:focus-visible,.t-adj:focus-visible,.t-ctrl:focus-visible{outline-offset:3px}
+.set-input:focus-visible,.rpe-input:focus-visible,.form-input:focus-visible,.exo-sel:focus-visible{outline:2px solid var(--ice);outline-offset:1px}
+/* lien d'Ã©vitement clavier */
+.skip-link{position:fixed;top:-60px;left:12px;z-index:400;background:var(--ice);color:var(--void);font-family:'Oswald',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:1px;padding:12px 18px;border-radius:10px;transition:top .2s}
+.skip-link:focus{top:calc(var(--safe-top) + 8px)}
+
+/* â”€â”€ ANTI-ROTATION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .rotate-lock{display:none;position:fixed;inset:0;z-index:9999;background:var(--void);flex-direction:column;align-items:center;justify-content:center;gap:16px;color:var(--frost)}
 .rl-icon{font-size:3rem;animation:rot 1.6s ease-in-out infinite}
 @keyframes rot{0%,100%{transform:rotate(0)}50%{transform:rotate(-90deg)}}
 .rl-text{font-family:'Anton',sans-serif;font-size:1.15rem;letter-spacing:5px;color:var(--steel-2)}
 @media (orientation:landscape) and (max-height:500px){ .rotate-lock{display:flex} }
 
-/* ── FOND : reiatsu froid, discret ────────────────────────────────────── */
+/* â”€â”€ FOND : reiatsu froid, discret â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .bg-wrap{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .bg-orb{position:absolute;border-radius:50%;filter:blur(100px)}
 .bg-orb1{width:520px;height:520px;background:radial-gradient(circle,rgba(var(--day-rgb),.5),transparent 70%);top:-180px;left:-120px;opacity:.10;animation:ob1 24s ease-in-out infinite;transition:background .5s}
@@ -67,7 +77,7 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
 
 #root{position:relative;z-index:1;max-width:780px;margin:0 auto}
 
-/* ── HEADER (Dynamic Island safe) ─────────────────────────────────────── */
+/* â”€â”€ HEADER (Dynamic Island safe) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .hdr{position:sticky;top:0;z-index:50;padding-top:var(--hdr-pad-top);transition:padding-top .2s}
 .hdr-glass{
   background:linear-gradient(180deg,rgba(6,8,11,.94),rgba(6,8,11,.80));
@@ -92,7 +102,7 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
 .logo-text{font-family:'Anton',sans-serif;font-size:1.5rem;letter-spacing:3px;color:var(--frost);line-height:1;text-shadow:0 0 20px rgba(var(--day-rgb),.35)}
 .week-pill{background:rgba(var(--day-rgb),.10);border:1px solid rgba(var(--day-rgb),.38);border-radius:99px;padding:4px 11px;text-align:center;line-height:1;transition:background .4s,border-color .4s}
 .week-num{font-family:'Oswald',sans-serif;font-weight:600;font-size:.82rem;letter-spacing:2px;color:var(--day-c);line-height:1.1;transition:color .4s}
-.week-date{font-size:.53rem;color:var(--muted);letter-spacing:.4px;line-height:1.2;font-family:'Oswald',sans-serif;font-weight:300}
+.week-date{font-size:.58rem;color:var(--muted);letter-spacing:.4px;line-height:1.2;font-family:'Oswald',sans-serif;font-weight:300}
 
 .act-btn{
   height:34px;min-width:34px;border-radius:10px;border:1px solid var(--line-2);
@@ -109,7 +119,7 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
 }
 .act-btn-next:active{filter:brightness(1.12)}
 
-/* TABS — chaque jour = son identité couleur */
+/* TABS â€” chaque jour = son identitÃ© couleur */
 .tabs-wrap{display:flex;overflow-x:auto;scrollbar-width:none;gap:0}
 .tabs-wrap::-webkit-scrollbar{display:none}
 .tab{
@@ -123,7 +133,7 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
 .tab.active::after{transform:scaleX(1)}
 .tab:active{color:var(--frost-2)}
 
-/* ── JAUGE DE PUISSANCE (signature) ───────────────────────────────────── */
+/* â”€â”€ JAUGE DE PUISSANCE (signature) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .fatigue-bar{max-width:780px;margin:0 auto;padding:14px 15px 4px}
 .fatigue-inner{
   background:linear-gradient(160deg,var(--panel),var(--void-2));
@@ -141,7 +151,7 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
   position:relative;height:12px;border-radius:99px;overflow:hidden;
   background:rgba(91,118,136,.12);border:1px solid var(--line);
 }
-/* rail : dégradé froid→braise en filigrane (montre la « cible ») */
+/* rail : dÃ©gradÃ© froidâ†’braise en filigrane (montre la Â« cible Â») */
 .pg-track::before{content:'';position:absolute;inset:0;opacity:.16;
   background:linear-gradient(90deg,var(--steel) 0%,var(--ice) 55%,var(--ember) 100%);}
 .pg-fill{
@@ -149,7 +159,7 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
   min-width:2px;transition:width .55s cubic-bezier(.3,1,.4,1);
   filter:drop-shadow(0 0 7px rgba(var(--day-rgb),.55));
 }
-/* couleur en COORDONNÉES ABSOLUES : la braise n'apparaît qu'en fin de course */
+/* couleur en COORDONNÃ‰ES ABSOLUES : la braise n'apparaÃ®t qu'en fin de course */
 .pg-fill::before{content:'';position:absolute;left:0;top:0;height:100%;width:min(92vw,750px);
   background:linear-gradient(90deg,var(--steel) 0%,var(--ice) 55%,var(--ember-2) 92%);}
 /* balayage lumineux subtil */
@@ -163,7 +173,7 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
 .fatigue-chips{display:flex;gap:6px;flex-shrink:0}
 .f-chip{font-family:'Oswald',sans-serif;font-weight:500;font-size:.6rem;letter-spacing:.5px;padding:3px 8px;border-radius:99px;border:1px solid;white-space:nowrap}
 
-/* ── GRID / CARTES ────────────────────────────────────────────────────── */
+/* â”€â”€ GRID / CARTES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .grid{max-width:780px;margin:0 auto;padding:10px 15px 40px;display:flex;flex-direction:column;gap:12px}
 
 .card{
@@ -178,24 +188,24 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
 .card-name{font-family:'Oswald',sans-serif;font-weight:600;font-size:1.02rem;letter-spacing:.3px;color:var(--frost);line-height:1.15}
 .card-muscle{font-size:.66rem;color:var(--muted);letter-spacing:.3px;margin-top:2px;font-weight:500}
 .card-head-r{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex-shrink:0}
-.zone-badge{font-family:'Oswald',sans-serif;font-weight:600;font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:99px;border:1px solid;white-space:nowrap}
+.zone-badge{font-family:'Oswald',sans-serif;font-weight:600;font-size:.62rem;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:99px;border:1px solid;white-space:nowrap}
 .exo-actions{display:flex;gap:4px}
 .exo-act{width:26px;height:26px;border-radius:8px;border:1px solid var(--line-2);background:rgba(221,231,239,.03);color:var(--muted);font-size:.72rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,color .15s,transform .12s}
 .exo-act:active{background:rgba(91,118,136,.2);color:var(--frost);transform:scale(.9)}
 
-/* Perf résumé */
+/* Perf rÃ©sumÃ© */
 .card-perf{display:flex;align-items:center;gap:2px;padding:8px 12px;border-radius:var(--r-sm);background:rgba(6,8,11,.5);border:1px solid var(--line)}
 .perf-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px}
 .perf-val{font-family:'Oswald',sans-serif;font-weight:700;font-size:1rem;letter-spacing:.5px;line-height:1}
-.perf-lbl{font-family:'Oswald',sans-serif;font-weight:400;font-size:.5rem;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
+.perf-lbl{font-family:'Oswald',sans-serif;font-weight:400;font-size:.58rem;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
 .perf-sep{width:1px;align-self:stretch;background:var(--line-2);margin:2px 0}
 
-/* Tableau des séries */
+/* Tableau des sÃ©ries */
 .sets-table{display:flex;flex-direction:column;gap:6px}
-.sets-header{display:grid;grid-template-columns:34px 1fr 1fr 54px 40px;gap:8px;padding:0 2px 2px;align-items:center}
-.sets-header span{font-family:'Oswald',sans-serif;font-weight:500;font-size:.54rem;letter-spacing:1.5px;color:var(--muted-2);text-transform:uppercase;text-align:center}
+.sets-header{display:grid;grid-template-columns:34px 1fr 1fr 54px 44px;gap:8px;padding:0 2px 2px;align-items:center}
+.sets-header span{font-family:'Oswald',sans-serif;font-weight:500;font-size:.6rem;letter-spacing:1.5px;color:var(--muted-2);text-transform:uppercase;text-align:center}
 .sets-header span:first-child{text-align:left;padding-left:4px}
-.set-row{display:grid;grid-template-columns:34px 1fr 1fr 54px 40px;gap:8px;align-items:center;transition:opacity .2s}
+.set-row{display:grid;grid-template-columns:34px 1fr 1fr 54px 44px;gap:8px;align-items:center;transition:opacity .2s}
 .set-num{font-family:'Anton',sans-serif;font-size:1.05rem;color:var(--muted-2);text-align:left;padding-left:4px;line-height:1;transition:color .2s}
 .set-input{
   width:100%;height:42px;border-radius:10px;border:1px solid rgba(91,118,136,.18);
@@ -212,8 +222,8 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
 .rpe-input:focus{box-shadow:0 0 0 3px rgba(var(--day-rgb),.12)}
 .rpe-input::placeholder{color:var(--muted-2)}
 .set-check{
-  width:40px;height:40px;border-radius:11px;border:1.5px solid var(--line-2);
-  background:rgba(6,8,11,.4);color:transparent;font-size:1.05rem;font-weight:700;
+  width:44px;height:44px;border-radius:12px;border:1.5px solid var(--line-2);
+  background:rgba(6,8,11,.4);color:transparent;font-size:1.1rem;font-weight:700;
   display:flex;align-items:center;justify-content:center;cursor:pointer;
   transition:all .18s cubic-bezier(.3,1.4,.5,1);
 }
@@ -228,8 +238,9 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
 
 /* Bouton timer */
 .timer-btn{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:11px 14px;border-radius:var(--r-sm);cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;width:100%;
+  padding:13px 14px;border-radius:var(--r-sm);cursor:pointer;text-align:left;
+  font-family:inherit;-webkit-appearance:none;appearance:none;
   background:linear-gradient(145deg,rgba(91,118,136,.12),rgba(6,8,11,.3));
   border:1px solid var(--line-2);transition:background .15s,border-color .15s,transform .1s;
 }
@@ -240,8 +251,9 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
 
 /* Carte "ajouter" */
 .add-exo-card{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:100%;
   padding:22px;border-radius:var(--r);cursor:pointer;
+  font-family:inherit;-webkit-appearance:none;appearance:none;
   border:1.5px dashed var(--line-2);background:rgba(221,231,239,.012);
   transition:border-color .2s,background .2s;
 }
@@ -249,7 +261,7 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
 .add-icon{font-size:1.5rem;color:var(--steel-2);line-height:1}
 .add-lbl{font-family:'Oswald',sans-serif;font-weight:600;font-size:.66rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase}
 
-/* ── TIMER OVERLAY ────────────────────────────────────────────────────── */
+/* â”€â”€ TIMER OVERLAY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .t-ov{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
 .t-ov.open{opacity:1;visibility:visible}
 .t-bg{position:absolute;inset:0;background:rgba(6,8,11,.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
@@ -274,7 +286,7 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
 .t-ctrl-main{width:74px;height:74px;font-size:1.7rem;background:linear-gradient(145deg,var(--day-c),rgba(var(--day-rgb),.7));color:var(--void);border-color:transparent;box-shadow:0 0 26px rgba(var(--day-rgb),.5)}
 .t-ctrl-main:active{transform:scale(.93)}
 
-/* ── BANKAI OVERLAY ───────────────────────────────────────────────────── */
+/* â”€â”€ BANKAI OVERLAY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .bk-ov{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s;cursor:pointer;overflow:hidden}
 .bk-ov.open{opacity:1;visibility:visible}
 .bk-bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(10,14,19,.92),rgba(6,8,11,.98))}
@@ -292,7 +304,7 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
 .bk-tap{font-family:'Oswald',sans-serif;font-weight:400;font-size:.6rem;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-top:14px;animation:blink 1.8s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:.4}50%{opacity:1}}
 
-/* ── SHEETS ───────────────────────────────────────────────────────────── */
+/* â”€â”€ SHEETS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .s-ov{position:fixed;inset:0;z-index:150;background:rgba(6,8,11,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;display:flex;align-items:flex-end;justify-content:center}
 .s-ov.open{opacity:1;visibility:visible}
 .sheet{
@@ -331,7 +343,7 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
 .ch-reason{font-size:.6rem;color:var(--muted);letter-spacing:.3px}
 .ch-hint{flex-basis:100%;font-size:.6rem;color:var(--muted-2);font-style:italic;line-height:1.4;padding-left:2px}
 
-/* ── HISTORY / CHARTS ─────────────────────────────────────────────────── */
+/* â”€â”€ HISTORY / CHARTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .exo-sel{width:100%;padding:12px 14px;border-radius:var(--r-sm);border:1px solid var(--line-2);background:var(--void-2);color:var(--frost);font-family:'Oswald',sans-serif;font-weight:500;font-size:.86rem;margin-bottom:14px;outline:none;-webkit-appearance:none;appearance:none}
 .exo-sel:focus{border-color:var(--day-c)}
 .chart-card{background:linear-gradient(160deg,var(--panel),var(--void-2));border:1px solid var(--line);border-radius:var(--r);padding:16px 15px}
@@ -349,7 +361,7 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
 .chip{display:flex;align-items:center;gap:6px;padding:6px 11px;border-radius:99px;background:rgba(91,118,136,.1);border:1px solid var(--line-2);font-family:'Oswald',sans-serif;font-weight:500;font-size:.66rem;color:var(--frost-2)}
 .chip-l{font-weight:700;color:var(--muted);letter-spacing:.5px}
 
-/* ── RECAP ────────────────────────────────────────────────────────────── */
+/* â”€â”€ RECAP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .recap-card{background:linear-gradient(160deg,var(--panel),var(--void-2));border:1px solid var(--line);border-radius:var(--r);padding:16px 15px;margin-bottom:14px}
 .recap-ttl{font-family:'Oswald',sans-serif;font-weight:600;font-size:.68rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
 .vol-item{margin-bottom:12px}
@@ -361,7 +373,7 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
 .rule-sym{font-family:'Oswald',sans-serif;font-weight:700;font-size:.82rem;min-width:34px;letter-spacing:.5px}
 .rule-desc{font-size:.72rem;color:var(--frost-2);line-height:1.45}
 
-/* ── BACKUP ───────────────────────────────────────────────────────────── */
+/* â”€â”€ BACKUP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .bk-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:16px}
 .bk-btn{display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px;border-radius:var(--r);border:1px solid var(--line-2);background:linear-gradient(160deg,var(--panel-2),var(--void-2));color:var(--frost);font-family:'Oswald',sans-serif;font-weight:600;font-size:.8rem;letter-spacing:1.5px;cursor:pointer;transition:border-color .18s,background .18s,transform .1s;text-transform:uppercase}
 .bk-btn:active{border-color:var(--day-c);background:rgba(var(--day-rgb),.08);transform:scale(.98)}
@@ -369,7 +381,7 @@ input,textarea,select,button{touch-action:manipulation;font-family:inherit}
 .bk-info{font-size:.7rem;color:var(--muted);line-height:1.55;padding:12px 14px;border-radius:var(--r-sm);background:rgba(91,118,136,.06);border:1px solid var(--line)}
 .bk-info strong{display:block;color:var(--frost-2);font-family:'Oswald',sans-serif;font-weight:600;font-size:.72rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
 
-/* ── EXO EDITOR FORM ──────────────────────────────────────────────────── */
+/* â”€â”€ EXO EDITOR FORM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .form-row{margin-bottom:13px}
 .form-row.cols2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
 .form-lbl{display:block;font-family:'Oswald',sans-serif;font-weight:500;font-size:.62rem;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
@@ -383,10 +395,10 @@ select.form-input{font-family:'Oswald',sans-serif;font-weight:500}
 .form-btn-ghost{background:rgba(221,231,239,.04);color:var(--frost-2);border:1px solid var(--line-2)}
 .form-btn-danger{background:rgba(201,106,90,.14);color:var(--danger);border:1px solid rgba(201,106,90,.4);flex-basis:100%}
 
-/* ── SCROLLBARS (sheets) ──────────────────────────────────────────────── */
+/* â”€â”€ SCROLLBARS (sheets) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .sh-body::-webkit-scrollbar{width:0}
 
-/* ── MOTION REDUITE ───────────────────────────────────────────────────── */
+/* â”€â”€ MOTION REDUITE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.12s!important}
   .pg-fill::after,.bg-orb1,.bg-orb2,.t-glow,.bk-radial,.bk-line,.bk-icon{animation:none!important}
