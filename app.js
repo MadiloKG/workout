@@ -16,24 +16,24 @@ document.addEventListener('touchend', e => {
 // ── CONSTANTES ────────────────────────────────────────────────────────────
 const POLY = ["Leg Press","Hack Squat","Squat","Fentes","Tractions","Rowing","Tirage","RDL","Hip Thrust","Développé","Dips","Thruster","Push Press"];
 // Récup : puissance/force = récup longue (SNC frais). Explosif = repos complet.
-const REST_T = { Explosif:180, Force:180, Hypertrophie:90, Métabolique:60, "Avant-bras":60, Cardio:0 };
+const REST_T = { Explosif:180, Force:180, Hypertrophie:90, Métabolique:60, "Prévention":45, "Avant-bras":60, Cardio:0 };
 const INTER_EXO_REST = 150; // 2min30 de récup entre exercices (programme lourd)
 const ZONES = {
   Explosif:     {color:"#F4B15E", bg:"rgba(224,138,60,.13)",  border:"rgba(224,138,60,.34)"},
   Force:        {color:"#8FB0C4", bg:"rgba(91,118,136,.14)",  border:"rgba(91,118,136,.32)"},
   Hypertrophie: {color:"#DCE6EE", bg:"rgba(199,214,224,.07)", border:"rgba(199,214,224,.18)"},
   Métabolique:  {color:"#7FB2D0", bg:"rgba(127,178,208,.10)", border:"rgba(127,178,208,.24)"},
+  "Prévention": {color:"#7FB2D0", bg:"rgba(127,178,208,.10)", border:"rgba(127,178,208,.28)"},
   "Avant-bras": {color:"#5B7688", bg:"rgba(91,118,136,.10)",  border:"rgba(91,118,136,.22)"},
   Cardio:       {color:"#9aa6ad", bg:"rgba(199,214,224,.05)", border:"rgba(199,214,224,.14)"},
 };
-const ZONE_LIST = ["Explosif","Force","Hypertrophie","Métabolique","Cardio"];
+const ZONE_LIST = ["Explosif","Force","Hypertrophie","Métabolique","Prévention","Cardio"];
 
 // ── DAYS (méta) ───────────────────────────────────────────────────────────
 // Chaque jour a sa propre couleur d'accent (utilisée dans le thème)
 const DAYS_META = [
-  { id:"lundi",    label:"LUNDI",    sub:"Push · Power",     color:"#7FB2D0", rgb:"127,178,208" },
-  { id:"mercredi", label:"MERCREDI", sub:"Pull · Hinge",     color:"#6C86B8", rgb:"108,134,184" },
-  { id:"vendredi", label:"VENDREDI", sub:"Athletic · Total", color:"#E08A3C", rgb:"224,138,60"  },
+  { id:"mardi",    label:"MARDI",    sub:"Push · Force",  color:"#7FB2D0", rgb:"127,178,208" },
+  { id:"vendredi", label:"VENDREDI", sub:"Lower · Power", color:"#E08A3C", rgb:"224,138,60"  },
 ];
 
 function applyDayTheme(day){
@@ -44,37 +44,27 @@ function applyDayTheme(day){
 
 // ── PROGRAMME PAR DÉFAUT ──────────────────────────────────────────────────
 const DEFAULT_EXOS = {
-  // ── LUNDI · PUSH / POWER ────────────────────────────────────────────────
-  lundi: [
-    {id:"pushpress", name:"Développé militaire explosif haltères", muscle:"Épaules / Explosif",     w:14,   unit:"kg/main", sets:4, reps:"3",   zone:"Explosif",     note:"OUVERTURE À SEC. Pousse le plus VITE possible, jambes qui aident (push press). Jamais à l'échec — récup complète entre séries. C'est ça qui te rend explosif."},
-    {id:"inc",       name:"Développé incliné Hammer Strength",     muscle:"Pectoraux sup.",         w:27.5, unit:"kg/côté", sets:2, reps:"6-8", zone:"Force",        note:"Lourd. 1 rép en réserve sur la série 1, échec technique sur la série 2. Explosif à la poussée, contrôlé à la descente."},
-    {id:"pull",      name:"Tractions lestées",                     muscle:"Dos / Biceps",           w:5,    unit:"kg lest", sets:2, reps:"6-8", zone:"Force",        note:"Tire vite, redescends lentement. Dès que tu passes 8 reps, ajoute du lest. Si tu ne tiens pas 6 lestées, fais-les au poids du corps."},
-    {id:"ohp",       name:"Développé épaules Hammer Strength",     muscle:"Épaules",                w:22,   unit:"kg/côté", sets:2, reps:"6-8", zone:"Force",        note:"Puissance verticale. Gainage serré."},
-    {id:"dip",       name:"Dips lestés",                           muscle:"Pectoraux bas / Triceps",w:10,   unit:"kg lest", sets:2, reps:"8-10",zone:"Hypertrophie", note:"À l'échec sur les 2 séries. Descente contrôlée, poussée sèche."},
-    {id:"carry",     name:"Farmer's carry lourd",                  muscle:"Avant-bras / Core",      w:24,   unit:"kg/main", sets:2, reps:"30m", zone:"Métabolique",  note:"Le plus lourd possible en gardant une posture haute. Grip + gainage antichute."},
-    {id:"sm1",       name:"Skillmill · sprints",                   muscle:"Cardio",                 w:0,    unit:"6×20s",   sets:1, reps:"6×20s max", zone:"Cardio", isCardio:true, note:"Accélérations à fond, 40s de récup. Puissance jambes + condition."},
+  // ── MARDI · PUSH / FORCE (veille de match) ──────────────────────────────
+  // Haut du corps, force, protection épaule. Jambes épargnées, zéro échec sur les presses.
+  mardi: [
+    {id:"inc",    name:"Développé incliné Hammer Strength",  muscle:"Pectoraux sup.",   w:27.5, unit:"kg/côté", sets:2, reps:"6-8",  zone:"Force",       note:"1 rép en réserve, jamais à l'échec (baseball demain). Explosif à la poussée, contrôlé à la descente."},
+    {id:"pull",   name:"Tractions lestées",                  muscle:"Dos / Biceps",     w:5,    unit:"kg lest", sets:2, reps:"6-8",  zone:"Force",       note:"Tire vite, redescends lentement. Dès que tu passes 8 reps, ajoute du lest ; sinon fais-les au poids du corps."},
+    {id:"ohp",    name:"Développé militaire haltères",       muscle:"Épaules",          w:18,   unit:"kg/main", sets:2, reps:"6-8",  zone:"Force",       note:"1-2 reps en réserve. Épaule solide et saine pour lancer demain."},
+    {id:"row",    name:"Rowing Hammer Strength",             muscle:"Dos (épaisseur)",  w:40,   unit:"kg/côté", sets:2, reps:"8-10", zone:"Hypertrophie",note:"Contrôle. Équilibre l'épaule de lancer (les rotateurs postérieurs)."},
+    {id:"cuff",   name:"Rotations externes câble",           muscle:"Épaules (coiffe)", w:5,    unit:"kg",      sets:2, reps:"15",   zone:"Prévention",  note:"15 PAR CÔTÉ. Léger, lent, propre. Non négociable : c'est ce qui protège ton épaule de lanceur."},
+    {id:"pallof", name:"Pallof press",                       muscle:"Core / Obliques",  w:15,   unit:"kg",      sets:2, reps:"12",   zone:"Métabolique", note:"12 PAR CÔTÉ. Anti-rotation = base du transfert de puissance au swing et au lancer."},
+    {id:"carry",  name:"Farmer's carry lourd",               muscle:"Avant-bras / Core",w:24,   unit:"kg/main", sets:2, reps:"30m",  zone:"Métabolique", note:"Le plus lourd possible, posture haute. Grip (tenue de batte) + gainage."},
   ],
-  // ── MERCREDI · PULL / HINGE ─────────────────────────────────────────────
-  mercredi: [
-    {id:"swing",  name:"Swing haltère balistique",           muscle:"Fessiers / Explosif",  w:24, unit:"kg",      sets:5, reps:"5",   zone:"Explosif",     note:"OUVERTURE À SEC. Projection sèche des hanches, pas les bras. Explosif, jamais à l'échec. Réveille la chaîne postérieure."},
-    {id:"rdl",    name:"RDL haltères",                       muscle:"Ischio / Fessiers",    w:20, unit:"kg/main", sets:2, reps:"6-8", zone:"Force",        note:"Lourd, dos neutre, 1 rép en réserve. Étirement contrôlé, remontée puissante."},
-    {id:"row",    name:"Rowing Hammer Strength",             muscle:"Dos (épaisseur)",      w:40, unit:"kg/côté", sets:2, reps:"6-8", zone:"Force",        note:"Tire fort vers le bas des côtes, coudes serrés. Explosif à la traction."},
-    {id:"press",  name:"Développé couché Hammer Strength",   muscle:"Pectoraux",            w:30, unit:"kg/côté", sets:2, reps:"6-8", zone:"Force",        note:"Push horizontal lourd. Barre/poignées rapides à la poussée."},
-    {id:"bulg",   name:"Fentes bulgares haltères",           muscle:"Quad / Fessiers",      w:14, unit:"kg/main", sets:2, reps:"8",   zone:"Hypertrophie", note:"8 reps PAR JAMBE, à l'échec. Stabilité, équilibre et mobilité de hanche."},
-    {id:"curl",   name:"Curl haltères",                      muscle:"Biceps",               w:14, unit:"kg/côté", sets:2, reps:"8-10",zone:"Hypertrophie", note:"À l'échec. Pas de balancier."},
-    {id:"hang",   name:"Relevés de jambes suspendu",         muscle:"Abdominaux",           w:0,  unit:"pds corps",sets:2, reps:"10-12", zone:"Métabolique", note:"Gainage + grip. Contrôle la descente, pas d'élan."},
-    {id:"sm2",    name:"Rameur · LISS",                      muscle:"Cardio",               w:0,  unit:"12min",   sets:1, reps:"12min",   zone:"Cardio", isCardio:true, note:"Allure régulière, respiration nasale. Récup active."},
-  ],
-  // ── VENDREDI · ATHLETIC / TOTAL ─────────────────────────────────────────
+  // ── VENDREDI · LOWER / POWER (2 jours avant match) ──────────────────────
+  // Bas du corps lourd + puissance rotationnelle. Ici tu peux charger.
   vendredi: [
-    {id:"thruster", name:"Thruster haltères explosif",        muscle:"Quadriceps / Explosif", w:16, unit:"kg/main", sets:4, reps:"4",   zone:"Explosif",     note:"OUVERTURE À SEC. Squat → poussée en un geste explosif, full body. Vitesse max, jamais à l'échec."},
-    {id:"hack",     name:"Hack Squat",                        muscle:"Quadriceps",            w:80, unit:"kg",      sets:2, reps:"6-8", zone:"Force",        note:"Bas du corps lourd, amplitude complète, remontée explosive. (Pas de Hack ? Leg Press ~185kg.)"},
-    {id:"ht",       name:"Hip Thrust machine",                muscle:"Fessiers",              w:80, unit:"kg",      sets:2, reps:"8-10",zone:"Force",        note:"Puissance des hanches. Verrouille 1s en haut, fessiers contractés à fond."},
-    {id:"dipv",     name:"Dips lestés",                       muscle:"Pectoraux bas / Triceps",w:12,unit:"kg lest", sets:2, reps:"6-8", zone:"Force",        note:"Version lourde. Explosif à la poussée."},
-    {id:"row2",     name:"Tirage horizontal câble",           muscle:"Dos (largeur)",         w:55, unit:"kg",      sets:2, reps:"6-8", zone:"Force",        note:"Rétracte les omoplates, tire vers le nombril."},
-    {id:"cossack",  name:"Cossack squat + mobilité hanche",   muscle:"Quad / Mobilité",       w:8,  unit:"kg",      sets:2, reps:"6",   zone:"Hypertrophie", note:"6 reps PAR CÔTÉ. Grande amplitude — mobilité hanche/cheville, agilité et contrôle."},
-    {id:"rot",      name:"Rotation câble anti-rotation",      muscle:"Core / Obliques",       w:15, unit:"kg",      sets:2, reps:"12",  zone:"Métabolique",  note:"12 PAR CÔTÉ. Transfert de force par le tronc — la vraie source de puissance athlétique."},
-    {id:"sm3",      name:"Skillmill · agilité",               muscle:"Cardio",                w:0,  unit:"6×20s",   sets:1, reps:"6×20s",   zone:"Cardio", isCardio:true, note:"Changements de rythme et de vitesse. Pieds rapides, agilité + condition."},
+    {id:"mbthrow", name:"Lancer rotationnel med ball",       muscle:"Rotation / Puissance", w:5,  unit:"kg",      sets:4, reps:"4",   zone:"Explosif",    note:"OUVERTURE À SEC. Vitesse max, projection sèche. Transfert direct vers ton swing et ton lancer. Jamais à l'échec. (Pas de med ball ? Rotation câble explosive / wood chop rapide.)"},
+    {id:"hack",    name:"Hack Squat",                        muscle:"Quadriceps",           w:80, unit:"kg",      sets:2, reps:"6-8", zone:"Force",       note:"Bas du corps lourd, amplitude complète, remontée explosive = drive des jambes. (Pas de Hack ? Leg Press ~185kg.)"},
+    {id:"rdl",     name:"RDL haltères",                      muscle:"Ischio / Fessiers",    w:20, unit:"kg/main", sets:2, reps:"6-8", zone:"Force",       note:"Chaîne postérieure = sprint et puissance de hanche. Dos neutre, 1 rép en réserve."},
+    {id:"ht",      name:"Hip Thrust machine",                muscle:"Fessiers",             w:80, unit:"kg",      sets:2, reps:"8-10",zone:"Force",       note:"Puissance des hanches. Verrouille 1s en haut, fessiers contractés à fond."},
+    {id:"press",   name:"Développé couché Hammer Strength",  muscle:"Pectoraux",            w:30, unit:"kg/côté", sets:2, reps:"6-8", zone:"Force",       note:"2ᵉ push de la semaine, maintien du haut du corps. Poussée rapide."},
+    {id:"bulg",    name:"Fentes bulgares haltères",          muscle:"Quad / Fessiers",      w:14, unit:"kg/main", sets:2, reps:"8",   zone:"Hypertrophie",note:"8 reps PAR JAMBE, à l'échec. Stabilité, prévention, mobilité de hanche."},
+    {id:"rot",     name:"Rotation câble contrôlée",          muscle:"Core / Obliques",      w:15, unit:"kg",      sets:2, reps:"12",  zone:"Métabolique", note:"12 PAR CÔTÉ. Complément lent et contrôlé du med ball. Le tronc transfère la puissance."},
   ],
 };
 
@@ -347,8 +337,8 @@ function render(){
               <button class="act-btn act-btn-next" onclick="openNext()">SEM+</button>
             </div>
           </div>
-          <div class="tabs-wrap">
-            ${DAYS_META.map((d,i) => `<button class="tab ${i===aDay?"active":""}" onclick="switchDay(${i})">${d.label}</button>`).join("")}
+          <div class="tabs-wrap" role="tablist" aria-label="Jour d'entraînement">
+            ${DAYS_META.map((d,i) => `<button class="tab ${i===aDay?"active":""}" role="tab" aria-selected="${i===aDay?"true":"false"}"${i===aDay?' aria-current="true"':""} onclick="switchDay(${i})">${d.label}</button>`).join("")}
           </div>
         </div>
       </div>
@@ -362,7 +352,7 @@ function render(){
           </div>
           <span class="pg-pct" id="pgPct">${pg.pct}%</span>
         </div>
-        <div class="pg-track"><div class="pg-fill" id="pgFill" style="width:${pg.pct}%"></div></div>
+        <div class="pg-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pg.pct}" aria-label="Progression de la séance : ${pg.done} sur ${pg.tot} séries"><div class="pg-fill" id="pgFill" style="width:${pg.pct}%"></div></div>
         <div class="fatigue-row">
           <span class="fatigue-lbl">${day.label} — ${day.sub}</span>
           <div class="fatigue-chips" id="fatChips">${fatHtml}</div>
@@ -371,10 +361,10 @@ function render(){
     </div>
     <div class="grid">
       ${dayExos(day.id).map(e => renderCard(e, day)).join("")}
-      <div class="add-exo-card" onclick="openExoEditor('${day.id}', null)">
-        <div class="add-icon">＋</div>
+      <button type="button" class="add-exo-card" onclick="openExoEditor('${day.id}', null)" aria-label="Ajouter un exercice">
+        <div class="add-icon" aria-hidden="true">＋</div>
         <div class="add-lbl">AJOUTER UN EXERCICE</div>
-      </div>
+      </button>
     </div>`;
 }
 
@@ -403,8 +393,8 @@ function renderCard(ex, day){
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:10px;padding:8px 0">
-          <div class="set-check ${done?"checked":""}" onclick="togCardio('${day.id}','${ex.id}')">✓</div>
-          <span style="font-size:.75rem;color:var(--muted2)">${ex.reps} — ${ex.w} ${ex.unit}</span>
+          <button type="button" class="set-check ${done?"checked":""}" onclick="togCardio('${day.id}','${ex.id}')" aria-pressed="${done?"true":"false"}" aria-label="${done?"Décocher":"Valider"} ${escapeAttr(ex.name)}">✓</button>
+          <span style="font-size:.78rem;color:var(--muted2)">${ex.reps} — ${ex.w} ${ex.unit}</span>
         </div>
         ${ex.note ? `<div style="font-size:.62rem;color:var(--muted);font-style:italic;padding:0 2px">${ex.note}</div>` : ""}
       </div>
@@ -415,23 +405,27 @@ function renderCard(ex, day){
 
   const rows = sets.map((s, i) => {
     const rpeC = rpeColor(s.rpe);
+    const setLbl = `série ${i+1} de ${escapeAttr(ex.name)}`;
     return `<div class="set-row ${s.done?"done-row":""}">
-      <span class="set-num">${i+1}</span>
+      <span class="set-num" aria-hidden="true">${i+1}</span>
       <input class="set-input ${s.done?"done-input":""}" type="number" inputmode="decimal" step="0.5" value="${s.w}"
+        aria-label="Charge (${escapeAttr(ex.unit)}), ${setLbl}"
         onfocus="this.select()"
         onchange="setVal('${day.id}','${ex.id}',${i},'w',this.value)"
-        style="border-color:${s.done?"rgba(89,112,129,.35)":"rgba(89,112,129,.18)"}">
+        style="border-color:${s.done?"rgba(127,178,208,.35)":"rgba(91,118,136,.18)"}">
       <input class="set-input ${s.done?"done-input":""}" type="number" inputmode="numeric" min="0" max="50" value="${s.reps}"
+        aria-label="Répétitions, ${setLbl}"
         onfocus="this.select()"
         onchange="setVal('${day.id}','${ex.id}',${i},'reps',this.value)"
-        style="border-color:${s.done?"rgba(89,112,129,.35)":"rgba(89,112,129,.18)"}">
+        style="border-color:${s.done?"rgba(127,178,208,.35)":"rgba(91,118,136,.18)"}">
       <div class="rpe-input-wrap">
         <input class="rpe-input" type="number" inputmode="numeric" min="0" max="10" value="${s.rpe||""}" placeholder="—"
+          aria-label="RPE (0 à 10), ${setLbl}"
           onfocus="this.select()"
           onchange="setVal('${day.id}','${ex.id}',${i},'rpe',this.value)"
-          style="border-color:${s.rpe?rpeC:"rgba(89,112,129,.18)"};color:${s.rpe?rpeC:"var(--muted2)"}">
+          style="border-color:${s.rpe?rpeC:"rgba(91,118,136,.18)"};color:${s.rpe?rpeC:"var(--muted2)"}">
       </div>
-      <div class="set-check ${s.done?"checked":""}" onclick="togSet('${day.id}','${ex.id}',${i})">✓</div>
+      <button type="button" class="set-check ${s.done?"checked":""}" onclick="togSet('${day.id}','${ex.id}',${i})" aria-pressed="${s.done?"true":"false"}" aria-label="${s.done?"Annuler la validation de la":"Valider la"} ${setLbl}">✓</button>
     </div>`;
   }).join("");
 
@@ -459,13 +453,13 @@ function renderCard(ex, day){
         </div>
         ${rows}
       </div>
-      <div class="timer-btn" onclick="startTimer('${day.id}','${ex.id}')">
+      <button type="button" class="timer-btn" onclick="startTimer('${day.id}','${ex.id}')" aria-label="Valider la prochaine série et démarrer la récupération (${rl})">
         <div class="timer-btn-l">
-          <div class="timer-icon">⏱</div>
+          <div class="timer-icon" aria-hidden="true">⏱</div>
           <span>${isInter ? "Inter-exercice" : "Récupération"}</span>
         </div>
         <span class="timer-dur">${rl}</span>
-      </div>
+      </button>
     </div>
   </div>`;
 }
@@ -506,7 +500,11 @@ function refreshFatigueBar() {
   if ($d) $d.textContent = pg.done;
   if ($t) $t.textContent = `/ ${pg.tot} séries`;
   if ($p) $p.textContent = `${pg.pct}%`;
-  if ($f) $f.style.width = `${pg.pct}%`;
+  if ($f) {
+    $f.style.width = `${pg.pct}%`;
+    const track = $f.parentElement;
+    if (track) { track.setAttribute("aria-valuenow", pg.pct); track.setAttribute("aria-label", `Progression de la séance : ${pg.done} sur ${pg.tot} séries`); }
+  }
   if ($c) {
     let html = "";
     if (fat.avgRpe !== null) {
