@@ -18,21 +18,23 @@
 </head>
 <body>
 
+<a class="skip-link" href="#root">Aller au contenu</a>
+
 <!-- Anti-rotation overlay (s'affiche en paysage) -->
-<div class="rotate-lock">
-  <div class="rl-icon">📱</div>
+<div class="rotate-lock" role="alert">
+  <div class="rl-icon" aria-hidden="true">📱</div>
   <div class="rl-text">MODE PORTRAIT UNIQUEMENT</div>
 </div>
 
 <!-- Background -->
-<div class="bg-wrap">
+<div class="bg-wrap" aria-hidden="true">
   <div class="bg-orb bg-orb1"></div>
   <div class="bg-orb bg-orb2"></div>
   <div class="bg-grid"></div>
 </div>
 
 <!-- App root -->
-<div id="root"></div>
+<main id="root" tabindex="-1"></main>
 
 <!-- TIMER overlay -->
 <div class="t-ov" id="tOv">
@@ -58,9 +60,9 @@
       <button class="t-adj" onclick="adj(60)">+1min</button>
     </div>
     <div class="t-ctrls">
-      <button class="t-ctrl t-ctrl-ghost" onclick="closeTimer()">✕</button>
-      <button class="t-ctrl t-ctrl-main" id="tPause" onclick="togglePause()">⏸</button>
-      <button class="t-ctrl t-ctrl-ghost" onclick="skipTimer()">⏭</button>
+      <button class="t-ctrl t-ctrl-ghost" onclick="closeTimer()" aria-label="Fermer le minuteur">✕</button>
+      <button class="t-ctrl t-ctrl-main" id="tPause" onclick="togglePause()" aria-label="Mettre en pause ou reprendre">⏸</button>
+      <button class="t-ctrl t-ctrl-ghost" onclick="skipTimer()" aria-label="Passer la récupération">⏭</button>
     </div>
   </div>
 </div>
